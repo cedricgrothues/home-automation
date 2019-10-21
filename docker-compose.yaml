@@ -11,6 +11,4 @@ services:
     ports:
       - 8001:80
     environment:
-      NODE_ENV: production
-    env_file:
-      - ./.env
+      NODE_ENV: development
