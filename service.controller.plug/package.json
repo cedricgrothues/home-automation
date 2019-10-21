@@ -1,0 +1,11 @@
+{
+  "name": "service.controller.plug",
+  "version": "1.0.0",
+  "description": "smart plug controller",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Cedric Grothues",
+  "license": "MIT"
+}
