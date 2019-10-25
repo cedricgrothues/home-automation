@@ -1,4 +1,4 @@
-import 'package:service/service.dart' as service;
+import 'package:service.device.registry/service.dart' as service;
 
 main(List<String> arguments) {
   print('Hello world: ${service.calculate()}!');
