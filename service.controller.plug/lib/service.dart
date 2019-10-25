@@ -8,7 +8,6 @@ int port = Platform.environment['PORT'] ?? 4001;
 
 main(List<String> args) {
   Router()
-    ..use(Logger.minimal)
     ..get(r'^/device/\w+', handler: device.get)
     ..patch(r'^/device/\w+', handler: device.update)
     ..listen(port: port);
