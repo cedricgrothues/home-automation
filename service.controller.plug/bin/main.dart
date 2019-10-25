@@ -1,3 +1,3 @@
-import 'package:service.controller.plug/service.dart' as service;
+import 'package:service.controller.plug/controller.dart' as controller;
 
-main(List<String> arguments) => service.main();
+main(List<String> arguments) => controller.main(arguments);
