@@ -17,4 +17,6 @@ app.use(express.json());
 app.use("/devices", devices);
 app.use("/rooms", rooms);
 
-app.listen(PORT);
+app.listen(PORT, () =>
+  console.log("service.device-registry is listening on port: " + PORT)
+);

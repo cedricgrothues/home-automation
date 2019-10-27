@@ -1,0 +1,20 @@
+{
+  "name": "service.controller.plug",
+  "version": "1.0.0",
+  "description": "A controller for smart-plugs",
+  "main": "app.js",
+  "scripts": {
+    "start": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/cedricgrothues/home-automation.git"
+  },
+  "keywords": [],
+  "author": "Cedric Grothues",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
