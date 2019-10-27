@@ -19,7 +19,7 @@ Availiable on port `4000`
   {
     "id": "bedside-plug",
     "name": "Bedside Plug",
-    "kind": "plug",
+    "type": "plug",
     "controller": "service.controller.plug",
     "room": {
       "id": "bedroom",
@@ -29,7 +29,7 @@ Availiable on port `4000`
   {
     "id": "ceiling-lamp",
     "name": "Main Lamp",
-    "kind": "lamp",
+    "type": "lamp",
     "controller": "service.controller.hue",
     "room": {
       "id": "bedroom",
@@ -49,7 +49,7 @@ Availiable on port `4000`
 
 - `"id":string` a globally unique ID for this device, can be used to get the device address
 - `"name":string` a friendly name for the device
-- `"kind":string` the kind of device e.g. lamp
+- `"type":string` the type of device e.g. lamp
 - `"room_id":string` the globally unique ID of the room
 - `"controller":string` the name of the device's controller
 
@@ -66,7 +66,7 @@ Returns the new device if successful.
 {
   "id": "my-id",
   "name": "My Device",
-  "kind": "switch",
+  "type": "switch",
   "controller": "service.controller.plug",
   "room": {
     "id": "bedroom",
@@ -90,7 +90,7 @@ Returns the new device if successful.
 {
   "id": "my-id",
   "name": "My Device",
-  "kind": "switch",
+  "type": "switch",
   "controller": "service.controller.plug",
   "room": {
     "id": "bedroom",
@@ -129,7 +129,7 @@ Returns the new device if successful.
       {
         "id": "ceiling-lamp",
         "name": "Lamp",
-        "kind": "lamp",
+        "type": "lamp",
         "controller": "service.controller.hue"
       }
     ]
@@ -141,7 +141,7 @@ Returns the new device if successful.
       {
         "id": "tv2",
         "name": "TV",
-        "kind": "tv",
+        "type": "tv",
         "controller": "controller-2"
       }
     ]
@@ -193,7 +193,7 @@ Returns the new room is created successfully.
     {
       "id": "id1",
       "name": "Device 1",
-      "kind": "switch",
+      "type": "switch",
       "controller": "controller-1"
     }
   ]

@@ -47,7 +47,7 @@ const device = sequelize.define(
       unique: false,
       allowNull: false
     },
-    kind: {
+    type: {
       type: Sequelize.STRING,
       unique: false,
       allowNull: false

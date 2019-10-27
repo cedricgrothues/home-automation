@@ -11,7 +11,7 @@ router
     room
       .findAll({
         include: [
-          { model: device, attributes: ["id", "name", "kind", "controller"] }
+          { model: device, attributes: ["id", "name", "type", "controller"] }
         ]
       })
       .then(rooms => {
@@ -57,7 +57,7 @@ router
           id: req.params.uid
         },
         include: [
-          { model: device, attributes: ["id", "name", "kind", "controller"] }
+          { model: device, attributes: ["id", "name", "type", "controller"] }
         ]
       })
       .then(room => {

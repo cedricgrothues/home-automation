@@ -11,7 +11,7 @@ router
     device
       .findAll({
         include: [room],
-        attributes: ["id", "name", "kind", "controller"]
+        attributes: ["id", "name", "type", "controller"]
       })
       .then(devices => {
         res.status(200).json(devices);
@@ -26,7 +26,7 @@ router
     if (
       !req.body.id ||
       !req.body.name ||
-      !req.body.kind ||
+      !req.body.type ||
       !req.body.room_id ||
       !req.body.controller
     )
@@ -44,7 +44,7 @@ router
       .create({
         id: req.body.id,
         name: req.body.name,
-        kind: req.body.kind,
+        type: req.body.type,
         room_id: req.body.room_id,
         controller: req.body.controller
       })
@@ -53,7 +53,7 @@ router
       })
       .catch(function(err) {
         res.status(400).json({
-          message: "Room with ID '" + req.body.room + "' not found."
+          message: "Room with ID '" + req.body.room_id + "' not found."
         });
       });
   });
@@ -67,7 +67,7 @@ router
           id: req.params.uid
         },
         include: [room],
-        attributes: ["id", "name", "kind", "controller"]
+        attributes: ["id", "name", "type", "controller"]
       })
       .then(device => {
         if (device) res.status(200).json(device);
