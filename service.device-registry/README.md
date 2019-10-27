@@ -1,8 +1,11 @@
 # service.device-registry
 
+Availiable on port `4000`
+
 ## Usage
 
 ### List all devices
+
 **Definition**
 
 `GET /devices`
@@ -13,51 +16,44 @@
 
 ```json
 [
-    {
-        "id": "id1",
-        "address": "125.243.21",
-        "name": "Device 1",
-        "type": "hs100",
-        "kind": "switch",
-        "controller_name": "controller-1",
-        "room": {
-            "id": "bedroom",
-            "name": "Cedric's Bedroom"
-        }
-    },
-    {
-        "id": "id2",
-        "address": "125.243.212",
-        "name": "Device 2",
-        "type": "huelight",
-        "kind": "lamp",
-        "controller_name": "controller-2",
-        "room": {
-            "id": "kitchen",
-            "name": "Kitchen"
-        }
+  {
+    "id": "bedside-plug",
+    "name": "Bedside Plug",
+    "kind": "plug",
+    "controller": "service.controller.plug",
+    "room": {
+      "id": "bedroom",
+      "name": "Cedric's Bedroom"
     }
+  },
+  {
+    "id": "ceiling-lamp",
+    "name": "Main Lamp",
+    "kind": "lamp",
+    "controller": "service.controller.hue",
+    "room": {
+      "id": "bedroom",
+      "name": "Cedric's Bedroom"
+    }
+  }
 ]
 ```
 
 ### Register a new device
+
 **Definition**
 
 `POST /devices`
 
 **Arguments**
 
-- `"id":string` a globally unique ID for this device
-- `"address":string` the ip address of the device, ideally static
+- `"id":string` a globally unique ID for this device, can be used to get the device address
 - `"name":string` a friendly name for the device
-- `"type":string` the type of the device as understood by the client e.g. hs100
 - `"kind":string` the kind of device e.g. lamp
 - `"room_id":string` the globally unique ID of the room
-- `"controller_name":string` the name of the device's controller
-- `"attributes":object` arbitrary controller-specific information about the device
-- `"state_providers":array` names of external services that provide state
+- `"controller":string` the name of the device's controller
 
-If the ID already exists, the existing device will be overwritten.
+If the ID already exists, an error will be thrown.
 
 **Response**
 
@@ -68,22 +64,22 @@ Returns the new device if successful.
 
 ```json
 {
-    "id": "id1",
-    "name": "Device 1",
-    "type": "hs100",
-    "kind": "switch",
-    "controller_name": "controller-2",
-    "room": {
-        "id": "bedroom",
-        "name": "Jake's Bedroom"
-    }
+  "id": "my-id",
+  "name": "My Device",
+  "kind": "switch",
+  "controller": "service.controller.plug",
+  "room": {
+    "id": "bedroom",
+    "name": "Cedric's Bedroom"
+  }
 }
 ```
 
 ### Lookup device details
+
 **Definition**
 
-`GET /device/<id>`
+`GET /devices/<id>`
 
 **Response**
 
@@ -92,22 +88,22 @@ Returns the new device if successful.
 
 ```json
 {
-    "id": "id1",
-    "name": "Device 1",
-    "type": "hs100",
-    "kind": "switch",
-    "controller_name": "controller-1",
-    "room": {
-        "id": "bedroom",
-        "name": "Cedric's Bedroom"
-    }
+  "id": "my-id",
+  "name": "My Device",
+  "kind": "switch",
+  "controller": "service.controller.plug",
+  "room": {
+    "id": "bedroom",
+    "name": "Cedric's Bedroom"
+  }
 }
 ```
 
 ### Delete a device
+
 **Definition**
 
-`DELETE /device/<id>`
+`DELETE /devices/<id>`
 
 **Response**
 
@@ -115,6 +111,7 @@ Returns the new device if successful.
 - 204: success
 
 ### List rooms
+
 **Definition**
 
 `GET /rooms`
@@ -125,37 +122,35 @@ Returns the new device if successful.
 
 ```json
 [
-    {
-        "id": "bedroom",
-        "name": "Cedric's Bedroom",
-        "devices": [
-            {
-                "id": "lamp1",
-                "name": "Lamp",
-                "type": "huelight",
-                "kind": "lamp",
-                "controller_name": "controller-1"
-            }
-        ]
-    },
-    {
-        "id": "kitchen",
-        "name": "Kitchen",
-        "devices": [
-            {
-                "id": "tv2",
-                "name": "TV",
-                "type": "philips48",
-                "kind": "tv",
-                "controller_name": "controller-2"
-            }
-        ]
-    }
+  {
+    "id": "bedroom",
+    "name": "Cedric's Bedroom",
+    "devices": [
+      {
+        "id": "ceiling-lamp",
+        "name": "Lamp",
+        "kind": "lamp",
+        "controller": "service.controller.hue"
+      }
+    ]
+  },
+  {
+    "id": "kitchen",
+    "name": "Kitchen",
+    "devices": [
+      {
+        "id": "tv2",
+        "name": "TV",
+        "kind": "tv",
+        "controller": "controller-2"
+      }
+    ]
+  }
 ]
-
 ```
 
 ### Register new room
+
 **Definition**
 
 `POST /rooms`
@@ -165,8 +160,7 @@ Returns the new device if successful.
 - `"id":string` a globally unique id for the room
 - `"name":string` a friendly name for the room
 
-If the id already exists, the existing room will be overwritten.
-Devices belonging to an existing room will not be modified.
+If the id already exists, an error will be thrown.
 
 **Response**
 
@@ -176,15 +170,15 @@ Returns the new room is created successfully.
 
 ```json
 {
-    "id": "bedroom",
-    "name": "Cedric's Bedroom",
-    "devices": []
+  "id": "bedroom",
+  "name": "Cedric's Bedroom"
 }
 ```
 
 ### Lookup room details
+
 **Definition**
-`GET /room/<id>`
+`GET /rooms/<id>`
 
 **Response**
 
@@ -193,24 +187,24 @@ Returns the new room is created successfully.
 
 ```json
 {
-    "id": "bedroom",
-    "name": "Cedric's Bedroom",
-    "devices": [
-        {
-            "id": "id1",
-            "name": "Device 1",
-            "type": "hs100",
-            "kind": "switch",
-            "controller_name": "controller-1"
-        }
-    ]
+  "id": "bedroom",
+  "name": "Cedric's Bedroom",
+  "devices": [
+    {
+      "id": "id1",
+      "name": "Device 1",
+      "kind": "switch",
+      "controller": "controller-1"
+    }
+  ]
 }
 ```
 
 ### Delete a room
+
 **Definition**
 
-`DELETE /room/<id>`
+`DELETE /rooms/<id>`
 
 **Response**
 

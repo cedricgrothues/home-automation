@@ -1,8 +1,0 @@
-name: database
-description: An implementation of sqlite3's C api
-version: 1.0.0
-
-author: Cedric Grothues <cedricgrothues@gmail.com>
-
-environment:
-  sdk: '>=2.5.0 <3.0.0'
