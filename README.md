@@ -1,6 +1,6 @@
 # Home Automation
 
-Distributed home automation system largely written in NodeJS. Largely a learning opportunity rather than a production-ready system.
+Distributed home automation system largely written in NodeJS. Largely a learning opportunity rather than a production-ready system. 
 
 ## API Specification
 
