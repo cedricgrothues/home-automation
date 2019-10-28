@@ -20,7 +20,7 @@ router.get("/", (req, res, next) => {
     })
     .catch(function(err) {
       const error = new Error(
-        "A  problem occured while querying all rooms: " + err
+        "A  problem occured while querying all rooms: " + err.message
       );
       error.status = 500;
       return next(error);
