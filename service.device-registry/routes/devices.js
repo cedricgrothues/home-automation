@@ -7,68 +7,104 @@ router.use(express.urlencoded({ extended: true }));
 
 router
   .route("/")
-  .get((req, res) => {
-    device
-      .findAll({
-        include: [room],
-        attributes: ["id", "name", "type", "controller"]
-      })
-      .then(devices => {
-        res.status(200).json(devices);
-      })
-      .catch(function(err) {
-        res.status(500).json({
-          message: "A  problem occured while querying all devices: " + err
+  .get((req, res, next) => {
+    if (req.query.controller != null)
+      device
+        .findAll({
+          where: {
+            controller: req.query.controller
+          },
+          include: [room],
+          attributes: ["id", "name", "type", "controller", "address"]
+        })
+        .then(devices => {
+          res.status(200).json(devices);
+        })
+        .catch(function(err) {
+          err.status = 500;
+          return next(err);
         });
-      });
+    else
+      device
+        .findAll({
+          include: [room],
+          attributes: ["id", "name", "type", "controller", "address"]
+        })
+        .then(devices => {
+          res.status(200).json(devices);
+        })
+        .catch(function(err) {
+          const error = new Error(
+            "A  problem occured while querying all devices: " + err
+          );
+          error.status = 500;
+          return next(error);
+        });
   })
-  .post((req, res) => {
+  .post((req, res, next) => {
     if (
       !req.body.id ||
       !req.body.name ||
       !req.body.type ||
       !req.body.room_id ||
-      !req.body.controller
-    )
-      return res.status(400).json({
-        message:
-          "Missing parameter(s), refer to the documentation for more information."
-      });
+      !req.body.controller ||
+      !req.body.address
+    ) {
+      const error = new Error(
+        "Missing parameter(s), refer to the documentation for more information."
+      );
+      error.status = 400;
+      return next(error);
+    }
 
-    if (!/^\w+$/.test(req.body.id))
-      return res.status(400).json({
-        message:
-          "ID contains invalid characters, refer to the documentation for more information."
-      });
+    if (!/^\w+$/.test(req.body.id)) {
+      const error = new Error(
+        "ID contains invalid characters, refer to the documentation for more information."
+      );
+      error.status = 400;
+      return next(error);
+    }
     device
       .create({
         id: req.body.id,
         name: req.body.name,
         type: req.body.type,
         room_id: req.body.room_id,
-        controller: req.body.controller
+        controller: req.body.controller,
+        address: req.body.address
       })
       .then(created => {
         res.status(201).json(created);
       })
       .catch(function(err) {
-        res.status(400).json({
-          message: "Room with ID '" + req.body.room_id + "' not found."
-        });
+        const error = new Error(
+          "Could not create room with ID: " + req.body.id + ". " + err
+        );
+        error.status = 500;
+        return next(error);
       });
   });
 
 router
   .route("/:uid")
-  .get((req, res) => {
-    device
-      .findOne({
-        where: {
-          id: req.params.uid
-        },
-        include: [room],
-        attributes: ["id", "name", "type", "controller"]
-      })
+  .get((req, res, next) => {
+    (req.query.controller
+      ? device.findOne({
+          where: {
+            id: req.params.uid,
+            controller: req.query.controller
+          },
+          include: [room],
+          attributes: ["id", "name", "type", "controller", "address"]
+        })
+      : device.findOne({
+          where: {
+            id: req.params.uid
+          },
+          include: [room],
+          attributes: ["id", "name", "type", "controller", "address"]
+        })
+    )
       .then(device => {
         if (device) res.status(200).json(device);
         else
@@ -77,16 +113,17 @@ router
           });
       })
       .catch(function(err) {
-        res.status(500).json({
-          message:
-            "An error occured, while querying for device with id: " +
+        const error = new Error(
+          "An error occured, while querying for device with id: " +
             req.params.uid +
-            " err: " +
+            ". " +
             err
-        });
+        );
+        error.status = 500;
+        return next(error);
       });
   })
-  .delete((req, res) => {
+  .delete((req, res, next) => {
     device
       .destroy({
         where: {
@@ -94,10 +131,17 @@ router
         }
       })
       .then(data => {
-        if (data === 0)
-          return res.status(404).json({ message: "Device not found." });
-        else if (data === 1) return res.sendStatus(204);
-        else return res.sendStatus(500);
+        if (data === 0) {
+          const error = new Error("Device not found.");
+          error.status = 404;
+          return next(error);
+        } else if (data === 1) {
+          return res.sendStatus(204);
+        } else {
+          const error = new Error("Internal server error.");
+          error.status = 500;
+          return next(error);
+        }
       });
   });
 

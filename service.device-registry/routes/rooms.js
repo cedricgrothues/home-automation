@@ -5,91 +5,113 @@ const { sequelize, room, device } = require("../database");
 
 router.use(express.urlencoded({ extended: true }));
 
-router
-  .route("/")
-  .get((req, res) => {
-    room
-      .findAll({
-        include: [
-          { model: device, attributes: ["id", "name", "type", "controller"] }
-        ]
-      })
-      .then(rooms => {
-        res.status(200).json(rooms);
-      })
-      .catch(function(err) {
-        res.status(500).json({
-          message: "A  problem occured while querying all rooms: " + err
-        });
-      });
-  })
-  .post((req, res) => {
-    if (!req.body.id || !req.body.name)
-      return res.status(400).json({
-        message:
-          "Missing parameter(s), refer to the documentation for more information."
-      });
-
-    if (!/^\w+$/.test(req.body.id))
-      return res.status(400).json({
-        message:
-          "ID contains invalid characters, refer to the documentation for more information."
-      });
-    room
-      .create({ id: req.body.id, name: req.body.name })
-      .then(created => {
-        res.status(201).json(created);
-      })
-      .catch(function(err) {
-        res.status(500).json({
-          message:
-            "A  problem occured while inserting object into database: " + err
-        });
-      });
-  });
-
-router
-  .route("/:uid")
-  .get((req, res) => {
-    room
-      .findOne({
-        where: {
-          id: req.params.uid
-        },
-        include: [
-          { model: device, attributes: ["id", "name", "type", "controller"] }
-        ]
-      })
-      .then(room => {
-        if (room) res.status(200).json(room);
-        else
-          res.status(404).json({
-            message: "Room with ID '" + req.params.uid + "' not found."
-          });
-      })
-      .catch(function(err) {
-        res.status(500).json({
-          message:
-            "An error occured, while querying for room with id: " +
-            req.params.uid +
-            " err: " +
-            err
-        });
-      });
-  })
-  .delete((req, res) => {
-    room
-      .destroy({
-        where: {
-          id: req.params.uid
+router.get("/", (req, res, next) => {
+  room
+    .findAll({
+      include: [
+        {
+          model: device,
+          attributes: ["id", "name", "type", "controller", "address"]
         }
-      })
-      .then(data => {
-        if (data === 0)
-          return res.status(404).json({ message: "Room not found." });
-        else if (data === 1) return res.sendStatus(204);
-        else return res.sendStatus(500);
-      });
-  });
+      ]
+    })
+    .then(rooms => {
+      res.status(200).json(rooms);
+    })
+    .catch(function(err) {
+      const error = new Error(
+        "A  problem occured while querying all rooms: " + err
+      );
+      error.status = 500;
+      return next(error);
+    });
+});
+
+router.post("/", (req, res, next) => {
+  if (!req.body.id || !req.body.name) {
+    const error = new Error(
+      "Missing parameter(s), refer to the documentation for more information."
+    );
+    error.status = 400;
+    return next(error);
+  }
+
+  if (!/^\w+$/.test(req.body.id)) {
+    const error = new Error(
+      "ID contains invalid characters, refer to the documentation for more information."
+    );
+    error.status = 400;
+    return next(error);
+  }
+  room
+    .create({ id: req.body.id, name: req.body.name })
+    .then(created => {
+      res.status(201).json(created);
+    })
+    .catch(function(err) {
+      const error = new Error(
+        "A  problem occured while inserting object into database: " + err
+      );
+      error.status = 500;
+      return next(error);
+    });
+});
+
+router.get("/:uid", (req, res, next) => {
+  room
+    .findOne({
+      where: {
+        id: req.params.uid
+      },
+      include: [
+        {
+          model: device,
+          attributes: ["id", "name", "type", "controller", "address"]
+        }
+      ]
+    })
+    .then(room => {
+      if (!room) {
+        const error = new Error(
+          "Room with ID '" + req.params.uid + "' not found."
+        );
+        error.status = 404;
+        return next(error);
+      } else {
+        res.status(200).json(room);
+      }
+    })
+    .catch(function(err) {
+      const error = new Error(
+        "An error occured, while querying for room with id: " +
+          req.params.uid +
+          " err: " +
+          err
+      );
+      error.status = 500;
+      return next(error);
+    });
+});
+
+router.delete("/:uid", (req, res, next) => {
+  room
+    .destroy({
+      where: {
+        id: req.params.uid
+      }
+    })
+    .then(data => {
+      if (data === 0) {
+        const error = new Error("Room not found.");
+        error.status = 404;
+        return next(error);
+      } else if (data === 1) return res.sendStatus(204);
+      else {
+        const error = new Error("Internal server error");
+        error.status = 500;
+        return next(error);
+      }
+    });
+});
 
 module.exports = router;

@@ -56,6 +56,11 @@ const device = sequelize.define(
       type: Sequelize.STRING,
       unique: false,
       allowNull: false
+    },
+    address: {
+      type: Sequelize.STRING,
+      unique: true,
+      allowNull: false
     }
   },
   {
