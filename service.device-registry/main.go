@@ -35,14 +35,14 @@ func main() {
 	router.GET("/devices", routes.AllDevices)
 	router.POST("/devices", routes.AddDevice)
 
-	router.GET("/devices/:device", routes.GetDevice)
-	router.DELETE("/devices/:device", routes.DeleteDevice)
+	router.GET("/devices/:id", routes.GetDevice)
+	router.DELETE("/devices/:id", routes.DeleteDevice)
 
 	router.GET("/rooms", routes.AllRooms)
 	router.POST("/rooms", routes.AddRoom)
 
-	router.GET("/rooms/:room", routes.GetRoom)
-	router.DELETE("/rooms/:room", routes.DeleteRoom)
+	router.GET("/rooms/:id", routes.GetRoom)
+	router.DELETE("/rooms/:id", routes.DeleteRoom)
 
 	log.Fatalf("\n\x1b[31m[%v]\x1b[0m %s %v", "service.device-registry", "Failed to start with error:", http.ListenAndServe(":4000", router))
 }
