@@ -13,7 +13,7 @@ import (
 
 func main() {
 
-	database, err := sql.Open("sqlite3", "./database/device-registry.db")
+	database, err := sql.Open("sqlite3", "./database/device-registry.sqlite")
 
 	if err != nil {
 		log.Fatal(err)
@@ -21,8 +21,8 @@ func main() {
 
 	defer database.Close()
 
-	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL, controller TEXT NOT NULL, room_id TEXT NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE CASCADE);`)
-	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id TEXT PRIMARY KEY, name TEXT NOT NULL);")
+	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL, controller TEXT NOT NULL, room_id TEXT NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
+	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id TEXT PRIMARY KEY, name TEXT NOT NULL, FOREIGN KEY (id) REFERENCES devices (room_id) ON UPDATE CASCADE ON DELETE SET NULL);")
 
 	routes.Database = database
 
@@ -47,14 +47,14 @@ func main() {
 	log.Fatalf("\n\x1b[31m[%v]\x1b[0m %s %v", "service.device-registry", "Failed to start with error:", http.ListenAndServe(":4000", router))
 }
 
-// NotFound handles errors if a route was not found
+// NotFound : HTTP handler that is called if no matching route is found
 func NotFound(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusNotFound)
 	w.Write([]byte(`{"message":"Page ` + r.URL.Path + ` not found"}`))
 }
 
-// NotAllowed handles errors if a method is not allowed
+// NotAllowed : HTTP handler that is called if the current method is not allowed
 func NotAllowed(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusMethodNotAllowed)
@@ -66,12 +66,5 @@ func PanicHandler(w http.ResponseWriter, r *http.Request, p interface{}) {
 	fmt.Print(p)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusInternalServerError)
-	w.Write([]byte(`{"message":"Internal server error"}`))
-}
-
-// HandleError logs and handles the passed error
-func HandleError(e error) {
-	if e != nil {
-		log.Fatalf("\n\x1b[31m[%v]\x1b[0m %s %v", "service.device-registry", "An error occured:", e.Error())
-	}
+	w.Write([]byte(`{"message":"` + p.(error).Error() + `"}`))
 }

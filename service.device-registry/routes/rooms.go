@@ -3,7 +3,6 @@ package routes
 import (
 	"database/sql"
 	"encoding/json"
-	"log"
 	"net/http"
 	"regexp"
 
@@ -30,53 +29,37 @@ type device struct {
 // AllRooms handles GET /rooms and returns a 200 status code with all rooms and their according devices
 func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	rows, err := Database.Query("SELECT * FROM rooms")
+	var rooms []Room
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	rows, err := Database.Query(`SELECT id, name FROM rooms`)
 
 	defer rows.Close()
 
-	var rooms []Room
-
-	for rows.Next() {
-		var id string
-		var name string
-		var devices []device
-
-		err = rows.Scan(&id, &name)
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		rows, err = Database.Query("SELECT id, name, type, controller FROM devices WHERE room_id=?", id)
-
-		defer rows.Close()
-
-		for rows.Next() {
-			var device device
-			err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller)
-
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			devices = append(devices, device)
-		}
-
-		err = rows.Err()
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		rooms = append(rooms, Room{id, name, devices})
+	if err != nil {
+		panic(err)
 	}
 
-	err = rows.Err()
-	if err != nil {
-		log.Fatal(err)
+	for rows.Next() {
+		var room Room
+
+		rows.Scan(&room.ID, &room.Name)
+
+		deviceRows, err := Database.Query(`SELECT id, name, type, controller FROM devices WHERE room_id=?`, room.ID)
+
+		defer deviceRows.Close()
+
+		if err != nil {
+			panic(err)
+		}
+
+		for deviceRows.Next() {
+			var d device
+
+			deviceRows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller)
+			room.Devices = append(room.Devices, d)
+		}
+
+		rooms = append(rooms, room)
 	}
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -85,7 +68,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	bytes, err := json.Marshal(rooms)
 
 	if err != nil {
-		log.Fatal("A problem occured while converting JSON: " + err.Error())
+		panic("A problem occured while converting JSON: " + err.Error())
 	}
 
 	w.Write(bytes)
@@ -95,6 +78,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	r.ParseForm()
 
+	// Check if all params are present, if not abort with 400 error
 	if !(len(r.Form["id"]) > 0 && len(r.Form["name"]) > 0) {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
@@ -102,6 +86,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
+	// match id agains regex pattern to ensure it´s valid
 	if match, _ := regexp.MatchString(`^\w+$`, r.Form["id"][0]); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
@@ -109,18 +94,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	rows, err := Database.Query("SELECT id FROM rooms WHERE id=?", r.Form["id"][0])
-
-	if rows.Next() {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(`{"message":"A room with this ID already exists."}`))
-		return
-	}
-
-	defer rows.Close()
-
-	_, err = Database.Exec("INSERT INTO rooms(id, name) values(?,?)", r.Form["id"][0], r.Form["name"][0])
+	_, err := Database.Exec("INSERT INTO rooms(id, name) values(?,?)", r.Form["id"][0], r.Form["name"][0])
 
 	if err != nil {
 		panic(err)
@@ -128,7 +102,11 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	var room Room
 
-	Database.QueryRow(`SELECT r.id, r.name, GROUP_CONCAT(d.id, d.name, device.type, device.controller) FROM rooms r INNER JOIN devices d ON d.room_id = r.id WHERE r.id=?`, r.Form["id"][0]).Scan(&room.ID, &room.Name, &room.Devices)
+	err = Database.QueryRow("SELECT id, name FROM rooms WHERE id=?", r.Form["id"][0]).Scan(&room.ID, &room.Name)
+
+	if err != nil {
+		panic(err)
+	}
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusCreated)
@@ -144,47 +122,34 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // GetRoom Gets a specific device
 func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	var room Room
 
-	rows, err := Database.Query("SELECT id, name FROM rooms WHERE id=?", p[0].Value)
+	err := Database.QueryRow(`SELECT id, name FROM rooms WHERE id=?`, p[0].Value).Scan(&room.ID, &room.Name)
+
+	if err != nil {
+		if err != sql.ErrNoRows {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(`{"message":"Room with ID '` + p[0].Value + `' not found."}`))
+			return
+		}
+	}
+
+	rows, err := Database.Query(`SELECT id, name, type, controller FROM devices WHERE room_id=?`, p[0].Value)
+
 	defer rows.Close()
 
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
-	room := Room{}
+	for rows.Next() {
+		var d device
 
-	if rows.Next() {
-		err = rows.Scan(&room.ID, &room.Name)
-
-		rows, err := Database.Query("SELECT id, name, type, controller FROM devices WHERE room_id=?", room.ID)
-		defer rows.Close()
-
-		if err != nil {
-			log.Fatal(err)
-		}
-
-		for rows.Next() {
-			var (
-				id         string
-				name       string
-				dtype      string
-				controller string
-			)
-			err = rows.Scan(&id, &name, &dtype, &controller)
-
-			if err != nil {
-				log.Fatal(err)
-			}
-
-			room.Devices = append(room.Devices, device{id, name, dtype, controller})
-		}
-
-	} else {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"message":"Room with ID '` + p[0].Value + `' not found."}`))
-		return
+		rows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller)
+		room.Devices = append(room.Devices, d)
 	}
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -201,23 +166,34 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // DeleteRoom deletes a specified room
 func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	var id string
 
-	rows, err := Database.Query("SELECT id, name FROM rooms WHERE id=?", p[0].Value)
+	err := Database.QueryRow("SELECT id FROM rooms WHERE id=?", p[0].Value).Scan(&id)
+
+	if err != nil {
+		if err != sql.ErrNoRows {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(`{"message":"Room with ID '` + p[0].Value + `' not found."}`))
+			return
+		}
+	}
+
+	statement, err := Database.Prepare("DELETE FROM rooms WHERE id=?")
+	_, err = statement.Exec(p[0].Value)
+
+	defer statement.Close()
 
 	if err != nil {
 		panic(err)
 	}
 
-	defer rows.Close()
+	statement, err = Database.Prepare("DELETE FROM devices WHERE room_id=?")
+	_, err = statement.Exec(p[0].Value)
 
-	if !rows.Next() {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"message":"Room with ID '` + p[0].Value + `' not found."}`))
-		return
-	}
-
-	_, err = Database.Exec("DELETE FROM rooms WHERE id=?", p[0].Value)
+	defer statement.Close()
 
 	if err != nil {
 		panic(err)

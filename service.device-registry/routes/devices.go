@@ -1,9 +1,8 @@
 package routes
 
 import (
+	"database/sql"
 	"encoding/json"
-	"fmt"
-	"log"
 	"net/http"
 	"regexp"
 
@@ -16,15 +15,13 @@ type Device struct {
 	Name       string `json:"name"`
 	Type       string `json:"type"`
 	Controller string `json:"controller"`
-	Room       room   `json:"room"`
+	Room       struct {
+		ID   string `json:"id"`
+		Name string `json:"name"`
+	} `json:"room"`
 }
 
-type room struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
-}
-
-// AllDevices Lists all devices
+// AllDevices Lists all devices ✅
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id")
 
@@ -35,15 +32,15 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var devices []Device
 
 	for rows.Next() {
-		var ID string
-		var Name string
-		var Type string
-		var Controller string
+		var device Device
 
-		var room room
+		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
 
-		err = rows.Scan(&ID, &Name, &Type, &Controller, &room.ID, &room.Name)
-		devices = append(devices, Device{ID, Name, Type, Controller, room})
+		if err != nil {
+			panic(err)
+		}
+
+		devices = append(devices, device)
 	}
 
 	defer rows.Close()
@@ -78,29 +75,35 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
+	var id string
+	err := Database.QueryRow("SELECT id FROM rooms WHERE id=?", r.Form["room_id"][0]).Scan(&id)
+
+	if err != nil {
+		if err != sql.ErrNoRows {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(`{"message":"Room with ID '` + r.Form["room_id"][0] + `' not found."}`))
+			return
+		}
+	}
+
 	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, room_id) values(?,?,?,?,?)")
+	defer stmt.Close()
 
 	if err != nil {
 		panic(err)
 	}
 
-	res, err := stmt.Exec(r.Form["id"][0], r.Form["name"][0], r.Form["type"][0], r.Form["controller"][0], r.Form["room_id"][0])
+	_, err = stmt.Exec(r.Form["id"][0], r.Form["name"][0], r.Form["type"][0], r.Form["controller"][0], r.Form["room_id"][0])
 
 	if err != nil {
 		panic("A problem occured while inserting object into database: " + err.Error())
 	}
 
-	fmt.Println(res)
-
-	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id WHERE d.id=?", r.Form["id"][0])
-
-	device := Device{}
-
-	if rows.Next() {
-		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
-	}
-
-	defer rows.Close()
+	var device Device
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id WHERE d.id=?", r.Form["id"][0]).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusCreated)
@@ -116,24 +119,20 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // GetDevice Gets a specific device
 func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id WHERE d.id=?", p[0].Value)
+	var device Device
+
+	err := Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id WHERE d.id=?", p[0].Value).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
 
 	if err != nil {
-		panic(err)
+		if err != sql.ErrNoRows {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(`{"message":"Device with ID '` + p[0].Value + `' not found."}`))
+			return
+		}
 	}
-
-	device := Device{}
-
-	if rows.Next() {
-		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
-	} else {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"message":"Device with ID '` + p[0].Value + `' not found."}`))
-		return
-	}
-
-	defer rows.Close()
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
@@ -149,25 +148,28 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // DeleteDevice deletes a specified device
 func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	rows, err := Database.Query("SELECT id FROM devices WHERE id=?", p[0].Value)
+	var id string
+
+	err := Database.QueryRow("SELECT id FROM devices WHERE id=?", p[0].Value).Scan(&id)
 
 	if err != nil {
-		log.Fatal(err)
+		if err != sql.ErrNoRows {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(`{"message":"Device with ID '` + p[0].Value + `' not found."}`))
+			return
+		}
 	}
 
-	defer rows.Close()
+	statement, err := Database.Prepare("DELETE FROM devices WHERE id=?")
+	_, err = statement.Exec(p[0].Value)
 
-	if !rows.Next() {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte(`{"message":"Device with ID '` + p[0].Value + `' not found."}`))
-		return
-	}
-
-	_, err = Database.Exec("DELETE FROM devices WHERE id=?", p[0].Value)
+	defer statement.Close()
 
 	if err != nil {
-		log.Fatal(err)
+		panic(err)
 	}
 
 	w.WriteHeader(http.StatusNoContent)
