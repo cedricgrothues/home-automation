@@ -1,6 +1,8 @@
 # Home Automation
 
-Distributed home automation system largely written in NodeJS. Largely a learning opportunity rather than a production-ready system. 
+Distributed home automation system largely written in Go. Mostly a learning opportunity rather than a production-ready system. 
+
+`4000`: service.device-registry
 
 ## API Specification
 
