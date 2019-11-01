@@ -1,6 +1,6 @@
 # service.device-registry
 
-Availiable on port `4000`
+Availiable on port `4000` by default
 
 ## Usage
 
@@ -75,7 +75,6 @@ Returns the new device if successful.
   "name": "My Device",
   "type": "switch",
   "controller": "service.controller.plug",
-  "address": "ip-address",
   "room": {
     "id": "bedroom",
     "name": "Cedric's Bedroom"
