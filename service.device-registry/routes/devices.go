@@ -18,10 +18,10 @@ type Device struct {
 	Room       struct {
 		ID   string `json:"id"`
 		Name string `json:"name"`
-	} `json:"room"`
+	} `json:"room,omitempty"`
 }
 
-// AllDevices Lists all devices ✅
+// AllDevices Lists all devices
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id")
 

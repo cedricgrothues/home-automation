@@ -175,8 +175,7 @@ Returns the new room is created successfully.
 ```json
 {
   "id": "bedroom",
-  "name": "Cedric's Bedroom",
-  "devices": null
+  "name": "Cedric's Bedroom"
 }
 ```
 

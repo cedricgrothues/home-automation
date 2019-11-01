@@ -16,14 +16,7 @@ var Database *sql.DB
 type Room struct {
 	ID      string   `json:"id"`
 	Name    string   `json:"name"`
-	Devices []device `json:"devices"`
-}
-
-type device struct {
-	ID         string `json:"id"`
-	Name       string `json:"name"`
-	Type       string `json:"type"`
-	Controller string `json:"controller"`
+	Devices []Device `json:"devices,omitempty"`
 }
 
 // AllRooms handles GET /rooms and returns a 200 status code with all rooms and their according devices
@@ -53,7 +46,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 
 		for deviceRows.Next() {
-			var d device
+			var d Device
 
 			deviceRows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller)
 			room.Devices = append(room.Devices, d)
@@ -146,7 +139,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	for rows.Next() {
-		var d device
+		var d Device
 
 		rows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller)
 		room.Devices = append(room.Devices, d)
