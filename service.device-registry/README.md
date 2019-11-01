@@ -25,7 +25,6 @@ Availiable on port `4000` by default
     "name": "Bedside Plug",
     "type": "plug",
     "controller": "service.controller.plug",
-    "address": "ip-address",
     "room": {
       "id": "bedroom",
       "name": "Cedric's Bedroom"
@@ -36,7 +35,6 @@ Availiable on port `4000` by default
     "name": "Main Lamp",
     "type": "lamp",
     "controller": "service.controller.hue",
-    "address": "ip-address",
     "room": {
       "id": "bedroom",
       "name": "Cedric's Bedroom"
@@ -58,7 +56,6 @@ Availiable on port `4000` by default
 - `"type":string` the type of device e.g. lamp
 - `"room_id":string` the globally unique ID of the room
 - `"controller":string` the name of the device's controller
-- `"address":string` the device's ip address
 
 If the ID already exists, an error will be thrown.
 
@@ -99,7 +96,6 @@ Returns the new device if successful.
   "name": "My Device",
   "type": "switch",
   "controller": "service.controller.plug",
-  "address": "ip-address",
   "room": {
     "id": "bedroom",
     "name": "Cedric's Bedroom"
@@ -138,8 +134,7 @@ Returns the new device if successful.
         "id": "ceiling-lamp",
         "name": "Lamp",
         "type": "lamp",
-        "controller": "service.controller.hue",
-        "address": "ip-address"
+        "controller": "service.controller.hue"
       }
     ]
   },
@@ -151,8 +146,7 @@ Returns the new device if successful.
         "id": "tv2",
         "name": "TV",
         "type": "tv",
-        "controller": "controller-2",
-        "address": "ip-address"
+        "controller": "controller-2"
       }
     ]
   }
@@ -181,7 +175,8 @@ Returns the new room is created successfully.
 ```json
 {
   "id": "bedroom",
-  "name": "Cedric's Bedroom"
+  "name": "Cedric's Bedroom",
+  "devices": null
 }
 ```
 
@@ -204,8 +199,7 @@ Returns the new room is created successfully.
       "id": "id1",
       "name": "Device 1",
       "type": "switch",
-      "controller": "controller-1",
-      "address": "ip-address"
+      "controller": "controller-1"
     }
   ]
 }
