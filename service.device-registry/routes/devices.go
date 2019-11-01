@@ -23,7 +23,9 @@ type Device struct {
 
 // AllDevices Lists all devices
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id")
+	params := r.URL.Query()
+
+	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND ($1 IS '' OR d.controller=$1)", params.Get("controller"))
 
 	if err != nil {
 		panic(err)
@@ -103,7 +105,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	var device Device
-	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id WHERE d.id=?", r.Form["id"][0]).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=?", r.Form["id"][0]).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusCreated)
