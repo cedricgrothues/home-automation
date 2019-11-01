@@ -2,6 +2,8 @@
 
 Distributed home automation system largely written in Go. Mostly a learning opportunity rather than a production-ready system. 
 
+`4000`: service.device-registry
+
 ## API Specification
 
 All responses will be JSON.
