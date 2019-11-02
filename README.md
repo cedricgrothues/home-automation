@@ -1,6 +1,6 @@
 # Home Automation
 
-Distributed home automation system largely written in Go. Mostly a learning opportunity rather than a production-ready system. 
+Distributed home automation system largely written in Go. Mostly a learning opportunity rather than a production-ready system. Inspired by [Jake Wright](www.github.com/jakewright)'s home-automation youtube series.
 
 `4000`: service.device-registry
 
