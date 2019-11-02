@@ -121,9 +121,11 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // GetDevice Gets a specific device
 func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	params := r.URL.Query()
+
 	var device Device
 
-	err := Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id WHERE d.id=?", p[0].Value).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
+	err := Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND ($2 IS '' OR d.controller=$2)", p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Room.ID, &device.Room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
