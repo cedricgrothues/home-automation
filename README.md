@@ -1,23 +1,23 @@
 # Home Automation
 
-Distributed home automation system largely written in Go. Mostly a learning opportunity rather than a production-ready system. Inspired by [Jake Wright](https://github.com/jakewright)'s home-automation youtube series.
+Home Automation is a distributed smart home system largely written in Go. 
+It's mostly meant as a learning opportunity rather than a production-ready system.
 
-`4000`: service.device-registry
+## Usage
 
-## API Specification
+All responses will be JSON. Individual service's READMEs will detail the expected JSON value.
 
-All responses will be JSON.
+### Config Service
+The config service reads and distributes configuration information from ./data/config.yaml.
+Default config.yaml structure:
+```yaml
+development: Yes # Production or development environment?
 
-Individual service's READMEs will detail the expected JSON value.
-
-## Errors
-
-An error will be indicated by a non-2xx status code. The response will include a message.
-
-```json
-{
-  "message": "Description of what went wrong"
-}
+services:
+  service.example:
+    package: service.example
+    name: Example Service
+    port: 80
 ```
 
 ### Controllers
@@ -57,3 +57,24 @@ Controllers must implement a standardised interface for fetching and updating de
   }
 }
 ```
+
+### Errors
+
+An error will be indicated by a non-2xx status code. The response will include a message.
+
+```json
+{
+  "message": "Description of what went wrong"
+}
+```
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+Please make sure to update tests as appropriate.
+
+## Credits
+This project is based on [Jake Wright](https://github.com/jakewright)'s idea of a home-automation system, his youtube series about this and his home-automation repo.
+
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
