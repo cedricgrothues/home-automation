@@ -15,7 +15,7 @@ type Device struct {
 	Name       string `json:"name"`
 	Type       string `json:"type"`
 	Controller string `json:"controller"`
-	Room       struct {
+	Room       *struct {
 		ID   string `json:"id"`
 		Name string `json:"name"`
 	} `json:"room,omitempty"`
