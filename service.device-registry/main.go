@@ -21,12 +21,15 @@ func main() {
 
 	defer database.Close()
 
-	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL, controller TEXT NOT NULL, room_id TEXT NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
+	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL, controller TEXT NOT NULL, address TEXT NOT NULL, room_id TEXT NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
 	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id TEXT PRIMARY KEY, name TEXT NOT NULL, FOREIGN KEY (id) REFERENCES devices (room_id) ON UPDATE CASCADE ON DELETE SET NULL);")
 
 	routes.Database = database
 
 	router := httprouter.New()
+	router.NotFound = http.HandlerFunc(errors.NotFound)
+	router.MethodNotAllowed = http.HandlerFunc(errors.NotAllowed)
+	router.PanicHandler = errors.PanicHandler
 
 	router.GET("/devices", routes.AllDevices)
 	router.POST("/devices", routes.AddDevice)

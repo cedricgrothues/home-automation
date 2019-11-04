@@ -10,7 +10,6 @@ import (
 
 func main() {
 	router := httprouter.New()
-	router.HandleMethodNotAllowed = true
 	router.NotFound = http.HandlerFunc(errors.NotFound)
 	router.MethodNotAllowed = http.HandlerFunc(errors.NotAllowed)
 	router.PanicHandler = errors.PanicHandler
@@ -18,5 +17,5 @@ func main() {
 	router.GET("/devices/:id", routes.GetState)
 	router.PATCH("/devices/:id", routes.PatchState)
 
-	errors.Log("service.device-registry", "Failed to start with error:", http.ListenAndServe(":4001", router))
+	errors.Log("service.device-registry", "Failed to start with error:", http.ListenAndServe(":4002", router))
 }

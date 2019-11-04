@@ -1,0 +1,4 @@
+github.com/cedricgrothues/home-automation v0.0.0-20191102221442-c9c8aa4ef3e2 h1:6m+I9wOx9DNSZWXXRICjxXxE3YgOFtZIDyMrMgFy5RU=
+github.com/cedricgrothues/home-automation v0.0.0-20191102221442-c9c8aa4ef3e2/go.mod h1:A+EgZ330D18wdweeu1kzEriWnhjL4fdT4DsgmzF1dXc=
+github.com/julienschmidt/httprouter v1.3.0 h1:U0609e9tgbseu3rBINet9P48AI/D3oJs4dN7jwJOQ1U=
+github.com/julienschmidt/httprouter v1.3.0/go.mod h1:JR6WtHb+2LUe8TCKY3cZOxFyyO8IZAc4RVcycCCAKdM=

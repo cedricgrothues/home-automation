@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"regexp"
 
+	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -15,6 +16,7 @@ type Device struct {
 	Name       string `json:"name"`
 	Type       string `json:"type"`
 	Controller string `json:"controller"`
+	Address    string `json:"address"`
 	Room       *Room  `json:"room,omitempty"`
 }
 
@@ -22,7 +24,7 @@ type Device struct {
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	params := r.URL.Query()
 
-	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND ($1 IS '' OR d.controller=$1)", params.Get("controller"))
+	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND ($1 IS '' OR d.controller=$1)", params.Get("controller"))
 
 	if err != nil {
 		panic(err)
@@ -34,7 +36,7 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		var device Device
 		room := &Room{}
 
-		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &room.ID, &room.Name)
+		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
 
 		device.Room = room
 
@@ -63,10 +65,8 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	r.ParseForm()
 
-	if !(len(r.Form["id"]) > 0 && len(r.Form["name"]) > 0 && len(r.Form["type"]) > 0 && len(r.Form["controller"]) > 0 && len(r.Form["room_id"]) > 0) {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write([]byte(`{"message":"Missing parameter(s), refer to the documentation for more information."}`))
+	if !(len(r.Form["id"]) > 0 && len(r.Form["name"]) > 0 && len(r.Form["type"]) > 0 && len(r.Form["controller"]) > 0 && len(r.Form["room_id"]) > 0 && len(r.Form["address"]) > 0) {
+		errors.MissingParams(w)
 		return
 	}
 
@@ -74,6 +74,13 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(`{"message":"ID contains invalid characters, refer to the documentation for more information."}`))
+		return
+	}
+
+	if match, _ := regexp.MatchString(`^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$`, r.Form["address"][0]); !match {
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"message":"Invalid IPv4 address format, refer to the documentation for more information."}`))
 		return
 	}
 
@@ -91,14 +98,14 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, room_id) values(?,?,?,?,?)")
+	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, address, room_id) values(?,?,?,?,?,?)")
 	defer stmt.Close()
 
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = stmt.Exec(r.Form["id"][0], r.Form["name"][0], r.Form["type"][0], r.Form["controller"][0], r.Form["room_id"][0])
+	_, err = stmt.Exec(r.Form["id"][0], r.Form["name"][0], r.Form["type"][0], r.Form["controller"][0], r.Form["address"][0], r.Form["room_id"][0])
 
 	if err != nil {
 		panic("A problem occured while inserting object into database: " + err.Error())
@@ -107,7 +114,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var device Device
 	room := &Room{}
 
-	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=?", r.Form["id"][0]).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &room.ID, &room.Name)
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=?", r.Form["id"][0]).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
 
 	device.Room = room
 
@@ -130,7 +137,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var device Device
 	room := &Room{}
 
-	err := Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND ($2 IS '' OR d.controller=$2)", p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &room.ID, &room.Name)
+	err := Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND ($2 IS '' OR d.controller=$2)", p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {

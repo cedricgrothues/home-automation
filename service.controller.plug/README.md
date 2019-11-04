@@ -1,6 +1,6 @@
 # service.controller.plug
 
-Availiable on port `4001`
+Availiable on port `4002`
 
 ## Usage
 

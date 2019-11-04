@@ -13,6 +13,14 @@ func Handle(e error) {
 	}
 }
 
+// MissingParams handles missing parameter errors
+func MissingParams(w http.ResponseWriter) {
+	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(http.StatusBadRequest)
+	w.Write([]byte(`{"message":"Missing parameter(s), refer to the documentation for more information."}`))
+	return
+}
+
 // Log service, message and error and exit with exit code 1
 func Log(s string, m string, e error) {
 	fmt.Printf("\n\x1b[31m[%v]\x1b[0m %s %v", s, m, e)
