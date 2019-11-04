@@ -2,29 +2,13 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"regexp"
-	"strconv"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/service.controller.plug/helper"
+	"github.com/cedricgrothues/home-automation/service.controller.plug/dao"
 	"github.com/julienschmidt/httprouter"
 )
-
-// Device : instance of a device
-type Device struct {
-	ID         string `json:"id"`
-	Name       string `json:"name"`
-	Type       string `json:"type"`
-	Controller string `json:"controller"`
-	Address    string `json:"address"`
-	Room       struct {
-		ID      string   `json:"id"`
-		Name    string   `json:"name"`
-		Devices []Device `json:"devices,omitempty"`
-	} `json:"room,omitempty"`
-}
 
 // Response : a typical response struct
 type Response struct {
@@ -38,7 +22,8 @@ type Response struct {
 
 // GetState combines service.device-registry data, with device state
 func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	resp, err := http.Get("http://localhost:4000/devices/" + p[0].Value + "?controller=service.controller.plug")
+
+	device, err := dao.GetDeviceInfo(p[0].Value)
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -51,37 +36,13 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	defer resp.Body.Close()
-
-	var result Device
-
-	err = json.NewDecoder(resp.Body).Decode(&result)
-
-	if err != nil {
-		panic(err)
-	}
-
-	if resp.StatusCode != 200 {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(resp.StatusCode)
-
-		res, err := json.Marshal(result)
-
-		if err != nil {
-			panic(err)
-		}
-
-		w.Write([]byte(res))
-		return
-	}
-
 	response := Response{
-		ID:      result.ID,
-		Name:    result.Name,
-		Address: result.Address,
+		ID:      device.ID,
+		Name:    device.Name,
+		Address: device.Address,
 	}
 
-	resp, err = http.Get("http://" + response.Address + "/cm?cmnd=Power")
+	power, err := dao.GetState(response.Address)
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -92,14 +53,6 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			w.Write([]byte(`{"message":"Unable to contact the device."}`))
 			return
 		}
-	}
-
-	defer resp.Body.Close()
-
-	power, err := helper.PowerBool(resp.Body)
-
-	if err != nil {
-		panic(err)
 	}
 
 	response.State.Power = power
@@ -126,7 +79,7 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	resp, err := http.Get("http://localhost:4000/devices/" + p[0].Value + "?controller=service.controller.plug")
+	device, err := dao.GetDeviceInfo(p[0].Value)
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -139,37 +92,11 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	defer resp.Body.Close()
-
-	var result Device
-
-	err = json.NewDecoder(resp.Body).Decode(&result)
-
-	if err != nil {
-		panic(err)
-	}
-
-	if resp.StatusCode != 200 {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(resp.StatusCode)
-
-		res, err := json.Marshal(result)
-
-		if err != nil {
-			panic(err)
-		}
-
-		w.Write([]byte(res))
-		return
-	}
-
 	response := Response{
-		ID:      result.ID,
-		Name:    result.Name,
-		Address: result.Address,
+		ID:      device.ID,
+		Name:    device.Name,
+		Address: device.Address,
 	}
-
-	power, err := strconv.ParseBool(r.Form["power"][0])
 
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -178,15 +105,7 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	var query string
-
-	if power == true {
-		query = "cmnd=Power%201"
-	} else if power == false {
-		query = "cmnd=Power%200"
-	}
-
-	resp, err = http.Get("http://" + response.Address + "/cm?" + query)
+	power, err := dao.SetState(response.Address, r.Form["power"][0])
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -197,30 +116,6 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			w.Write([]byte(`{"message":"Unable to contact the device."}`))
 			return
 		}
-	}
-
-	defer resp.Body.Close()
-
-	if resp.StatusCode != 200 {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(resp.StatusCode)
-
-		res, err := json.Marshal(result)
-
-		if err != nil {
-			panic(err)
-		}
-
-		w.Write([]byte(res))
-		return
-	}
-
-	fmt.Print("http://" + response.Address + "/cm?" + query)
-
-	power, err = helper.PowerBool(resp.Body)
-
-	if err != nil {
-		panic(err)
 	}
 
 	response.State.Power = power
