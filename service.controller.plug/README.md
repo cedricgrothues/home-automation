@@ -19,8 +19,7 @@ Availiable on port `4002`
 {
   "identifier": "bedroom-plug",
   "name": "Bedroom Plug",
-  "type": "plug",
-  "controller": "service.controller.plug",
+  "address": "123.456.7.890",
   "state": {
     "power": true
   }
@@ -46,8 +45,7 @@ Availiable on port `4002`
 {
   "identifier": "bedroom-plug",
   "name": "Bedroom Plug",
-  "type": "plug",
-  "controller": "service.controller.plug",
+  "address": "123.456.7.890",
   "state": {
     "power": true
   }
