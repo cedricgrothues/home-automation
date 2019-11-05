@@ -24,7 +24,7 @@ services:
 
 Controllers must implement a standardised interface for fetching and updating device state.
 
-`GET service.controller.x/device/<device-identifier>`
+`GET service.controller.<controller-identifier>/device/<device-identifier>`
 
 - 200: success
 
