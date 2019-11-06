@@ -3,6 +3,7 @@ package routes
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"regexp"
 
@@ -93,7 +94,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message":"Room with ID '` + r.Form["room_id"][0] + `' not found."}`))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, r.Form["room_id"][0])))
 			return
 		}
 	}
@@ -145,7 +146,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message":"Device with ID '` + p[0].Value + `' not found."}`))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Device with ID '%s' not found."}`, p[0].Value)))
 			return
 		}
 	}
@@ -176,7 +177,7 @@ func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message":"Device with ID '` + p[0].Value + `' not found."}`))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Device with ID '%s' not found."}`, p[0].Value)))
 			return
 		}
 	}

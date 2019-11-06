@@ -82,6 +82,7 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	device, err := dao.GetDeviceInfo(p[0].Value)
 
 	if err != nil {
+		// undesirable solution, update in the near future
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
 			panic(err)
 		} else {

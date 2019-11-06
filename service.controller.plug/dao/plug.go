@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/service.controller.plug/helper"
@@ -8,7 +9,8 @@ import (
 
 // GetState returns the requested devices state and an optional error
 func GetState(address string) (bool, error) {
-	resp, err := http.Get("http://" + address + "/cm?cmnd=Power")
+
+	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power`, address))
 
 	if err != nil {
 		return false, err
@@ -27,15 +29,15 @@ func GetState(address string) (bool, error) {
 
 // SetState updates the requested devices state and returns the power state and an optional error
 func SetState(address string, state string) (bool, error) {
-	var query string
+	var cmnd string
 
 	if state == "true" {
-		query = "cmnd=Power%201"
+		cmnd = "Power%201"
 	} else if state == "false" {
-		query = "cmnd=Power%200"
+		cmnd = "Power%200"
 	}
 
-	resp, err := http.Get("http://" + address + "/cm?" + query)
+	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=%s`, address, cmnd))
 
 	if err != nil {
 		return false, err

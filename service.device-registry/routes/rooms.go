@@ -3,6 +3,7 @@ package routes
 import (
 	"database/sql"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"regexp"
 
@@ -124,7 +125,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message":"Room with ID '` + p[0].Value + `' not found."}`))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, p[0].Value)))
 			return
 		}
 	}
@@ -168,7 +169,7 @@ func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message":"Room with ID '` + p[0].Value + `' not found."}`))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, p[0].Value)))
 			return
 		}
 	}

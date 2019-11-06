@@ -2,6 +2,7 @@ package dao
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 )
 
@@ -21,7 +22,7 @@ type Device struct {
 
 // GetDeviceInfo returns the requested devices info and an optional error
 func GetDeviceInfo(id string) (*Device, error) {
-	resp, err := http.Get("http://localhost:4000/devices/" + id + "?controller=service.controller.plug")
+	resp, err := http.Get(fmt.Sprintf(`http://localhost:4000/devices/%s?controller=%s`, id, "service.controller.plug"))
 
 	if err != nil {
 		return nil, err

@@ -8,6 +8,11 @@ import (
 
 // Sonos :
 type Sonos struct {
+	Address string
+}
+
+// Service :
+type Service struct {
 	Name    string
 	Address string
 	Port    int
@@ -15,11 +20,13 @@ type Sonos struct {
 
 // Play : Start the media playback
 func (s *Sonos) Play() {
+	service := Service{"AVTransport", s.Address, 1400}
+
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Speed"] = 1
 
-	err := s.request("Play", options)
+	err := service.request("Play", options)
 
 	if err != nil {
 		panic(err)
@@ -33,17 +40,19 @@ func (s *Sonos) Pause() {
 
 // Stop the media playback
 func (s *Sonos) Stop() {
+	service := Service{"AVTransport", s.Address, 1400}
+
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 
-	err := s.request("Stop", options)
+	err := service.request("Stop", options)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (s *Sonos) request(a string, o map[string]interface{}) error {
+func (s *Service) request(a string, o map[string]interface{}) error {
 	action := fmt.Sprintf(`"urn:schemas-upnp-org:service:%s:1#%s"`, s.Name, a)
 	body := `<u:` + a + ` xmlns:u="urn:schemas-upnp-org:service:` + s.Name + `:1">`
 
