@@ -3,6 +3,7 @@ package dao
 import (
 	"bytes"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 )
 
@@ -16,40 +17,7 @@ type Service struct {
 	Name    string
 	Address string
 	Port    int
-}
-
-// Play : Start the media playback
-func (s *Sonos) Play() {
-	service := Service{"AVTransport", s.Address, 1400}
-
-	options := make(map[string]interface{})
-	options["InstanceID"] = 0
-	options["Speed"] = 1
-
-	err := service.request("Play", options)
-
-	if err != nil {
-		panic(err)
-	}
-}
-
-// Pause the media playback
-func (s *Sonos) Pause() {
-
-}
-
-// Stop the media playback
-func (s *Sonos) Stop() {
-	service := Service{"AVTransport", s.Address, 1400}
-
-	options := make(map[string]interface{})
-	options["InstanceID"] = 0
-
-	err := service.request("Stop", options)
-
-	if err != nil {
-		panic(err)
-	}
+	Control string
 }
 
 func (s *Service) request(a string, o map[string]interface{}) error {
@@ -57,14 +25,15 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 	body := `<u:` + a + ` xmlns:u="urn:schemas-upnp-org:service:` + s.Name + `:1">`
 
 	for k, v := range o {
+		fmt.Println(k, v)
 		body += fmt.Sprintf(`<%s>%v</%s>`, k, v, k)
 	}
 
 	body += fmt.Sprintf(`</u:%s>`, a)
 
-	buffer := bytes.NewBufferString(body)
+	buffer := bytes.NewBufferString(fmt.Sprintf(`<?xml version="1.0" ?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>%s</s:Body></s:Envelope>`, body))
 
-	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d/MediaRenderer/AVTransport/Control`, s.Address, s.Port), buffer)
+	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, s.Address, s.Port, s.Control), buffer)
 
 	if err != nil {
 		return err
@@ -82,7 +51,9 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 
 	defer res.Body.Close()
 
-	fmt.Println(res.Body)
+	bodyBytes, err := ioutil.ReadAll(res.Body)
+
+	fmt.Println(string(bodyBytes))
 
 	return nil
 }
