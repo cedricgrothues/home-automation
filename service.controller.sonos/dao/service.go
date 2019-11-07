@@ -2,9 +2,11 @@ package dao
 
 import (
 	"bytes"
+	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"net/url"
 )
 
 // Sonos :
@@ -18,6 +20,12 @@ type Service struct {
 	Address string
 	Port    int
 	Control string
+}
+
+type Envelope struct {
+	TrackDuration string `xml:"Body>GetPositionInfoResponse>TrackDuration"`
+	TrackMetaData string `xml:"Body>GetPositionInfoResponse>TrackMetaData"`
+	TrackURI      string `xml:"Body>GetPositionInfoResponse>TrackURI"`
 }
 
 func (s *Service) request(a string, o map[string]interface{}) error {
@@ -51,9 +59,18 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 
 	defer res.Body.Close()
 
-	bodyBytes, err := ioutil.ReadAll(res.Body)
+	bytes, err := ioutil.ReadAll(res.Body)
 
-	fmt.Println(string(bodyBytes))
+	if err != nil {
+		return err
+	}
+
+	var XML Envelope
+	xml.Unmarshal(bytes, &XML)
+
+	fmt.Println(XML.TrackMetaData)
+	str, err := url.QueryUnescape(string(bytes))
+	fmt.Println("\n\n\n\n" + str)
 
 	return nil
 }
