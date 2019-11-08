@@ -11,7 +11,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// Device : instance of a device
+// Device defines instance of a device
 type Device struct {
 	ID         string `json:"id"`
 	Name       string `json:"name"`
@@ -21,7 +21,7 @@ type Device struct {
 	Room       *Room  `json:"room,omitempty"`
 }
 
-// AllDevices Lists all devices
+// AllDevices handles GET requests to /devices and returns a JSON structure describing all devices in the database
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	params := r.URL.Query()
 
@@ -62,7 +62,7 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// AddDevice Adds a device
+// AddDevice handles POST requests to /devices and returns a JSON structure describing the added device if it's successfully been inserted into the database
 func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	r.ParseForm()
 
@@ -131,7 +131,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// GetDevice Gets a specific device
+// GetDevice handles GET requests to /devices/<id> and returns a JSON structure describing the requested device if it was found, else it returns a `404 NOT FOUND` error
 func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	params := r.URL.Query()
 
@@ -165,7 +165,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// DeleteDevice deletes a specified device
+// DeleteDevice handles DELETE requests to /devices/<id> and returns a `204 NO CONTENT` response if it was removed successfully, else it returns a `404 NOT FOUND` error
 func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var id string
 

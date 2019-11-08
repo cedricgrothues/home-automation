@@ -11,17 +11,17 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// Database : shared DB instance, initalized in package main
+// Database defines a new shared sqlite3 shared instance, that is defined in main package's main() method
 var Database *sql.DB
 
-// Room : instance of a room
+// Room has an id, name and devices
 type Room struct {
 	ID      string   `json:"id"`
 	Name    string   `json:"name"`
 	Devices []Device `json:"devices,omitempty"`
 }
 
-// AllRooms handles GET /rooms and returns a 200 status code with all rooms and their according devices
+// AllRooms handles all GET /rooms and handles them accordingly
 func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	var rooms []Room
@@ -69,7 +69,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// AddRoom Adds a device
+// AddRoom trys to inserts a new room to the database instance defined in the Database variable
 func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	r.ParseForm()
 
@@ -79,7 +79,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	// match id agains regex pattern to ensure it´s valid
+	// Match the id agains regex pattern to ensure it´s valid
 	if match, _ := regexp.MatchString(`^\w+$`, r.Form["id"][0]); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
@@ -87,6 +87,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
+	// Insert all the data in the database
 	_, err := Database.Exec("INSERT INTO rooms(id, name) values(?,?)", r.Form["id"][0], r.Form["name"][0])
 
 	if err != nil {
@@ -113,7 +114,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// GetRoom Gets a specific device
+// GetRoom handles all GET requests to /rooms/<id> and either returns a json structure describing the room or a `Not Found` error, if the room can't be found in the database
 func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var room Room
 
@@ -157,7 +158,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// DeleteRoom deletes a specified room
+// DeleteRoom handles all DELETE requests to /rooms/<id> and return either a `404 NOT FOUND` if the room does not exist or a 204 response if it's been deleted successfully
 func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var id string
 
