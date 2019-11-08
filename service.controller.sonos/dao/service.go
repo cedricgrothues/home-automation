@@ -16,12 +16,14 @@ type Sonos struct {
 
 // Service :
 type Service struct {
-	Name    string
-	Address string
-	Port    int
-	Control string
+	Name       string
+	Address    string
+	Port       int
+	ControlURL string
+	EventURL   string
 }
 
+// Envelope : A response Envelope
 type Envelope struct {
 	TrackDuration string `xml:"Body>GetPositionInfoResponse>TrackDuration"`
 	TrackMetaData string `xml:"Body>GetPositionInfoResponse>TrackMetaData"`
@@ -41,7 +43,7 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 
 	buffer := bytes.NewBufferString(fmt.Sprintf(`<?xml version="1.0" ?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>%s</s:Body></s:Envelope>`, body))
 
-	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, s.Address, s.Port, s.Control), buffer)
+	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, s.Address, s.Port, s.ControlURL), buffer)
 
 	if err != nil {
 		return err

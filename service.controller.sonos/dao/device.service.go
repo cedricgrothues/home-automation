@@ -2,7 +2,7 @@ package dao
 
 // SetLEDState does what it says
 func (s *Sonos) SetLEDState(state string) {
-	service := Service{"DeviceProperties", s.Address, 1400, "/DeviceProperties/Control"}
+	service := Service{"DeviceProperties", s.Address, 1400, "/DeviceProperties/Control", "/DeviceProperties/Event"}
 
 	options := make(map[string]interface{})
 	options["DesiredLEDState"] = state
@@ -14,9 +14,9 @@ func (s *Sonos) SetLEDState(state string) {
 	}
 }
 
-// GetLEDState does what it says
+// GetLEDState does what it says GetInvisible
 func (s *Sonos) GetLEDState() {
-	service := Service{"DeviceProperties", s.Address, 1400, "/DeviceProperties/Control"}
+	service := Service{"DeviceProperties", s.Address, 1400, "/DeviceProperties/Control", "/DeviceProperties/Control"}
 
 	options := make(map[string]interface{})
 

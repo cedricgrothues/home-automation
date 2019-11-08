@@ -4,7 +4,7 @@ import "github.com/cedricgrothues/home-automation/service.controller.sonos/helpe
 
 // GetVolume gets the current volume
 func (s *Sonos) GetVolume() {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control"}
+	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -19,7 +19,7 @@ func (s *Sonos) GetVolume() {
 
 // SetVolume sets the volume
 func (s *Sonos) SetVolume(desired int) {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control"}
+	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -35,7 +35,7 @@ func (s *Sonos) SetVolume(desired int) {
 
 // SetRelativeVolume adjusts the volume
 func (s *Sonos) SetRelativeVolume(adjustment int) {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control"}
+	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -51,7 +51,7 @@ func (s *Sonos) SetRelativeVolume(adjustment int) {
 
 // GetMute gets the current mute value
 func (s *Sonos) GetMute() {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control"}
+	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -66,7 +66,7 @@ func (s *Sonos) GetMute() {
 
 // SetMute sets the mute
 func (s *Sonos) SetMute(mute bool) {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control"}
+	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0

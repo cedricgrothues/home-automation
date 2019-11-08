@@ -2,7 +2,7 @@ package dao
 
 // Play : Start the media playback
 func (s *Sonos) Play() {
-	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control"}
+	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control", "/MediaRenderer/AVTransport/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -17,7 +17,7 @@ func (s *Sonos) Play() {
 
 // Pause the media playback
 func (s *Sonos) Pause() {
-	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control"}
+	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control", "/MediaRenderer/AVTransport/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -31,7 +31,7 @@ func (s *Sonos) Pause() {
 
 // Stop the media playback
 func (s *Sonos) Stop() {
-	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control"}
+	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control", "/MediaRenderer/AVTransport/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -45,7 +45,7 @@ func (s *Sonos) Stop() {
 
 // Next track
 func (s *Sonos) Next() {
-	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control"}
+	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control", "/MediaRenderer/AVTransport/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -59,7 +59,7 @@ func (s *Sonos) Next() {
 
 // Previous track
 func (s *Sonos) Previous() {
-	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control"}
+	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control", "/MediaRenderer/AVTransport/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
@@ -73,7 +73,7 @@ func (s *Sonos) Previous() {
 
 // GetPositionInfo does that
 func (s *Sonos) GetPositionInfo() {
-	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control"}
+	service := Service{"AVTransport", s.Address, 1400, "/MediaRenderer/AVTransport/Control", "/MediaRenderer/AVTransport/Event"}
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0

@@ -2,7 +2,7 @@ package dao
 
 // ListAvailableServices does what it says
 func (s *Sonos) ListAvailableServices() {
-	service := Service{"MusicServices", s.Address, 1400, "/MusicServices/Control"}
+	service := Service{"MusicServices", s.Address, 1400, "/MusicServices/Control", "/MusicServices/Event"}
 
 	options := make(map[string]interface{})
 
@@ -15,7 +15,7 @@ func (s *Sonos) ListAvailableServices() {
 
 // GetSessionID does what it says
 func (s *Sonos) GetSessionID() {
-	service := Service{"MusicServices", s.Address, 1400, "/MusicServices/Control"}
+	service := Service{"MusicServices", s.Address, 1400, "/MusicServices/Control", "/MusicServices/Event"}
 
 	options := make(map[string]interface{})
 
