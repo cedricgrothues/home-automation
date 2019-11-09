@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/service.controller.plug/routes"
+	"github.com/cedricgrothues/home-automation/service.controller.sonoff/routes"
 	"github.com/julienschmidt/httprouter"
 )
 

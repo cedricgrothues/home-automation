@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/cedricgrothues/home-automation/service.controller.plug/helper"
+	"github.com/cedricgrothues/home-automation/service.controller.sonoff/helper"
 )
 
 // GetState returns the requested devices state and an optional error
@@ -32,12 +32,12 @@ func SetState(address string, state string) (bool, error) {
 	var cmnd string
 
 	if state == "true" {
-		cmnd = "Power%201"
+		cmnd = "1"
 	} else if state == "false" {
-		cmnd = "Power%200"
+		cmnd = "0"
 	}
 
-	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=%s`, address, cmnd))
+	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power%%20%s`, address, cmnd))
 
 	if err != nil {
 		return false, err

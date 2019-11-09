@@ -6,7 +6,7 @@ import (
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/service.controller.plug/dao"
+	"github.com/cedricgrothues/home-automation/service.controller.sonoff/dao"
 	"github.com/julienschmidt/httprouter"
 )
 

@@ -22,7 +22,7 @@ type Device struct {
 
 // GetDeviceInfo returns the requested devices info and an optional error
 func GetDeviceInfo(id string) (*Device, error) {
-	resp, err := http.Get(fmt.Sprintf(`http://localhost:4000/devices/%s?controller=%s`, id, "service.controller.plug"))
+	resp, err := http.Get(fmt.Sprintf(`http://localhost:4000/devices/%s?controller=%s`, id, "service.controller.sonoff"))
 
 	if err != nil {
 		return nil, err
