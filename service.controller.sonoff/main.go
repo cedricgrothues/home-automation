@@ -17,5 +17,5 @@ func main() {
 	router.GET("/devices/:id", routes.GetState)
 	router.PATCH("/devices/:id", routes.PatchState)
 
-	errors.Log("service.device-registry", "Failed to start with error:", http.ListenAndServe(":4002", router))
+	errors.Log("service.controller.sonoff", "Failed to start with error:", http.ListenAndServe(":4002", router))
 }
