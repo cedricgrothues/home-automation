@@ -1,0 +1,15 @@
+version: '3'
+
+services:
+  service.device-registry:
+    build:
+      dockerfile: service.device-registry/dev.dockerfile
+      context: .
+    image: home-automation-device-registry
+    volumes:
+      - .:/go/src/github.com/cedricgrothues/home-automation
+      - /go/src/github.com/cedricgrothues/home-automation/vendor
+    ports:
+      - 7001:80
+    env_file:
+      - ./.env
