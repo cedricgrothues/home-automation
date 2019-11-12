@@ -8,23 +8,17 @@ import (
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
+	"github.com/cedricgrothues/home-automation/service.device-registry/models"
 	"github.com/julienschmidt/httprouter"
 )
 
 // Database defines a new shared sqlite3 shared instance, that is defined in main package's main() method
 var Database *sql.DB
 
-// Room has an id, name and devices
-type Room struct {
-	ID      string   `json:"id"`
-	Name    string   `json:"name"`
-	Devices []Device `json:"devices,omitempty"`
-}
-
 // AllRooms handles all GET /rooms and handles them accordingly
 func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	var rooms []Room
+	var rooms []models.Room
 
 	rows, err := Database.Query(`SELECT id, name FROM rooms`)
 
@@ -35,7 +29,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	for rows.Next() {
-		var room Room
+		var room models.Room
 
 		rows.Scan(&room.ID, &room.Name)
 
@@ -48,7 +42,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 
 		for deviceRows.Next() {
-			var d Device
+			var d models.Device
 
 			deviceRows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller, &d.Address)
 			room.Devices = append(room.Devices, d)
@@ -71,16 +65,18 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // AddRoom trys to inserts a new room to the database instance defined in the Database variable
 func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	r.ParseForm()
+	params := models.Room{}
+
+	err := json.NewDecoder(r.Body).Decode(&params)
 
 	// Check if all params are present, if not abort with 400 error
-	if !(len(r.Form["id"]) > 0 && len(r.Form["name"]) > 0) {
+	if !(params.ID != "" && params.Name != "") {
 		errors.MissingParams(w)
 		return
 	}
 
 	// Match the id agains regex pattern to ensure it´s valid
-	if match, _ := regexp.MatchString(`^\w+$`, r.Form["id"][0]); !match {
+	if match, _ := regexp.MatchString(`^\w+$`, params.ID); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(`{"message":"ID contains invalid characters, refer to the documentation for more information."}`))
@@ -88,15 +84,15 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// Insert all the data in the database
-	_, err := Database.Exec("INSERT INTO rooms(id, name) values(?,?)", r.Form["id"][0], r.Form["name"][0])
+	_, err = Database.Exec("INSERT INTO rooms(id, name) values(?,?)", params.ID, params.Name)
 
 	if err != nil {
 		panic(err)
 	}
 
-	var room Room
+	var room models.Room
 
-	err = Database.QueryRow("SELECT id, name FROM rooms WHERE id=?", r.Form["id"][0]).Scan(&room.ID, &room.Name)
+	err = Database.QueryRow("SELECT id, name FROM rooms WHERE id=?", params.ID).Scan(&room.ID, &room.Name)
 
 	if err != nil {
 		panic(err)
@@ -116,7 +112,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // GetRoom handles all GET requests to /rooms/<id> and either returns a json structure describing the room or a `Not Found` error, if the room can't be found in the database
 func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	var room Room
+	var room models.Room
 
 	err := Database.QueryRow(`SELECT id, name FROM rooms WHERE id=?`, p[0].Value).Scan(&room.ID, &room.Name)
 
@@ -140,7 +136,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	for rows.Next() {
-		var d Device
+		var d models.Device
 
 		rows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller, &d.Address)
 		room.Devices = append(room.Devices, d)

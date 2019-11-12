@@ -46,5 +46,5 @@ func PanicHandler(w http.ResponseWriter, r *http.Request, p interface{}) {
 	fmt.Print(p)
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusInternalServerError)
-	w.Write([]byte(`{"message":"` + p.(error).Error() + `"}`))
+	w.Write([]byte(fmt.Sprintf(`{"message":"%v"}`, p)))
 }
