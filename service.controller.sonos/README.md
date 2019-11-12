@@ -21,17 +21,16 @@ Availiable on port `4003`
   "name": "Sonos on the kitchen counter",
   "address": "123.456.7.890",
   "state": {
-    "status": {
-      "status": "playing",
-      "service": "Apple Music",
-      "song": "song-uid"
-    },
+    "status": "playing",
+    "service": "Apple Music",
     "volume": {
       "type": "int",
       "min": 0,
       "max": 10,
       "value": 3
-    }
+    },
+    "song": "song-uid",
+    "artist": "",
   }
 }
 ```
