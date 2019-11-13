@@ -74,7 +74,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests as appropriate.
 
 ## Credits
-This project is based on [Jake Wright](https://github.com/jakewright)'s idea of a home-automation system, his youtube series about this and his home-automation repo.
+This project is based on [Jake Wright](https://github.com/jakewright)'s idea of a home-automation system, his youtube series and his home-automation repo.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
