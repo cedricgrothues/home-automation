@@ -55,9 +55,9 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // AddDevice handles POST requests to /devices and returns a JSON structure describing the added device if it's successfully been inserted into the database
 func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	params := models.Device{}
+	device := models.Device{}
 
-	err := json.NewDecoder(r.Body).Decode(&params)
+	err := json.NewDecoder(r.Body).Decode(&device)
 
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -66,19 +66,19 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	if !(params.ID != "" && params.Name != "" && params.Type != "" && params.Controller != "" && params.RoomID != "" && params.Address != "") {
+	if !(device.ID != "" && device.Name != "" && device.Type != "" && device.Controller != "" && device.RoomID != "" && device.Address != "") {
 		errors.MissingParams(w)
 		return
 	}
 
-	if match, _ := regexp.MatchString(`^\w+$`, params.ID); !match {
+	if match, _ := regexp.MatchString(`^\w+$`, device.ID); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(`{"message":"ID contains invalid characters, refer to the documentation for more information."}`))
 		return
 	}
 
-	if match, _ := regexp.MatchString(`^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$`, params.Address); !match {
+	if match, _ := regexp.MatchString(`^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$`, device.Address); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(`{"message":"Invalid IPv4 address format, refer to the documentation for more information."}`))
@@ -86,7 +86,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	var id string
-	err = Database.QueryRow("SELECT id FROM rooms WHERE id=?", params.RoomID).Scan(&id)
+	err = Database.QueryRow("SELECT id FROM rooms WHERE id=?", device.RoomID).Scan(&id)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -94,7 +94,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, params.RoomID)))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, device.RoomID)))
 			return
 		}
 	}
@@ -106,18 +106,18 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		panic(err)
 	}
 
-	_, err = stmt.Exec(params.ID, params.Name, params.Type, params.Controller, params.Address, params.RoomID)
+	_, err = stmt.Exec(device.ID, device.Name, device.Type, device.Controller, device.Address, device.RoomID)
 
 	if err != nil {
 		panic("A problem occured while inserting object into database: " + err.Error())
 	}
 
-	var device models.Device
 	room := &models.Room{}
 
-	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=?", params.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=?", device.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Room.ID, &device.Room.Name)
 
 	device.Room = room
+	device.RoomID = ""
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusCreated)
