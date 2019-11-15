@@ -32,7 +32,7 @@ jobs:
         golint -set_exit_status ./...
 
   build:
-    name: Build
+    name: Build All
     runs-on: ubuntu-latest
     steps:
 
@@ -47,10 +47,5 @@ jobs:
     - name: Get dependencies
       run: go get -v -t -d ./...
 
-    - name: Build Registry
-      working-directory: service.device-registry
-      run: go build -v .
-
-    - name: Build Sonoff Controller
-      working-directory: service.device-registry
-      run: go build -v .
+    - name: Build
+      run: go build -v ...
