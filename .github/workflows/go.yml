@@ -1,11 +1,5 @@
 name: Go
-on:
-  push:
-    branches:
-      - master
-    # file paths to consider in the event. Optional; defaults to all.
-    paths:
-      - !'client.app.home/*'
+on: [push]
 
 jobs:
 
