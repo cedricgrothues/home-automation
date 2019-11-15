@@ -71,7 +71,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	if match, _ := regexp.MatchString(`^\w+$`, device.ID); !match {
+	if match, _ := regexp.MatchString(`^[a-z-_]+$`, device.ID); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(`{"message":"ID contains invalid characters, refer to the documentation for more information."}`))

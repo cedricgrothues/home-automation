@@ -76,7 +76,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// Match the id agains regex pattern to ensure it´s valid
-	if match, _ := regexp.MatchString(`^\w+$`, params.ID); !match {
+	if match, _ := regexp.MatchString(`^[a-z-_]+$`, params.ID); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(`{"message":"ID contains invalid characters, refer to the documentation for more information."}`))
