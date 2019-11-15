@@ -1,6 +1,5 @@
 package models
 
-// Device defines instance of a device
 type Device struct {
 	ID         string `json:"id"`
 	Name       string `json:"name"`
