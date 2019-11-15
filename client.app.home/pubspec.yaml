@@ -1,5 +1,5 @@
 name: home
-description: The mobile, web and desktop application communicating with the cedricgrothues/home-automation api 
+description: The mobile, web and desktop application communicating with the cedricgrothues/home-automation api
 
 version: 1.0.0+1
 
@@ -12,8 +12,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-
-  cupertino_icons: ^0.1.2
 
 dev_dependencies:
   flutter_test:
