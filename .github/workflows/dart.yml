@@ -1,9 +1,11 @@
 name: Dart CI
-
 on:
   push:
+    branches:
+      - master
+    # file paths to consider in the event. Optional; defaults to all.
     paths:
-    - 'client.app.home/**'
+      - 'client.app.home/.'
 
 jobs:
   build:
