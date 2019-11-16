@@ -7,8 +7,8 @@ import (
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/service.device-registry/routes"
+	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
-	_ "github.com/mattn/go-sqlite3"
 )
 
 func main() {
