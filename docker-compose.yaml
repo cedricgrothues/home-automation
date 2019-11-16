@@ -1,15 +1,25 @@
 version: '3'
 
 services:
-  service.device-registry:
-    build:
-      dockerfile: service.device-registry/dev.dockerfile
-      context: .
-    image: home-automation-device-registry
-    volumes:
-      - .:/go/src/github.com/cedricgrothues/home-automation
-      - /go/src/github.com/cedricgrothues/home-automation/vendor
+  # service.device-registry:
+  #   build:
+  #     dockerfile: service.device-registry/dev.dockerfile
+  #     context: .
+  #   ports:
+  #     - 4001:4001
+  #   depends_on: 
+  #     - service.device-registry.database
+  #   networks:
+  #     - backend
+
+  service.device-registry.database:
+    image: "postgres"
+    container_name: "service.device-registry.database"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
+      - POSTGRES_DB=service.device-registry.database
     ports:
-      - 7001:80
-    env_file:
-      - ./.env
+      - "54320:5432"
+    volumes:
+      - ./service.device-registry/database:/var/lib/postgresql/data
