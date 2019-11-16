@@ -16,7 +16,7 @@ import (
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	params := r.URL.Query()
 
-	rows, err := Database.Query("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND ($1 IS '' OR d.controller=$1)", params.Get("controller"))
+	rows, err := Database.Query(`SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND (length(CAST($1 AS TEXT)) <= 0 OR d.controller=$1)`, params.Get("controller"))
 
 	if err != nil {
 		panic(err)
@@ -86,7 +86,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	var id string
-	err = Database.QueryRow("SELECT id FROM rooms WHERE id=?", device.RoomID).Scan(&id)
+	err = Database.QueryRow("SELECT id FROM rooms WHERE id=$1", device.RoomID).Scan(&id)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -99,7 +99,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, address, room_id) values(?,?,?,?,?,?)")
+	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, address, room_id) values($1,$2,$3,$4,$5,$6)")
 	defer stmt.Close()
 
 	if err != nil {
@@ -112,11 +112,11 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		panic("A problem occured while inserting object into database: " + err.Error())
 	}
 
-	room := &models.Room{}
+	var room models.Room
 
-	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=?", device.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Room.ID, &device.Room.Name)
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1", device.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
 
-	device.Room = room
+	device.Room = &room
 	device.RoomID = ""
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -138,7 +138,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var device models.Device
 	room := &models.Room{}
 
-	err := Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND ($2 IS '' OR d.controller=$2)", p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
+	err := Database.QueryRow(`SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND (length(CAST($2 AS TEXT)) <= 0 OR d.controller=$2)`, p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -169,7 +169,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var id string
 
-	err := Database.QueryRow("SELECT id FROM devices WHERE id=?", p[0].Value).Scan(&id)
+	err := Database.QueryRow("SELECT id FROM devices WHERE id=$1", p[0].Value).Scan(&id)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -182,7 +182,7 @@ func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	statement, err := Database.Prepare("DELETE FROM devices WHERE id=?")
+	statement, err := Database.Prepare("DELETE FROM devices WHERE id=$1")
 	_, err = statement.Exec(p[0].Value)
 
 	defer statement.Close()

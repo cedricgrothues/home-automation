@@ -12,7 +12,7 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
-// Database defines a new shared sqlite3 shared instance, that is defined in main package's main() method
+// Database defines a new shared postgres instance, that is defined in main package's main() method
 var Database *sql.DB
 
 // AllRooms handles all GET /rooms and handles them accordingly
@@ -33,7 +33,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 		rows.Scan(&room.ID, &room.Name)
 
-		deviceRows, err := Database.Query(`SELECT id, name, type, controller, address FROM devices WHERE room_id=?`, room.ID)
+		deviceRows, err := Database.Query(`SELECT id, name, type, controller, address FROM devices WHERE room_id=$1`, room.ID)
 
 		defer deviceRows.Close()
 
@@ -84,7 +84,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	// Insert all the data in the database
-	_, err = Database.Exec("INSERT INTO rooms(id, name) values(?,?)", params.ID, params.Name)
+	_, err = Database.Exec("INSERT INTO rooms(id, name) values($1,$2)", params.ID, params.Name)
 
 	if err != nil {
 		panic(err)
@@ -92,7 +92,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	var room models.Room
 
-	err = Database.QueryRow("SELECT id, name FROM rooms WHERE id=?", params.ID).Scan(&room.ID, &room.Name)
+	err = Database.QueryRow("SELECT id, name FROM rooms WHERE id=$1", params.ID).Scan(&room.ID, &room.Name)
 
 	if err != nil {
 		panic(err)
@@ -114,7 +114,7 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var room models.Room
 
-	err := Database.QueryRow(`SELECT id, name FROM rooms WHERE id=?`, p[0].Value).Scan(&room.ID, &room.Name)
+	err := Database.QueryRow(`SELECT id, name FROM rooms WHERE id=$1`, p[0].Value).Scan(&room.ID, &room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -127,7 +127,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	rows, err := Database.Query(`SELECT id, name, type, controller, address FROM devices WHERE room_id=?`, p[0].Value)
+	rows, err := Database.Query(`SELECT id, name, type, controller, address FROM devices WHERE room_id=$1`, p[0].Value)
 
 	defer rows.Close()
 
@@ -158,7 +158,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var id string
 
-	err := Database.QueryRow("SELECT id FROM rooms WHERE id=?", p[0].Value).Scan(&id)
+	err := Database.QueryRow("SELECT id FROM rooms WHERE id=$1", p[0].Value).Scan(&id)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -171,7 +171,7 @@ func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	statement, err := Database.Prepare("DELETE FROM rooms WHERE id=?")
+	statement, err := Database.Prepare("DELETE FROM devices WHERE room_id=$1")
 	_, err = statement.Exec(p[0].Value)
 
 	defer statement.Close()
@@ -180,7 +180,7 @@ func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		panic(err)
 	}
 
-	statement, err = Database.Prepare("DELETE FROM devices WHERE room_id=?")
+	statement, err = Database.Prepare("DELETE FROM rooms WHERE id=$1")
 	_, err = statement.Exec(p[0].Value)
 
 	defer statement.Close()

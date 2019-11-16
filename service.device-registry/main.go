@@ -2,18 +2,27 @@ package main
 
 import (
 	"database/sql"
+	"fmt"
 	"log"
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/service.device-registry/routes"
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/julienschmidt/httprouter"
+	_ "github.com/lib/pq"
+)
+
+const (
+	host     = "localhost"
+	port     = 54320
+	user     = "postgres"
+	password = "zuhkiz-2honwu-semhoV"
+	dbname   = "service.device-registry.database"
 )
 
 func main() {
 
-	database, err := sql.Open("sqlite3", "./database/device-registry.sqlite")
+	database, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname))
 
 	if err != nil {
 		log.Fatal(err)
@@ -21,8 +30,8 @@ func main() {
 
 	defer database.Close()
 
-	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id TEXT PRIMARY KEY, name TEXT NOT NULL, type TEXT NOT NULL, controller TEXT NOT NULL, address TEXT NOT NULL, room_id TEXT NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
-	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id TEXT PRIMARY KEY, name TEXT NOT NULL, FOREIGN KEY (id) REFERENCES devices (room_id) ON UPDATE CASCADE ON DELETE SET NULL);")
+	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id varchar(20) PRIMARY KEY, name text NOT NULL);")
+	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id varchar(20) PRIMARY KEY, name text NOT NULL, type text NOT NULL, controller text NOT NULL, address text NOT NULL, room_id text NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
 
 	routes.Database = database
 
