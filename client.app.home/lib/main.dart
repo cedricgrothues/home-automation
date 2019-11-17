@@ -1,66 +1,66 @@
+import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 import 'package:home/screens/setup.dart';
+import 'package:home/screens/wifi.dart';
+import 'package:provider/provider.dart';
 
 void main() => runApp(App());
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Home',
-      theme: ThemeData(
-        scaffoldBackgroundColor: Colors.white,
-        fontFamily: 'Open Sans',
-        buttonColor: Colors.black,
-        textTheme: TextTheme(
-          headline: TextStyle(
-            fontSize: 35,
-            color: Colors.black,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 2,
+    return MultiProvider(
+      providers: <SingleChildCloneableWidget>[
+        StreamProvider(builder: (BuildContext context) => Connectivity().onConnectivityChanged, initialData: ConnectivityResult.wifi),
+      ],
+      child: MaterialApp(
+        title: 'Home',
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.white,
+          fontFamily: 'Open Sans',
+          buttonColor: Colors.black,
+          appBarTheme: AppBarTheme(
+            brightness: Brightness.light,
+            color: Colors.transparent,
+            elevation: 0,
+            iconTheme: IconThemeData(
+              color: Colors.black,
+              size: 26,
+            ),
           ),
-          button: TextStyle(
-            color: Colors.white,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-          subtitle: TextStyle(
-            color: Colors.black,
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
-          ),
-        ),
-      ),
-      darkTheme: ThemeData(
-        scaffoldBackgroundColor: Colors.black,
-        fontFamily: 'Open Sans',
-        buttonColor: Colors.white,
-        textTheme: TextTheme(
-          headline: TextStyle(
-            fontSize: 35,
-            color: Colors.white,
-            fontWeight: FontWeight.w700,
-            letterSpacing: 2,
-          ),
-          button: TextStyle(
-            color: Colors.black,
-            fontSize: 13,
-            fontWeight: FontWeight.w600,
-          ),
-          subtitle: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.w500,
-            fontSize: 13,
+          textTheme: TextTheme(
+            headline: TextStyle(
+              fontSize: 35,
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              letterSpacing: 2,
+            ),
+            button: TextStyle(
+              color: Colors.white,
+              fontSize: 14,
+              fontWeight: FontWeight.w700,
+            ),
+            subtitle: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 14,
+            ),
+            title: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w700,
+              fontSize: 17,
+            ),
           ),
         ),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => Setup(),
+          '/setup': (context) => Setup(),
+        },
+        builder: (context, child) => NetworkAware(child: child),
+        locale: const Locale('en', 'US'),
+        debugShowCheckedModeBanner: false,
       ),
-      initialRoute: '/',
-      routes: {
-        '/': (context) => Setup(),
-        '/setup': (context) => Setup(),
-      },
-      locale: const Locale('en', 'US'),
-      debugShowCheckedModeBanner: false,
     );
   }
 }

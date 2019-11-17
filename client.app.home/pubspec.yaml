@@ -3,8 +3,9 @@ description: The mobile, web and desktop application communicating with the cedr
 
 version: 1.0.0+1
 
-authors:
-  - Cedric Grothues <cedricgrothues@gmail.com>
+repository: https://www.github.com/cedricgrothues/home-automation
+
+author: Cedric Grothues <cedricgrothues@gmail.com>
 
 environment:
   sdk: ">=2.3.0 <3.0.0"
@@ -12,6 +13,9 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  url_launcher: ^5.2.5
+  provider: ^3.1.0+1
+  connectivity: ^0.4.5+3
 
 dev_dependencies:
   flutter_test:
@@ -21,6 +25,9 @@ flutter:
   uses-material-design: true
 
   fonts:
+    - family: Light
+      fonts:
+        - asset: assets/fonts/Light.ttf
     - family: Open Sans
       fonts:
         - asset: assets/fonts/OpenSans-Light.ttf
