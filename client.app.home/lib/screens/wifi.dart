@@ -11,7 +11,6 @@ class NetworkAware extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(Provider.of<ConnectivityResult>(context));
     if (Provider.of<ConnectivityResult>(context) != ConnectivityResult.wifi) {
       return Scaffold(
         body: SafeArea(
