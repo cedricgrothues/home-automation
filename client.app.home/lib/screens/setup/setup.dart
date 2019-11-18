@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:home/components/button.dart';
-import 'package:home/components/transitions.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
@@ -34,7 +33,7 @@ class _SetupState extends State<Setup> {
               Button(
                 title: "Connect to an existing system",
                 onPressed: () {
-                  Navigator.of(context).push(SlideRoute(page: Connect()));
+                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Connect()));
                 },
               ),
               RichText(

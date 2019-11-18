@@ -1,61 +1,70 @@
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
 
 import 'package:flutter/cupertino.dart';
-import 'package:home/components/icons.dart';
+import 'package:home/components/regular_icons.dart';
 import 'package:home/services/scanner.dart';
+import 'package:http/http.dart' as http;
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Connect extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: FutureBuilder<List<InternetAddress>>(
-          future: discover(),
-          builder: (context, snapshot) {
-            switch (snapshot.connectionState) {
-              case ConnectionState.none:
-              case ConnectionState.active:
-              case ConnectionState.waiting:
-                return LinearProgressIndicator(
-                  value: 1,
-                );
-              case ConnectionState.done:
-                if (snapshot.hasError)
-                  return Text('Error: ${snapshot.error}');
-                else if (snapshot.hasData)
-                  return Text('IP: ${snapshot.data.first.address}');
-                else
-                  return Text('Result without Data');
-            }
-            return null; // unreachable
-          },
-        ),
+      body: FutureProvider<InternetAddress>.value(
+        value: discover(),
+        child: ConnectResult(),
       ),
     );
   }
 
-  Future<List<InternetAddress>> discover() async {
-    List<InternetAddress> addresses = [];
-
+  Future<InternetAddress> discover() async {
     final String ip = await Connectivity().getWifiIP();
     final String subnet = ip.substring(0, ip.lastIndexOf('.'));
 
     /// Default device registry port (change if necessary)
-    final int port = 5000;
+    final int port = 4000;
 
     final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 200));
-    final stopwatch = Stopwatch()..start();
     await for (NetworkAddress addr in stream) {
-      if (addr != null && addr.exists) {
-        addresses.add(InternetAddress(addr.address));
-        print(addr.address);
-      }
+      if (addr == null || !addr.exists) continue;
+
+      http.Response response = await http.get("http://${addr.address}:$port/");
+
+      if (response.statusCode != 200) continue;
+
+      Map map = json.decode(response.body);
+
+      if (!map.containsKey("name") || map["name"] != "service.device-registry") continue;
+
+      return InternetAddress(addr.address);
     }
-    print(stopwatch.elapsed);
-    return addresses;
+
+    return null;
+  }
+}
+
+class ConnectResult extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    if (Provider.of<InternetAddress>(context) != null) {
+      store(context, address: Provider.of<InternetAddress>(context).address)
+          .then((ok) => Navigator.of(context).pushReplacementNamed("/rooms"));
+    }
+
+    return Scaffold(
+      body: Center(
+        child: CupertinoActivityIndicator(),
+      ),
+    );
+  }
+
+  Future<bool> store(BuildContext context, {String address}) {
+    return Provider.of<SharedPreferences>(context).setString('service.device-registry', address);
   }
 }
 
@@ -69,7 +78,7 @@ class ManualConnect extends StatelessWidget {
       extendBodyBehindAppBar: true,
       appBar: AppBar(
         leading: IconButton(
-          icon: Icon(LightIcons.times),
+          icon: Icon(RegularIcons.times),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),

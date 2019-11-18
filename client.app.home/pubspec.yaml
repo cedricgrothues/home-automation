@@ -17,6 +17,7 @@ dependencies:
   provider: ^3.1.0+1
   connectivity: ^0.4.5+3
   http: ^0.12.0+2
+  shared_preferences: ^0.5.4+5
 
 dev_dependencies:
   flutter_test:
@@ -26,6 +27,9 @@ flutter:
   uses-material-design: true
 
   fonts:
+    - family:  Regular
+      fonts:
+        - asset: assets/fonts/Regular.ttf
     - family: Light
       fonts:
         - asset: assets/fonts/Light.ttf
