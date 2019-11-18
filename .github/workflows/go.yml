@@ -1,5 +1,13 @@
 name: Go
-on: [push]
+on:
+  push:
+    branches:
+      - master
+    paths:
+      - 'service.device-registry/*'
+      - 'service.service.controller.sonos/*'
+      - 'service.service.controller.sonoff/*'
+      - 'libraries/*'
 
 jobs:
   lint:

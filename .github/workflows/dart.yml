@@ -1,26 +1,24 @@
-name: Dart CI
+name: Flutter CI
 
 on:
   push:
     branches:
       - master
-    # file paths to consider in the event. Optional; defaults to all.
     paths:
       - 'client.app.home/*'
 
 jobs:
   build:
-
+    name: Analyze Project
     runs-on: ubuntu-latest
-
-    container:
-      image:  google/dart:latest
-
     steps:
     - uses: actions/checkout@v1
-    - name: Install dependencies
-      working-directory: client.app.home
-      run: flutter pub get
-    - name: Run tests
-      working-directory: client.app.home
-      run: flutter pub run test
+    - uses: actions/setup-java@v1
+      with:
+        java-version: '12.x'
+    - uses: subosito/flutter-action@v1
+      with:
+        flutter-version: '1.9.1+hotfix.6'
+    - run: flutter pub get
+    - run: flutter test --coverage
+    - run: flutter analyze
