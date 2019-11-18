@@ -7,6 +7,7 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 All responses will be JSON. Individual service's READMEs will detail the expected JSON value.
 
+<!-- NOT YET IMPLEMENTED
 ### Config Service
 The config service reads and distributes configuration information from service.config/data/config.yaml.
 Default config.yaml structure:
@@ -18,7 +19,8 @@ services:
     package: service.example
     name: Example Service
     port: 80
-```
+``` 
+-->
 
 ### Controllers
 
