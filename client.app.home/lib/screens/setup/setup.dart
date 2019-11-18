@@ -2,9 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:home/components/button.dart';
-import 'package:home/components/icons.dart';
+import 'package:home/components/transitions.dart';
 
 import 'package:url_launcher/url_launcher.dart';
+
+import 'connect.dart';
 
 class Setup extends StatefulWidget {
   @override
@@ -32,7 +34,7 @@ class _SetupState extends State<Setup> {
               Button(
                 title: "Connect to an existing system",
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => _Connect()));
+                  Navigator.of(context).push(SlideRoute(page: Connect()));
                 },
               ),
               RichText(
@@ -56,43 +58,4 @@ class _SetupState extends State<Setup> {
   }
 
   void help() => launch("https://github.com/cedricgrothues/home-automation/blob/master/README.md");
-}
-
-class _Connect extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(LightIcons.times),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            height: 60,
-            child: CupertinoButton(
-              padding: EdgeInsets.all(0),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Theme.of(context).buttonColor,
-                alignment: Alignment.center,
-                child: Text(
-                  "Connect",
-                  style: Theme.of(context).textTheme.button.copyWith(fontSize: 16),
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }

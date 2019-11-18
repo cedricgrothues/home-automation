@@ -29,7 +29,7 @@ class NetworkAware extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 80),
                   child: Text(
-                    "You need to be connected to a wireless to use the Home App. Go to Settings > Wi-Fi on your device.",
+                    "You need to be connected to a wireless network to use the Home App. Go to Settings > Wi-Fi on your device.",
                     textAlign: TextAlign.center,
                     style: Theme.of(context).textTheme.subtitle.copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                   ),

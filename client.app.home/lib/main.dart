@@ -1,8 +1,10 @@
-import 'package:connectivity/connectivity.dart';
 import 'package:flutter/material.dart';
-import 'package:home/screens/setup.dart';
-import 'package:home/screens/wifi.dart';
+
 import 'package:provider/provider.dart';
+import 'package:connectivity/connectivity.dart';
+
+import 'package:home/screens/wifi.dart';
+import 'package:home/screens/setup/setup.dart';
 
 void main() => runApp(App());
 
@@ -49,6 +51,11 @@ class App extends StatelessWidget {
               color: Colors.black,
               fontWeight: FontWeight.w700,
               fontSize: 17,
+            ),
+            body1: TextStyle(
+              color: Colors.black,
+              fontWeight: FontWeight.w500,
+              fontSize: 19,
             ),
           ),
         ),
