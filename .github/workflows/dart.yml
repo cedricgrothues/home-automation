@@ -1,11 +1,6 @@
 name: Flutter CI
 
-on:
-  push:
-    branches:
-      - master
-    paths:
-      - 'client.app.home/*'
+on: [push]
 
 jobs:
   build:

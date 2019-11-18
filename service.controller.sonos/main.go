@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
+	"github.com/cedricgrothues/home-automation/libraries/go/readme"
 	"github.com/cedricgrothues/home-automation/service.controller.sonos/routes"
 	"github.com/julienschmidt/httprouter"
 )
@@ -15,13 +15,12 @@ func main() {
 	router.MethodNotAllowed = http.HandlerFunc(errors.NotAllowed)
 	router.PanicHandler = errors.PanicHandler
 
+	info := readme.Info{Name: "service.controller.sonos", Friendly: "Sonos Controller"}
+	router.GET("/", info.Get)
+
 	router.GET("/devices/:id", routes.GetState)
 	router.PATCH("/devices/:id", routes.PatchState)
 
-	for b := 'a'; b <= 'z'; b++ {
-		fmt.Println(string(b), &b)
-	}
-
-	//errors.Log("service.controller.sonos", "Failed to start with error:", http.ListenAndServe(":4003", router))
+	errors.Log("service.controller.sonos", "Failed to start with error:", http.ListenAndServe(":4003", router))
 
 }

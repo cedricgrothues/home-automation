@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
+	"github.com/cedricgrothues/home-automation/libraries/go/readme"
 	"github.com/cedricgrothues/home-automation/service.device-registry/routes"
 	"github.com/julienschmidt/httprouter"
 	_ "github.com/lib/pq"
@@ -39,6 +40,10 @@ func main() {
 	router.NotFound = http.HandlerFunc(errors.NotFound)
 	router.MethodNotAllowed = http.HandlerFunc(errors.NotAllowed)
 	router.PanicHandler = errors.PanicHandler
+
+	info := readme.Info{Name: "service.device-registry", Friendly: "Device Registry"}
+
+	router.GET("/", info.Get)
 
 	router.GET("/devices", routes.AllDevices)
 	router.POST("/devices", routes.AddDevice)
