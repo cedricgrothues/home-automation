@@ -1,6 +1,10 @@
 /// Lookup IP Addresses on Device
-import 'dart:async';
 import 'dart:io';
+import 'dart:async';
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+import 'package:connectivity/connectivity.dart';
 
 class NetworkAddress {
   final String address;
@@ -35,4 +39,29 @@ class NetworkAnalyzer {
       }
     }
   }
+}
+
+Future<String> discover() async {
+  final String ip = await Connectivity().getWifiIP();
+  final String subnet = ip.substring(0, ip.lastIndexOf('.'));
+
+  /// Default device registry port (change if necessary)
+  final int port = 4000;
+
+  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 200));
+  await for (NetworkAddress addr in stream) {
+    if (addr == null || !addr.exists) continue;
+
+    http.Response response = await http.get("http://${addr.address}:$port/");
+
+    if (response.statusCode != 200) continue;
+
+    Map map = json.decode(response.body);
+
+    if (!map.containsKey("name") || map["name"] != "service.device-registry") continue;
+
+    return addr.address;
+  }
+
+  return "not_found";
 }

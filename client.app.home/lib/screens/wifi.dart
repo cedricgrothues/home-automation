@@ -13,12 +13,12 @@ class NetworkAware extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
       duration: Duration(milliseconds: 200),
-      child: Provider.of<ConnectivityResult>(context) == ConnectivityResult.wifi ? child : _NoWifi(),
+      child: Provider.of<ConnectivityResult>(context) == ConnectivityResult.wifi ? child : NoWifi(),
     );
   }
 }
 
-class _NoWifi extends StatelessWidget {
+class NoWifi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(

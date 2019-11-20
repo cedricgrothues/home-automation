@@ -33,7 +33,7 @@ class _SetupState extends State<Setup> {
               Button(
                 title: "Connect to an existing system",
                 onPressed: () {
-                  Navigator.of(context).push(MaterialPageRoute(builder: (context) => Connect()));
+                  Navigator.of(context).pushReplacementNamed('/connect');
                 },
               ),
               RichText(

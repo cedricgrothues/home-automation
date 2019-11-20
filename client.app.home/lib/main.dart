@@ -12,9 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:home/screens/wifi.dart';
 import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/home/home.dart';
+import 'package:home/screens/setup/connect.dart';
+import 'package:home/services/scanner.dart';
 
 import 'package:home/components/splash_factory.dart';
-import 'package:home/components/transitions.dart';
+import 'package:home/components/not_found.dart';
+
+import 'components/routes.dart';
 
 void main() => runApp(App());
 
@@ -74,12 +78,44 @@ class App extends StatelessWidget {
           ),
         ),
         initialRoute: '/',
-        routes: {
-          '/': (context) => Splash(),
-          '/setup': (context) => Setup(),
-          '/rooms': (context) => Home(),
+        onGenerateRoute: (RouteSettings settings) {
+          switch (settings.name) {
+            case '/':
+              return NoTransitionRoute(
+                builder: (_) => Splash(),
+                settings: settings,
+              );
+            case '/home':
+              return NoTransitionRoute(
+                builder: (_) => Home(),
+                settings: settings,
+              );
+            case '/setup':
+              return NoPopTransitionRoute(
+                builder: (_) => Setup(),
+                settings: settings,
+              );
+            case '/not_found':
+              return NoTransitionRoute(
+                builder: (_) => NotFound(),
+                settings: settings,
+              );
+            case '/wifi_required':
+              return NoTransitionRoute(
+                builder: (_) => NoWifi(),
+                settings: settings,
+              );
+            case '/connect':
+              return NoTransitionRoute(
+                builder: (_) => FutureProvider<String>.value(
+                  value: discover(),
+                  child: Connect(),
+                ),
+              );
+            default:
+              return null;
+          }
         },
-        builder: (context, child) => NetworkAware(child: child),
         locale: const Locale('en', 'US'),
         debugShowCheckedModeBanner: false,
       ),
@@ -98,18 +134,23 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = Provider.of<SharedPreferences>(context);
 
     if (prefs != null) {
-      if (prefs.containsKey("service.device-registry")) {
-        http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/");
+      if (!prefs.containsKey("service.device-registry")) {
+        try {
+          http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/");
 
-        if (response.statusCode != 200) return;
+          if (response.statusCode != 200) return;
 
-        Map map = json.decode(response.body);
+          Map map = json.decode(response.body);
 
-        if (!map.containsKey("name") || map["name"] != "service.device-registry") return;
+          if (!map.containsKey("name") || map["name"] != "service.device-registry") return;
 
-        Navigator.of(context).pushReplacement(FadeRoute(page: Home()));
+          Navigator.of(context).pushReplacementNamed("/home");
+        } catch (error) {
+          Navigator.of(context).pushReplacementNamed("/setup");
+          print(error);
+        }
       } else
-        Navigator.of(context).pushReplacement(FadeRoute(page: Setup()));
+        Navigator.of(context).pushReplacementNamed("/setup");
     }
 
     super.didChangeDependencies();
