@@ -1,16 +1,14 @@
 version: '3'
 
 services:
-  # service.device-registry:
-  #   build:
-  #     dockerfile: service.device-registry/dev.dockerfile
-  #     context: .
-  #   ports:
-  #     - 4001:4001
-  #   depends_on: 
-  #     - service.device-registry.database
-  #   networks:
-  #     - backend
+  service.device-registry:
+    build:
+      dockerfile: service.device-registry/dev.dockerfile
+      context: .
+    ports:
+      - 4001:4001
+    depends_on: 
+      - service.device-registry.database
 
   service.device-registry.database:
     image: "postgres"
