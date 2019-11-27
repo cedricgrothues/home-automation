@@ -5,8 +5,6 @@ import 'package:home/components/button.dart';
 
 import 'package:url_launcher/url_launcher.dart';
 
-import 'connect.dart';
-
 class Setup extends StatefulWidget {
   @override
   _SetupState createState() => _SetupState();

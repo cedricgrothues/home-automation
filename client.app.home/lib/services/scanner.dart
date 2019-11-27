@@ -1,10 +1,11 @@
-/// Lookup IP Addresses on Device
 import 'dart:io';
 import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:connectivity/connectivity.dart';
+
+import 'package:home/models/errors.dart';
 
 class NetworkAddress {
   final String address;
@@ -20,7 +21,7 @@ class NetworkAnalyzer {
     Duration timeout = const Duration(milliseconds: 400),
   }) async* {
     if (port < 1 || port > 65535) {
-      throw 'Incorrect port';
+      throw PortError();
     }
 
     for (int i = 1; i < 256; ++i) {
