@@ -1,4 +1,4 @@
-# client.app.home - Fast, Robust & Secure Home Automation Client
+# client.app.home - Fast, Robust & Secure Client
 
 ## What is client.app.home?
 
