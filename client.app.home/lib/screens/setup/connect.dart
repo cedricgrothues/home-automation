@@ -5,17 +5,31 @@ import 'package:home/components/regular_icons.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Connect extends StatelessWidget {
+class Connect extends StatefulWidget {
   @override
-  Widget build(BuildContext context) {
+  _ConnectState createState() => _ConnectState();
+}
+
+class _ConnectState extends State<Connect> {
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+
     String ip = Provider.of<String>(context);
 
-    if (ip != null && ip != "not_found") {
-      store(context, address: Provider.of<String>(context)).then((ok) => Navigator.of(context).pushReplacementNamed("/home"));
-    } else if (ip != null && ip == "not_found") {
-      Navigator.of(context).pushReplacementNamed("/not_found");
-    }
+    if (ip != null) return;
 
+    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
+      if (ip != null && ip != "not_found") {
+        store(context, address: Provider.of<String>(context)).then((ok) => Navigator.of(context).pushReplacementNamed("/home"));
+      } else if (ip != null && ip == "not_found") {
+        Navigator.of(context).pushReplacementNamed("/not_found");
+      }
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
         child: CupertinoActivityIndicator(),

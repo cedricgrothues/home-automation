@@ -48,8 +48,10 @@ Future<String> discover() async {
   /// Default device registry port (change if necessary)
   final int port = 4000;
 
+  // A lower timeout of 200ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
   final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 200));
   await for (NetworkAddress addr in stream) {
+    print(addr.address);
     if (addr == null || !addr.exists) continue;
 
     http.Response response = await http.get("http://${addr.address}:$port/");

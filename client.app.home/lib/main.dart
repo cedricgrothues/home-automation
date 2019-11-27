@@ -91,7 +91,7 @@ class App extends StatelessWidget {
                 settings: settings,
               );
             case '/setup':
-              return NoPopTransitionRoute(
+              return NoTransitionRoute(
                 builder: (_) => Setup(),
                 settings: settings,
               );
@@ -134,18 +134,20 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = Provider.of<SharedPreferences>(context);
 
     if (prefs != null) {
-      if (!prefs.containsKey("service.device-registry")) {
+      if (prefs.containsKey("service.device-registry")) {
         try {
           http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/");
 
-          if (response.statusCode != 200) return;
+          if (response.statusCode != 200) throw 'invalid_status_code: ${response.statusCode}';
 
           Map map = json.decode(response.body);
 
-          if (!map.containsKey("name") || map["name"] != "service.device-registry") return;
+          if (!map.containsKey("name") || map["name"] != "service.device-registry") throw 'invalid_response: $map';
 
           Navigator.of(context).pushReplacementNamed("/home");
         } catch (error) {
+          /// Device registry could not be reached and an error was thrown...
+          /// TODO: Show error screen
           Navigator.of(context).pushReplacementNamed("/setup");
           print(error);
         }
@@ -158,10 +160,6 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: CupertinoActivityIndicator(),
-      ),
-    );
+    return Container(color: Colors.white);
   }
 }
