@@ -17,11 +17,7 @@ class _SplashState extends State<Splash> {
   void didChangeDependencies() async {
     SharedPreferences prefs = Provider.of<SharedPreferences>(context);
 
-    print("HEllo" + prefs.toString());
-
     if (prefs != null) {
-      print("NN");
-      prefs.setString("service.device-registry", "localhost");
       if (prefs.containsKey("service.device-registry")) {
         try {
           http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/");
@@ -34,8 +30,7 @@ class _SplashState extends State<Splash> {
 
           Navigator.of(context).pushReplacementNamed("/home");
         } catch (error) {
-          /// Device registry could not be reached and an error was thrown...
-          /// TODO: Show error screen
+          // Device registry could not be reached and an error was thrown...
           Navigator.of(context).pushReplacementNamed("/connection_failed");
           print(error);
         }
