@@ -1,8 +1,11 @@
 {
-    "services": {
-        "service.device-registry": {
+    "version": "0.1.0+pre.1",
+    "services": [
+        {
+            "identifier": "service.device-registry",
             "friendly": "Device Registry",
+            "options": null,
             "port": 4000
         }
-    }
+    ]
 }
