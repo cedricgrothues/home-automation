@@ -1,0 +1,8 @@
+{
+    "services": {
+        "service.device-registry": {
+            "friendly": "Device Registry",
+            "port": 4000
+        }
+    }
+}
