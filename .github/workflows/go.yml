@@ -5,8 +5,9 @@ on:
       - master
     paths:
       - 'service.device-registry/*'
-      - 'service.service.controller.sonos/*'
-      - 'service.service.controller.sonoff/*'
+      - 'service.config/*'
+      - 'service.controller.sonos/*'
+      - 'service.controller.sonoff/*'
       - 'libraries/*'
 
 jobs:
