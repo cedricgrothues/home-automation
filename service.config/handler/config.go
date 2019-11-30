@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/cedricgrothues/home-automation/libraries/go/response"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -90,7 +91,7 @@ func (c *Config) ReadConfig(w http.ResponseWriter, r *http.Request, p httprouter
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusNotFound)
 
-		w.Write([]byte(fmt.Sprintf("{\"message\":\"%v\"}", err)))
+		w.Write([]byte(response.JSON(err.Error(), nil)))
 		return
 	}
 
@@ -118,5 +119,5 @@ func (c *Config) ReloadConfig(w http.ResponseWriter, r *http.Request, p httprout
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 	w.WriteHeader(http.StatusOK)
 
-	w.Write([]byte("{\"message\": \"Config file reloaded successfully\"}"))
+	w.Write(response.JSON("Config file reloaded successfully", nil))
 }
