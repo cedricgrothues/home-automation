@@ -8,19 +8,32 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 All responses will be JSON. Individual service's READMEs will detail the expected JSON value.
 
 ### Config Service
-<!-- NOTE: This paragraph is likely to be updated within the next few days, as service.config development continues -->
 
 The config service reads and distributes configuration information from service.config/data/config.json.
 Default config.json structure:
 ```json
 {
     "version": "0.1.0-alpha",
+    "environment": "development",
+    "polling": {
+        "enabled": true,
+        "interval": 30000
+    },
     "services": [
         {
             "identifier": "service.device-registry",
             "friendly": "Device Registry",
-            "port": 4000
-        }
+            "port": 4000,
+            "options": {
+                "database": {
+                    "name": "service.device-registry.database",
+                    "host": "localhost",
+                    "port": 54320,
+                    "user": "user",
+                    "password": "password"
+                }
+            }
+        },
     ]
 }
 ``` 
