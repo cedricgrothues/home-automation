@@ -1,7 +1,7 @@
 name: home
 description: The mobile, web and desktop application communicating with the cedricgrothues/home-automation api
 
-version: 0.1.0+1
+version: 0.1.0-alpha
 
 repository: https://www.github.com/cedricgrothues/home-automation
 
