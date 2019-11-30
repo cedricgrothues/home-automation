@@ -7,20 +7,23 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 All responses will be JSON. Individual service's READMEs will detail the expected JSON value.
 
-<!-- NOT YET IMPLEMENTED
 ### Config Service
-The config service reads and distributes configuration information from service.config/data/config.yaml.
-Default config.yaml structure:
-```yaml
-development: Yes # Production or development environment?
+<!-- NOTE: This paragraph is likely to be updated within the next few days, as service.config development continues -->
 
-services:
-  service.example:
-    package: service.example
-    name: Example Service
-    port: 80
+The config service reads and distributes configuration information from service.config/data/<env>.config.json.
+Default dev.config.json structure:
+```json
+{
+    "version": "0.1.0-alpha",
+    "services": [
+        {
+            "identifier": "service.device-registry",
+            "friendly": "Device Registry",
+            "port": 4000
+        }
+    ]
+}
 ``` 
--->
 
 ### Controllers
 
