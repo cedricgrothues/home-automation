@@ -1,0 +1,24 @@
+name: Dart Pana
+
+on:
+  push:
+    branches: master
+    paths: 
+      - "client.app.home"
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    container:
+      image:  google/dart:latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Flutter CLI
+      uses: steebchen/flutter@v1.0.
+    - name: Install dependencies
+      run: pub global activate pana
+    - name: Run pana
+      run: pana -l100 --verbosity compact --no-warning --source path .
