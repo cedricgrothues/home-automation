@@ -46,7 +46,7 @@ func Read(path string) (*Config, error) {
 	return &c, nil
 }
 
-// UpdateConfig reads the specified file and updates the config's values accordingly
+// Update reads the specified file and updates the config's values accordingly
 func (c *Config) Update() error {
 	b, err := ioutil.ReadFile(c.path)
 
@@ -70,6 +70,7 @@ func (c *Config) Watch(d time.Duration) {
 	}
 }
 
+// Get retrieves a specific service config from the config file
 func (c *Config) Get(identifier string) (*Service, error) {
 	for i := range c.Services {
 		if c.Services[i].Identifier == identifier {
