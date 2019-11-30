@@ -27,7 +27,7 @@ type Service struct {
 	Identifier string                 `json:"identifier"`
 	Friendly   string                 `json:"friendly"`
 	Port       int                    `json:"port"`
-	Options    map[string]interface{} `json:"options"`
+	Options    map[string]interface{} `json:"options,omitempty"`
 }
 
 // Read config files
