@@ -4,11 +4,7 @@ on:
     branches:
       - master
     paths:
-      - 'service.device-registry/*'
-      - 'service.config/*'
-      - 'service.controller.sonos/*'
-      - 'service.controller.sonoff/*'
-      - 'libraries/*'
+      - !'client.app.home/*'
 
 jobs:
   lint:
