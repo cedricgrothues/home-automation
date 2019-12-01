@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 
+import 'package:home/components/regular_icons.dart';
+
 import 'package:provider/provider.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:home/components/regular_icons.dart';
 
 class NetworkAware extends StatelessWidget {
   const NetworkAware({Key key, @required this.child}) : super(key: key);
@@ -11,9 +12,11 @@ class NetworkAware extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AnimatedSwitcher(
-      duration: Duration(milliseconds: 200),
-      child: Provider.of<ConnectivityResult>(context) == ConnectivityResult.wifi ? child : NoWifi(),
+    return Stack(
+      children: <Widget>[
+        child,
+        if (Provider.of<ConnectivityResult>(context) != ConnectivityResult.wifi) NoWifi(),
+      ],
     );
   }
 }

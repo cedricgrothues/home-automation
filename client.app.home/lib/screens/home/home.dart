@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+
 import 'package:home/components/regular_icons.dart';
+import 'package:home/screens/home/add_device.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -11,16 +13,16 @@ class Home extends StatelessWidget {
           child: TabBar(
             tabs: [
               Tab(
-                icon: new Icon(RegularIcons.thermometer_three_quarters),
+                icon: new Icon(RegularIcons.home_lg_alt),
               ),
               Tab(
                 icon: new Icon(RegularIcons.music_alt),
               ),
               Tab(
-                icon: new Icon(RegularIcons.plus),
+                icon: new Icon(RegularIcons.clouds_moon),
               ),
               Tab(
-                icon: new Icon(RegularIcons.clouds_moon),
+                icon: new Icon(RegularIcons.plus),
               ),
             ],
             labelColor: Colors.black,
@@ -33,7 +35,7 @@ class Home extends StatelessWidget {
             Container(),
             Container(),
             Container(),
-            Container(),
+            AddDevice(),
           ],
         ),
       ),

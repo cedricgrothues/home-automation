@@ -7,15 +7,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:home/screens/wifi.dart';
 import 'package:home/screens/splash.dart';
-import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/home/home.dart';
+import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
+import 'package:home/screens/home/add_device.dart';
 
 import 'package:home/services/scanner.dart';
 
 import 'package:home/components/splash_factory.dart';
-import 'package:home/components/not_found.dart';
 
 import 'components/routes.dart';
 
@@ -77,7 +77,7 @@ class App extends StatelessWidget {
           ),
         ),
         initialRoute: '/',
-        // builder: (context, Widget child) => NetworkAware(child: child),
+        builder: (context, Widget child) => NetworkAware(child: child),
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case '/':
@@ -95,11 +95,6 @@ class App extends StatelessWidget {
                 builder: (_) => Setup(),
                 settings: settings,
               );
-            case '/not_found':
-              return NoTransitionRoute(
-                builder: (_) => NotFound(),
-                settings: settings,
-              );
             case '/wifi_required':
               return NoTransitionRoute(
                 builder: (_) => NoWifi(),
@@ -115,6 +110,10 @@ class App extends StatelessWidget {
             case '/connection_failed':
               return NoTransitionRoute(
                 builder: (_) => ConnectionFailed(),
+              );
+            case '/add_device':
+              return MaterialPageRoute(
+                builder: (_) => AddDevice(),
               );
             default:
               return null;
