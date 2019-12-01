@@ -41,5 +41,7 @@ func main() {
 	router.GET("/read/:id", config.ReadConfig)
 	router.GET("/reload", config.ReloadConfig)
 
+	router.GET("/controllers", config.GetControllers)
+
 	errors.Log("service.config", "Failed to start with error:", http.ListenAndServe(fmt.Sprintf(":%d", self.Port), router))
 }

@@ -25,6 +25,32 @@ This service provides information to device-registry and controllers
 }
 ```
 
+### Get all controllers
+
+**Definition**
+
+`GET /controllers`
+
+**Response**
+
+- 200: success
+- 500: internal server error
+
+```json
+[
+  {
+    "identifier": "service.controller.sonoff",
+    "friendly": "Sonoff Controller",
+    "port": 4002
+  },
+  {
+    "identifier": "service.controller.sonos",
+    "friendly": "Sonos Controller",
+    "port": 4003
+  }
+]
+```
+
 ### Reload the config
 
 **Definition**

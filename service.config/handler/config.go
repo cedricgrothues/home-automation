@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"net/http"
+	"regexp"
 	"time"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/response"
@@ -99,6 +100,29 @@ func (c *Config) ReadConfig(w http.ResponseWriter, r *http.Request, p httprouter
 	w.WriteHeader(http.StatusOK)
 
 	bytes, err := json.Marshal(service)
+
+	if err != nil {
+		panic("A problem occured while converting JSON: " + err.Error())
+	}
+
+	w.Write(bytes)
+}
+
+// GetControllers returns all services matching service.controller.*
+func (c *Config) GetControllers(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+
+	var controllers []Service
+
+	for i := range c.Services {
+		if match, _ := regexp.MatchString("^service\\.controller\\.\\w+$", c.Services[i].Identifier); match {
+			controllers = append(controllers, c.Services[i])
+		}
+	}
+
+	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+
+	bytes, err := json.Marshal(controllers)
 
 	if err != nil {
 		panic("A problem occured while converting JSON: " + err.Error())
