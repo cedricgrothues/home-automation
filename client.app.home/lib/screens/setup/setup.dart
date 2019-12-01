@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+
 import 'package:home/components/button.dart';
 
 import 'package:url_launcher/url_launcher.dart';
@@ -33,6 +34,7 @@ class _SetupState extends State<Setup> {
                 onPressed: () {
                   Navigator.of(context).pushReplacementNamed('/connect');
                 },
+                width: MediaQuery.of(context).size.width - 150,
               ),
               RichText(
                 text: TextSpan(

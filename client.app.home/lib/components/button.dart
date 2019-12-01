@@ -5,7 +5,7 @@ class Button extends StatelessWidget {
   const Button({Key key, this.title, this.onPressed, this.width}) : super(key: key);
 
   final String title;
-  final int width;
+  final double width;
   final void Function() onPressed;
 
   @override
