@@ -1,6 +1,6 @@
 # Home Automation
 
-Home Automation is a distributed smart home system largely written in Go. 
+Home Automation is a distributed smart home system largely written in Go.
 It's mostly meant as a learning opportunity rather than a production-ready system.
 
 ## Usage
@@ -33,10 +33,10 @@ Default config.json structure:
                     "password": "password"
                 }
             }
-        },
+        }
     ]
 }
-``` 
+```
 
 ### Controllers
 
