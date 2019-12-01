@@ -1,15 +1,6 @@
 version: '3'
 
 services:
-  service.device-registry:
-    build:
-      dockerfile: service.device-registry/dev.dockerfile
-      context: .
-    ports:
-      - 4001:4001
-    depends_on: 
-      - service.device-registry.database
-
   service.device-registry.database:
     image: "postgres"
     container_name: "service.device-registry.database"
@@ -18,6 +9,22 @@ services:
       - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
       - POSTGRES_DB=service.device-registry.database
     ports:
-      - "54320:5432"
+      - 54320:5432
     volumes:
       - ./service.device-registry/database:/var/lib/postgresql/data
+      
+  service.device-registry:
+    build:
+      dockerfile: service.device-registry/dev.dockerfile
+      context: .
+    ports:
+      - 4000:4000
+    depends_on:
+      - service.device-registry.database
+
+  # service.config:
+  #   build:
+  #     dockerfile: service.config/dev.dockerfile
+  #     context: .
+  #   ports:
+  #     - 4001:4001
