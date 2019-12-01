@@ -1,6 +1,6 @@
 # service.config
 
-Availiable on port `4001`
+Available on port `4001`
 This service provides information to device-registry and controllers
 
 ## Usage
@@ -13,7 +13,7 @@ This service provides information to device-registry and controllers
 
 **Response**
 
-- 404: serivce not found
+- 404: service not found
 - 200: success
 
 ```json

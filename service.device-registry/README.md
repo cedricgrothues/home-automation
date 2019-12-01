@@ -1,6 +1,6 @@
 # service.device-registry
 
-Availiable on port `4000` by default
+Available on port `4000` by default
 
 ## Usage
 
@@ -12,7 +12,7 @@ Availiable on port `4000` by default
 
 **Arguments**
 
-- `"controller":string` filter by the name of the device's controller (optional/query paramter)
+- `"controller":string` filter by the name of the device's controller (optional/query parameter)
 
 **Response**
 

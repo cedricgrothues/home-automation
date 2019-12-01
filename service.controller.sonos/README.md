@@ -1,6 +1,6 @@
 # service.controller.sonos
 
-Availiable on port `4003`
+Available on port `4003`
 
 ## Usage
 

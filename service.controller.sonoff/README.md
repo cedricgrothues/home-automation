@@ -1,6 +1,6 @@
 # service.controller.sonoff
 
-Availiable on port `4002`
+Available on port `4002`
 This controller can communicate with all Sonoff devices, including plugs and lamps
 
 ## Usage
