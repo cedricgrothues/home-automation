@@ -32,7 +32,8 @@ func main() {
 	defer database.Close()
 
 	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id varchar(20) PRIMARY KEY, name text NOT NULL);")
-	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id varchar(20) PRIMARY KEY, name text NOT NULL, type text NOT NULL, controller text NOT NULL, address text NOT NULL, room_id text NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
+	database.Exec(`CREATE TABLE IF NOT EXISTS devices (id varchar(20) PRIMARY KEY, name text NOT NULL, type text NOT NULL, controller text NOT NULL REFERENCES controllers (id), address text NOT NULL, room_id text NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);`)
+	database.Exec("CREATE TABLE IF NOT EXISTS controllers (id varchar(30) PRIMARY KEY, address text NOT NULL);")
 
 	routes.Database = database
 
@@ -56,6 +57,11 @@ func main() {
 
 	router.GET("/rooms/:id", routes.GetRoom)
 	router.DELETE("/rooms/:id", routes.DeleteRoom)
+
+	router.GET("/controllers", routes.AllControllers)
+
+	router.POST("/controllers", routes.RegisterController)
+	router.DELETE("/controllers/:id", routes.UnregisterController)
 
 	errors.Log("service.device-registry", "Failed to start with error:", http.ListenAndServe(":4000", router))
 }

@@ -17,3 +17,9 @@ type Room struct {
 	Name    string   `json:"name"`
 	Devices []Device `json:"devices,omitempty"`
 }
+
+// Controller defines a controller instance
+type Controller struct {
+	ID      string `json:"id"`
+	Address string `json:"address"`
+}

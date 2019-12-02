@@ -214,3 +214,63 @@ Returns the new room is created successfully.
 
 - 404: room not found
 - 204: success
+
+### List all controllers
+
+**Definition**
+
+`GET /controllers`
+
+**Response**
+
+- 200: success
+
+```json
+[
+  {
+    "id": "service.controller.sonos",
+    "address": "127.0.0.1"
+  },
+  {
+    "id": "service.controller.hue",
+    "address": "127.0.0.1"
+  }
+]
+```
+
+### Register a new controller
+
+**Definition**
+
+`POST /controllers`
+
+**Arguments**
+
+- `"id":string` a globally unique id for the controller (matches service.controller.\w+)
+- `"address":string` the controllers ip address
+
+If the id already exists, the column will be updated.
+
+**Response**
+
+- 201: created successfully
+
+Returns the new room is created successfully.
+
+```json
+{
+  "id": "service.controller.sonos",
+  "address": "127.0.0.1"
+}
+```
+
+### Delete a controller
+
+**Definition**
+
+`DELETE /controllers/<id>`
+
+**Response**
+
+- 404: room not found
+- 204: success
