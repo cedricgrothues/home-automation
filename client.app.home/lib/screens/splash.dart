@@ -43,6 +43,6 @@ class _SplashState extends State<Splash> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.white);
+    return Container(color: Theme.of(context).scaffoldBackgroundColor);
   }
 }

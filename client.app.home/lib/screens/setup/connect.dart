@@ -33,7 +33,23 @@ class _ConnectState extends State<Connect> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
-        child: CupertinoActivityIndicator(),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            CupertinoActivityIndicator(
+              radius: 12,
+            ),
+            Padding(
+              padding: const EdgeInsets.only(top: 40.0),
+              child: Text(
+                "Looking for a Home Hub...",
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
@@ -69,7 +85,7 @@ class ManualConnect extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.only(bottom: 15.0),
                   child: Text(
-                    "Enter the Device Registry's IP Address",
+                    "Enter your Home Hub's IP Address",
                     style: Theme.of(context).textTheme.body1,
                   ),
                 ),
