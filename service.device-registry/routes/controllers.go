@@ -80,7 +80,7 @@ func RegisterController(w http.ResponseWriter, r *http.Request, p httprouter.Par
 		return
 	}
 
-	err = Database.QueryRow("INSERT INTO controllers(id, address) values($1,$2) RETURNING id, address", controller.ID, controller.Address).Scan(&controller.ID, &controller.Address)
+	err = Database.QueryRow("INSERT INTO controllers(id, address) values($1,$2) ON CONFLICT (id) DO UPDATE SET id = excluded.id, address = excluded.address RETURNING id, address", controller.ID, controller.Address).Scan(&controller.ID, &controller.Address)
 
 	if err != nil {
 		panic(err)
