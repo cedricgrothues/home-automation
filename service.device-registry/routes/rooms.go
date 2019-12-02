@@ -83,16 +83,10 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	// Insert all the data in the database
-	_, err = Database.Exec("INSERT INTO rooms(id, name) values($1,$2)", params.ID, params.Name)
-
-	if err != nil {
-		panic(err)
-	}
-
 	var room models.Room
 
-	err = Database.QueryRow("SELECT id, name FROM rooms WHERE id=$1", params.ID).Scan(&room.ID, &room.Name)
+	// Insert all the data in the database
+	err = Database.QueryRow("INSERT INTO rooms(id, name) values($1,$2) RETURNING id, name", params.ID, params.Name).Scan(&room.ID, &room.Name)
 
 	if err != nil {
 		panic(err)
