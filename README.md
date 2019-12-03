@@ -3,7 +3,8 @@
 Home Automation is a distributed smart home system largely written in Go.
 It's mostly meant as a learning opportunity rather than a production-ready system.
 
-<img src=".github/screenshots/setup_light.png" width=200/> <img src=".github/screenshots/setup_dark.png" width=200/>
+<kbd><img src=".github/screenshots/setup_light.png" width=200/></kbd>
+<kbd><img src=".github/screenshots/setup_dark.png" width=200/></kbd>
 
 ## Usage
 
