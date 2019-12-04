@@ -13,7 +13,6 @@ import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/controls/lights.dart';
-import 'package:home/screens/home/add_device.dart';
 
 import 'package:home/services/scanner.dart';
 
@@ -181,10 +180,6 @@ class App extends StatelessWidget {
             case '/connection_failed':
               return NoTransitionRoute(
                 builder: (_) => ConnectionFailed(),
-              );
-            case '/add_device':
-              return MaterialPageRoute(
-                builder: (_) => AddDevice(),
               );
             case '/dimmable_light':
               return MaterialPageRoute(

@@ -24,7 +24,7 @@ class NetworkAnalyzer {
       throw PortError();
     }
 
-    for (int i = 1; i < 256; ++i) {
+    for (int i = 1; i <= 256; i++) {
       final host = '$subnet.$i';
 
       try {

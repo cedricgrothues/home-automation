@@ -7,3 +7,5 @@ class StatusCodeError extends Error {
 class ResponseError extends Error {}
 
 class PortError extends Error {}
+
+class NotFoundError extends Error {}
