@@ -7,7 +7,7 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/cedricgrothues/home-automation/libraries/go/errors"
+	"github.com/cedricgrothues/home-automation/service.device-registry/errors"
 	"github.com/cedricgrothues/home-automation/service.device-registry/models"
 	"github.com/julienschmidt/httprouter"
 )
@@ -99,13 +99,22 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	var room models.Room
+	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, address, room_id) values($1,$2,$3,$4,$5,$6)")
+	defer stmt.Close()
 
-	err = Database.QueryRow("INSERT INTO devices(id, name, type, controller, address, room_id) values($1,$2,$3,$4,$5,$6) RETURNING (SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1)", device.ID, device.Name, device.Type, device.Controller, device.Address, device.RoomID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
+	if err != nil {
+		panic(err)
+	}
+
+	_, err = stmt.Exec(device.ID, device.Name, device.Type, device.Controller, device.Address, device.RoomID)
 
 	if err != nil {
 		panic("A problem occured while inserting object into database: " + err.Error())
 	}
+
+	var room models.Room
+
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1", device.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
 
 	device.Room = &room
 	device.RoomID = ""

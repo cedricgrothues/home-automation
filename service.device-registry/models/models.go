@@ -22,4 +22,5 @@ type Room struct {
 type Controller struct {
 	ID      string `json:"id"`
 	Address string `json:"address"`
+	Port    int    `json:"port"`
 }

@@ -1,6 +1,7 @@
 package dao
 
 import (
+	"bytes"
 	"fmt"
 	"net/http"
 
@@ -10,13 +11,19 @@ import (
 // GetState returns the requested devices state and an optional error
 func GetState(address string) (bool, error) {
 
-	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power`, address))
+	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power&user=admin&password=`, address))
 
 	if err != nil {
 		return false, err
 	}
 
 	defer resp.Body.Close()
+
+	buf := new(bytes.Buffer)
+	buf.ReadFrom(resp.Body)
+	s := buf.String()
+
+	print(s)
 
 	power, err := helper.PowerBool(resp.Body)
 

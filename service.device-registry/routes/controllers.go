@@ -7,8 +7,8 @@ import (
 	"net/http"
 	"regexp"
 
-	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/service.device-registry/models"
+	"github.com/cedricgrothues/home-automation/service.device-registry/errors"
 	"github.com/julienschmidt/httprouter"
 )
 
@@ -25,7 +25,7 @@ func AllControllers(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	for rows.Next() {
 		var controller models.Controller
 
-		err = rows.Scan(&controller.ID, &controller.Address)
+		err = rows.Scan(&controller.ID, &controller.Address, &controller.Port)
 
 		if err != nil {
 			panic(err)
@@ -48,6 +48,35 @@ func AllControllers(w http.ResponseWriter, r *http.Request, p httprouter.Params)
 	w.Write(bytes)
 }
 
+// GetControllers handles GET requests to /controllers/:id and returns a JSON structure describing the controller
+func GetControllers(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+	controller := models.Controller{}
+
+	err := Database.QueryRow("SELECT * FROM controllers WHERE id=$1", p[0].Value).Scan(&controller.ID, &controller.Address, &controller.Port)
+
+	if err != nil {
+		if err != sql.ErrNoRows {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(fmt.Sprintf(`{"message":"Controller with ID '%s' not found."}`, p[0].Value)))
+			return
+		}
+	}
+
+	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+	w.WriteHeader(http.StatusOK)
+
+	bytes, err := json.Marshal(controller)
+
+	if err != nil {
+		panic("A problem occured while converting JSON: " + err.Error())
+	}
+
+	w.Write(bytes)
+}
+
 // RegisterController handles POST requests to /controllers and returns a JSON structure describing the added device if it's successfully been inserted into the database
 func RegisterController(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	controller := models.Controller{}
@@ -61,7 +90,7 @@ func RegisterController(w http.ResponseWriter, r *http.Request, p httprouter.Par
 		return
 	}
 
-	if !(controller.ID != "" && controller.Address != "") {
+	if !(controller.ID != "" && controller.Address != "" && controller.Port != 0) {
 		errors.MissingParams(w)
 		return
 	}
@@ -80,7 +109,7 @@ func RegisterController(w http.ResponseWriter, r *http.Request, p httprouter.Par
 		return
 	}
 
-	err = Database.QueryRow("INSERT INTO controllers(id, address) values($1,$2) ON CONFLICT (id) DO UPDATE SET id = excluded.id, address = excluded.address RETURNING id, address", controller.ID, controller.Address).Scan(&controller.ID, &controller.Address)
+	err = Database.QueryRow("INSERT INTO controllers(id, address, port) values($1,$2,$3) ON CONFLICT (id) DO UPDATE SET id = excluded.id, address = excluded.address RETURNING id, address, port", controller.ID, controller.Address, controller.Port).Scan(&controller.ID, &controller.Address, &controller.Port)
 
 	if err != nil {
 		panic(err)
