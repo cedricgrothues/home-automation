@@ -8,7 +8,7 @@ import (
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/service.device-registry/models"
-	"github.com/cedricgrothues/home-automation/service.device-registry/errors"
+	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/julienschmidt/httprouter"
 )
 
