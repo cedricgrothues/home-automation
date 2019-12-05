@@ -14,6 +14,13 @@ import (
 // ListenAndServe provides the config to the client
 func ListenAndServe(c *config.Configuration) error {
 	router := httprouter.New()
+
+	router.GET("/",func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"name":"service.api-gateway"}`))
+	})
+
 	for _, service := range c.Services {
 		url, err := url.Parse(service.URL)
 		if err != nil {
@@ -41,9 +48,7 @@ func handler(prefix string, proxy *httputil.ReverseProxy) func(http.ResponseWrit
 
 			proxy.ServeHTTP(w, r2)
 		} else {
-			w.Header().Add("Content-Type", "application/json; charset=utf-8")
-			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(`{"message":"Page ` + r.URL.Path + ` not found"}`))
+			httprouter.NotFound(w, r)
 		}
 	}
 }

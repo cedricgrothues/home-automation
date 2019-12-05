@@ -6,7 +6,6 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cedricgrothues/home-automation/libraries/go/readme"
 	"github.com/cedricgrothues/home-automation/service.device-registry/routes"
 	"github.com/cedricgrothues/httprouter"
 	_ "github.com/lib/pq"
@@ -37,9 +36,11 @@ func main() {
 
 	router := httprouter.New()
 
-	info := readme.Info{Name: "service.device-registry", Friendly: "Device Registry"}
-
-	router.GET("/", info.Get)
+	router.GET("/",func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"name":"service.device-registry"}`))
+	})
 
 	router.GET("/devices", routes.AllDevices)
 	router.POST("/devices", routes.AddDevice)

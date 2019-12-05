@@ -13,18 +13,20 @@ services:
     volumes:
       - ./service.device-registry/database:/var/lib/postgresql/data
       
-  # service.device-registry:
-  #   build:
-  #     dockerfile: service.device-registry/dev.dockerfile
-  #     context: .
-  #   ports:
-  #     - 4000:4000
-  #   depends_on:
-  #     - service.device-registry.database
+  service.api-gateway:
+    container_name: "service.api-gateway"
+    build:
+     dockerfile: service.api-gateway/Dockerfile
+     context: .
+    ports:
+     - 4000:4000
 
-  # service.config:
-  #   build:
-  #     dockerfile: service.config/dev.dockerfile
-  #     context: .
-  #   ports:
-  #     - 4001:4001
+  service.device-registry:
+    container_name: "service.device-registry"
+    build:
+      dockerfile: service.device-registry/Dockerfile
+      context: .
+    ports:
+    - 4001:4001
+    depends_on:
+      - service.device-registry.database

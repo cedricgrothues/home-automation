@@ -12,8 +12,11 @@ import (
 func main() {
 	router := httprouter.New()
 
-	info := readme.Info{Name: "service.controller.sonos", Friendly: "Sonos Controller"}
-	router.GET("/", info.Get)
+	router.GET("/",func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte(`{"name":"service.controller.sonos"}`))
+	})
 
 	router.GET("/devices/:id", routes.GetState)
 	router.PATCH("/devices/:id", routes.PatchState)
