@@ -4,6 +4,7 @@ services:
   service.device-registry.database:
     image: "postgres"
     container_name: "service.device-registry.database"
+    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
@@ -19,14 +20,35 @@ services:
      dockerfile: service.api-gateway/Dockerfile
      context: .
     ports:
-     - 4000:4000
+      - 4000:4000
 
   service.device-registry:
     container_name: "service.device-registry"
+    restart: always
     build:
       dockerfile: service.device-registry/Dockerfile
       context: .
     ports:
-    - 4001:4001
+      - 4001:4001
     depends_on:
       - service.device-registry.database
+
+  service.controller.sonoff:
+    container_name: "service.controller.sonoff"
+    build:
+      dockerfile: service.controller.sonoff/Dockerfile
+      context: .
+    ports:
+      - 4002:4002
+    depends_on:
+      - service.device-registry
+
+  service.controller.sonos:
+    container_name: "service.controller.sonos"
+    build:
+      dockerfile: service.controller.sonos/Dockerfile
+      context: .
+    ports:
+      - 4003:4003
+    depends_on:
+      - service.device-registry
