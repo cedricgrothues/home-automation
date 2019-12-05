@@ -1,6 +1,6 @@
 # service.device-registry
 
-Available on port `4000` by default
+Available on port `4001` by default
 
 ## Usage
 

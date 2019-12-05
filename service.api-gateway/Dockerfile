@@ -9,13 +9,13 @@ RUN git config --global url."https://589b62795c79fff2fee9152874dc3dfcf6381ef6:@g
 ADD ./libraries/go /go/src/github.com/cedricgrothues/home-automation/libraries/go
 ADD ./service.api-gateway /go/src/github.com/cedricgrothues/home-automation/service.api-gateway
 
-# Build the outyet command inside the container.
+# Build the service.api-gateway command inside the container.
 # (You may fetch or manage dependencies here,
 # either manually or with a tool like "godep".)
-RUN go get -v -t -d ./...
+RUN go get -v -t -d github.com/cedricgrothues/home-automation/...
 RUN go install github.com/cedricgrothues/home-automation/service.api-gateway
 
-# Run the outyet command by default when the container starts.
+# Run the service.api-gateway command by default when the container starts.
 ENTRYPOINT /go/bin/service.api-gateway /go/src/github.com/cedricgrothues/home-automation/service.api-gateway/config.yaml
 
 # Document that the service listens on port 8080.
