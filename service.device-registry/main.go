@@ -20,6 +20,7 @@ const (
 )
 
 func main() {
+	var database *sql.DB
 
 	database, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname))
 
@@ -29,10 +30,10 @@ func main() {
 
 	defer database.Close()
 
+	routes.Database = database
+
 	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id varchar(20) PRIMARY KEY, name text NOT NULL);")
 	database.Exec("CREATE TABLE IF NOT EXISTS devices (id varchar(20) PRIMARY KEY, name text NOT NULL, type text NOT NULL, controller text NOT NULL REFERENCES controllers (id), address text NOT NULL, room_id text NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);")
-
-	routes.Database = database
 
 	router := httprouter.New()
 
