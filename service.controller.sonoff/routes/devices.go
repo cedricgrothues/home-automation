@@ -7,7 +7,7 @@ import (
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/service.controller.sonoff/dao"
-	"github.com/julienschmidt/httprouter"
+	"github.com/cedricgrothues/httprouter"
 )
 
 // Response : a typical response struct

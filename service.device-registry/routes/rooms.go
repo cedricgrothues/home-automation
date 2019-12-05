@@ -9,7 +9,7 @@ import (
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/service.device-registry/models"
-	"github.com/julienschmidt/httprouter"
+	"github.com/cedricgrothues/httprouter"
 )
 
 // Database defines a new shared postgres instance, that is defined in main package's main() method

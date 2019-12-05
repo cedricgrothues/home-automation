@@ -1,10 +1,10 @@
-port: 80
+port: 4000
 
 services:
     service.device-registry:
         name: Device Registry
         prefix: service.device-registry
-        url: "http://192.168.2.117:4000"
+        url: "http://192.168.2.117:4001"
     service.controller.sonoff:
         name: Sonoff Controller
         prefix: service.controller.sonoff

@@ -3,7 +3,7 @@ package routes
 import (
 	"net/http"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/cedricgrothues/httprouter"
 )
 
 // GetState combines service.device-registry data, with device state

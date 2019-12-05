@@ -5,15 +5,12 @@ import (
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/libraries/go/readme"
-	"github.com/cedricgrothues/home-automation/service.controller.sonoff/routes"
-	"github.com/julienschmidt/httprouter"
+	"github.com/cedricgrothues/home-automation/service.controller.sonos/routes"
+	"github.com/cedricgrothues/httprouter"
 )
 
 func main() {
 	router := httprouter.New()
-	router.NotFound = http.HandlerFunc(errors.NotFound)
-	router.MethodNotAllowed = http.HandlerFunc(errors.NotAllowed)
-	router.PanicHandler = errors.PanicHandler
 
 	info := readme.Info{Name: "service.controller.sonoff", Friendly: "Sonoff Controller"}
 	router.GET("/", info.Get)

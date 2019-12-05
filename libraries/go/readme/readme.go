@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"net/http"
 
-	"github.com/julienschmidt/httprouter"
+	"github.com/cedricgrothues/httprouter"
 )
 
 // Info returns service info

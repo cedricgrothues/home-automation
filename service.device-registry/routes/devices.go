@@ -9,7 +9,7 @@ import (
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/service.device-registry/models"
-	"github.com/julienschmidt/httprouter"
+	"github.com/cedricgrothues/httprouter"
 )
 
 // AllDevices handles GET requests to /devices and returns a JSON structure describing all devices in the database
