@@ -1,5 +1,5 @@
 node_modules/
 *lock.json
 *.lock
-service.device-registry/database
+#service.device-registry/database
 .idea/
