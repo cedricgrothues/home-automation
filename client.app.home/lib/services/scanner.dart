@@ -46,13 +46,12 @@ Future<String> discover() async {
   final String ip = await Connectivity().getWifiIP();
   final String subnet = ip.substring(0, ip.lastIndexOf('.'));
 
-  /// Default device registry port (change if necessary)
+  /// Default API gateway port (change if necessary)
   final int port = 4000;
 
   // A lower timeout of 200ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
-  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 200));
+  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 100));
   await for (NetworkAddress addr in stream) {
-    print(addr.address);
     if (addr == null || !addr.exists) continue;
 
     http.Response response = await http.get("http://${addr.address}:$port/");
@@ -61,7 +60,7 @@ Future<String> discover() async {
 
     Map map = json.decode(response.body);
 
-    if (!map.containsKey("name") || map["name"] != "service.device-registry") continue;
+    if (!map.containsKey("name") || map["name"] != "service.api-gateway") continue;
 
     return addr.address;
   }

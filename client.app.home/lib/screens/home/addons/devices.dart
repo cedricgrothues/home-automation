@@ -12,7 +12,7 @@ class Devices extends StatelessWidget {
   static Future<List<DeviceModel>> fetch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/devices");
+    http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/service.device-registry");
 
     if (response.statusCode != 200) throw StatusCodeError();
 

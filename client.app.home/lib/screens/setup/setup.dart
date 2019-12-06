@@ -81,5 +81,6 @@ class _SetupState extends State<Setup> {
     );
   }
 
-  void help() => launch("https://github.com/cedricgrothues/home-automation/blob/master/README.md");
+  void help() =>
+      launch("https://589b62795c79fff2fee9152874dc3dfcf6381ef6:@github.com/cedricgrothues/home-automation/blob/master/README.md");
 }

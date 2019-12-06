@@ -43,20 +43,11 @@ class DeviceModel {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     // get controller ip
-    http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/controllers/$controller");
+    http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/$controller/devices/$id");
 
     if (response.statusCode != 200 && response.statusCode != 404)
       throw StatusCodeError(code: response.statusCode);
-    else if (response.statusCode == 404) return "Unknown Controller";
-
-    Map data = json.decode(response.body);
-
-    String address = data["address"] ?? "127.0.0.1";
-    String port = data["port"].toString() ?? "4000";
-
-    response = await http.get("http://$address:$port/devices/$id");
-
-    if (response.statusCode != 200) return "Controller Failed";
+    else if (response.statusCode == 404) return "Controller Failure";
 
     print(response);
 

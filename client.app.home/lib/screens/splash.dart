@@ -18,19 +18,19 @@ class _SplashState extends State<Splash> {
     SharedPreferences prefs = Provider.of<SharedPreferences>(context);
 
     if (prefs != null) {
-      if (prefs.containsKey("service.device-registry")) {
+      if (prefs.containsKey("service.api-gateway")) {
         try {
-          http.Response response = await http.get("http://${prefs.getString("service.device-registry")}:4000/");
+          http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/");
 
           if (response.statusCode != 200) throw StatusCodeError(code: response.statusCode);
 
           Map map = json.decode(response.body);
 
-          if (!map.containsKey("name") || map["name"] != "service.device-registry") throw ResponseError();
+          if (!map.containsKey("name") || map["name"] != "service.api-gateway") throw ResponseError();
 
           Navigator.of(context).pushReplacementNamed("/home");
         } catch (error) {
-          // Device registry could not be reached and an error was thrown...
+          // API Gateway could not be reached and an error was thrown...
           Navigator.of(context).pushReplacementNamed("/connection_failed");
           print(error);
         }

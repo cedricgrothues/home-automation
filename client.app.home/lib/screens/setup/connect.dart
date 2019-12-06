@@ -55,7 +55,7 @@ class _ConnectState extends State<Connect> {
   }
 
   Future<bool> store(BuildContext context, {String address}) {
-    return Provider.of<SharedPreferences>(context).setString('service.device-registry', address);
+    return Provider.of<SharedPreferences>(context).setString('service.api-gateway', address);
   }
 }
 
