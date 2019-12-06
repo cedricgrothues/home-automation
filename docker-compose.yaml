@@ -1,19 +1,6 @@
-version: '3'
+version: '3.7'
 
 services:
-  service.device-registry.database:
-    image: "postgres"
-    container_name: "service.device-registry.database"
-    restart: always
-    environment:
-      - POSTGRES_USER=postgres
-      - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
-      - POSTGRES_DB=service.device-registry.database
-    ports:
-      - 54320:5432
-    volumes:
-      - ./service.device-registry/database:/var/lib/postgresql/data
-      
   service.api-gateway:
     container_name: "service.api-gateway"
     build:
@@ -32,6 +19,20 @@ services:
       - 4001:4001
     depends_on:
       - service.device-registry.database
+
+  service.device-registry.database:
+    image: postgres:latest
+    container_name: "service.device-registry.database"
+    restart: always
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
+      - POSTGRES_DB=service.device-registry.database
+    ports:
+      - 5432:5432
+    volumes:
+      - ./service.device-registry/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - service.device-registry.database.data:/var/lib/postgresql/data
 
   service.controller.sonoff:
     container_name: "service.controller.sonoff"
@@ -52,3 +53,6 @@ services:
       - 4003:4003
     depends_on:
       - service.device-registry
+
+volumes:
+  service.device-registry.database.data:

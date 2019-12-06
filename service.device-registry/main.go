@@ -12,8 +12,8 @@ import (
 )
 
 const (
-	host     = "localhost"
-	port     = 54320
+	host     = "service.device-registry.database"
+	port     = 5432
 	user     = "postgres"
 	password = "zuhkiz-2honwu-semhoV"
 	dbname   = "service.device-registry.database"
@@ -31,9 +31,6 @@ func main() {
 	defer database.Close()
 
 	routes.Database = database
-
-	database.Exec("CREATE TABLE IF NOT EXISTS rooms (id varchar(20) PRIMARY KEY, name text NOT NULL);")
-	database.Exec("CREATE TABLE IF NOT EXISTS devices (id varchar(20) PRIMARY KEY, name text NOT NULL, type text NOT NULL, controller text NOT NULL REFERENCES controllers (id), address text NOT NULL, room_id text NOT NULL, FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL);")
 
 	router := httprouter.New()
 
