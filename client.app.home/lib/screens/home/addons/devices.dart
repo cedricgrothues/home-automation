@@ -12,11 +12,11 @@ class Devices extends StatelessWidget {
   static Future<List<DeviceModel>> fetch() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
-    http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/service.device-registry");
+    http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/service.device-registry/devices");
 
     if (response.statusCode != 200) throw StatusCodeError();
 
-    List<dynamic> devices = json.decode(response.body);
+    List<dynamic> devices = json.decode(response.body) ?? [];
 
     return devices.map((dynamic device) => DeviceModel.fromMap(Map.from(device))).toList();
   }
@@ -51,7 +51,20 @@ class _DeviceState extends State<Device> {
     return CupertinoButton(
       pressedOpacity: 0.6,
       padding: EdgeInsets.zero,
-      onPressed: () => setState(() => toggled = !toggled),
+      onPressed: () async {
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+
+        String req = "http://${prefs.getString("service.api-gateway")}:4000/${widget.device.controller}/devices/${widget.device.id}";
+
+        print(req);
+
+        http.Response result = await http.patch(req, body: json.encode({"power": toggled}));
+
+        setState(() {
+          widget.device.state = json.decode(result.body)["state"]["power"] == "true" ? "On" : "Off";
+          toggled = !toggled;
+        });
+      },
       child: AnimatedOpacity(
         duration: Duration(milliseconds: 100),
         opacity: toggled ? 0.4 : 1,

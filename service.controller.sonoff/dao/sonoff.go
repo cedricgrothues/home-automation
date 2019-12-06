@@ -35,12 +35,12 @@ func GetState(address string) (bool, error) {
 }
 
 // SetState updates the requested devices state and returns the power state and an optional error
-func SetState(address string, state string) (bool, error) {
+func SetState(address string, state bool) (bool, error) {
 	var cmnd string
 
-	if state == "true" {
+	if state == true {
 		cmnd = "1"
-	} else if state == "false" {
+	} else if state == false {
 		cmnd = "0"
 	}
 

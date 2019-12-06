@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:home/models/errors.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -45,11 +42,11 @@ class DeviceModel {
     // get controller ip
     http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/$controller/devices/$id");
 
-    if (response.statusCode != 200 && response.statusCode != 404)
-      throw StatusCodeError(code: response.statusCode);
-    else if (response.statusCode == 404) return "Controller Failure";
+    print(response.body);
 
-    print(response);
+    if (response.statusCode != 200 && response.statusCode != 404)
+      return "?";
+    else if (response.statusCode == 404) return "Controller Failure";
 
     return "On";
   }

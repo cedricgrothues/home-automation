@@ -2,6 +2,7 @@ package routes
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"regexp"
 
@@ -17,7 +18,7 @@ type Response struct {
 	Address string `json:"address"`
 	State   struct {
 		Power bool `json:"power"`
-	} `json:"room"`
+	} `json:"state"`
 }
 
 // GetState combines service.device-registry data, with device state
@@ -31,7 +32,7 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusServiceUnavailable)
-			w.Write([]byte(`{"message":"Unable to contact the device-registry service."}`))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Unable to contact the device-registry service. %v"}`, err)))
 			return
 		}
 	}
@@ -71,10 +72,14 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 // PatchState updates a device state
 func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
-	r.ParseForm()
 
+	var request struct {
+		Power bool `json:"power"`
+	}
+
+	err := json.NewDecoder(r.Body).Decode(&request)
 	// Check if all params are present, if not abort with 400 error
-	if !(len(r.Form["power"]) > 0) {
+	if err != nil {
 		errors.MissingParams(w)
 		return
 	}
@@ -106,7 +111,7 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	power, err := dao.SetState(response.Address, r.Form["power"][0])
+	power, err := dao.SetState(response.Address, request.Power)
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
