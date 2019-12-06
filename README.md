@@ -8,7 +8,7 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 ## Usage
 
-All responses will be JSON. Individual service's READMEs will detail the expected JSON value.
+All responses will be JSON. Individual service's README's will detail the expected JSON value.
 
 ### API Gateway Service
 
