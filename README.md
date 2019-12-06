@@ -10,35 +10,26 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 All responses will be JSON. Individual service's READMEs will detail the expected JSON value.
 
-### Config Service
+### API Gateway Service
 
-The config service reads and distributes configuration information from service.config/data/config.json.
-Default config.json structure:
-```json
-{
-    "version": "0.1.0-alpha",
-    "environment": "development",
-    "polling": {
-        "enabled": true,
-        "interval": 30000
-    },
-    "services": [
-        {
-            "identifier": "service.device-registry",
-            "friendly": "Device Registry",
-            "port": 4000,
-            "options": {
-                "database": {
-                    "name": "service.device-registry.database",
-                    "host": "localhost",
-                    "port": 54320,
-                    "user": "user",
-                    "password": "password"
-                }
-            }
-        }
-    ]
-}
+The api gateway service reads data from `service.api-gateway/config.yaml` and distributes requests accordingly.
+Default config.yaml structure:
+```yaml
+port: 4000
+
+services:
+    service.device-registry:
+        name: Device Registry
+        prefix: service.device-registry
+        url: "http://192.168.2.117:4001"
+    service.controller.sonoff:
+        name: Sonoff Controller
+        prefix: service.controller.sonoff
+        url: "http://192.168.2.117:4002"
+    service.controller.sonos:
+        name: Sonos Controller
+        prefix: service.controller.sonos
+        url: "http://192.168.2.117:4003"
 ```
 
 ### Controllers
