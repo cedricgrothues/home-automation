@@ -53,7 +53,7 @@ Available on port `4001` by default
 
 - `"id":string` a globally unique ID for this device, can be used to get the device address
 - `"name":string` a friendly name for the device
-- `"type":string` the type of device, accepted types: `plug`, `speaker`, `lamp`
+- `"type":string` the type of device, accepted types: `plug`, `speaker`, `lamp`, `lamp-dimmable`, `lamp-color`
 - `"room_id":string` the globally unique ID of the room
 - `"controller":string` the name of the device's controller
 

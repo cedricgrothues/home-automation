@@ -78,6 +78,13 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
+	if match, _ := regexp.MatchString(`^(?:lamp(?:-dimmable|-color)?|plug|speaker)$`, device.Type); !match {
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(`{"message":"Type not recognized, refer to the documentation for more information."}`))
+		return
+	}
+
 	if match, _ := regexp.MatchString(`^(?:(?:^|\.)(?:2(?:5[0-5]|[0-4]\d)|1?\d?\d)){4}$`, device.Address); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
