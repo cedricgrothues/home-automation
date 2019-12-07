@@ -30,12 +30,12 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
         FutureProvider<SharedPreferences>.value(value: SharedPreferences.getInstance()),
-        StreamProvider.value(value: Connectivity().onConnectivityChanged, initialData: ConnectivityResult.wifi),
+        StreamProvider<ConnectivityResult>.value(value: Connectivity().onConnectivityChanged, initialData: ConnectivityResult.wifi),
       ],
       child: MaterialApp(
         title: 'Home',
         theme: ThemeData(
-          scaffoldBackgroundColor: Colors.white,
+          scaffoldBackgroundColor: Color(0xFFFEFFFF),
           fontFamily: 'Open Sans',
           buttonColor: Colors.black,
           appBarTheme: AppBarTheme(
@@ -110,7 +110,7 @@ class App extends StatelessWidget {
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           splashFactory: NoSplashFactory(),
-          cardColor: Color(0xff1c1c1e),
+          cardColor: Color(0xFF1C1C1E),
           textTheme: TextTheme(
             headline: TextStyle(
               fontSize: 35,

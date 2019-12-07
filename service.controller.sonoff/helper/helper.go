@@ -13,7 +13,7 @@ func PowerBool(body io.ReadCloser) (bool, error) {
 	err := json.NewDecoder(body).Decode(&r)
 
 	if err != nil {
-		return false, fmt.Errorf("Can't decode body")
+		return false, err
 	}
 
 	if r["POWER"] == "ON" {

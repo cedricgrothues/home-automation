@@ -2,7 +2,7 @@ package routes
 
 import (
 	"encoding/json"
-	"fmt"
+	"net"
 	"net/http"
 	"regexp"
 
@@ -31,8 +31,8 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			panic(err)
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
-			w.WriteHeader(http.StatusServiceUnavailable)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Unable to contact the device-registry service. %v"}`, err)))
+			w.WriteHeader(http.StatusFailedDependency)
+			w.Write([]byte(`{"message":"Unable to contact the device-registry service."}`))
 			return
 		}
 	}
@@ -46,14 +46,10 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	power, err := dao.GetState(response.Address)
 
 	if err != nil {
-		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
-			panic(err)
-		} else {
-			w.Header().Add("Content-Type", "application/json; charset=utf-8")
-			w.WriteHeader(http.StatusServiceUnavailable)
-			w.Write([]byte(`{"message":"Unable to contact the device."}`))
-			return
-		}
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusFailedDependency)
+		w.Write([]byte(`{"message":"Failed to connect to the device."}`))
+		return
 	}
 
 	response.State.Power = power
@@ -92,7 +88,7 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			panic(err)
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
-			w.WriteHeader(http.StatusServiceUnavailable)
+			w.WriteHeader(http.StatusFailedDependency)
 			w.Write([]byte(`{"message":"Unable to contact the device-registry service."}`))
 			return
 		}
@@ -114,13 +110,13 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	power, err := dao.SetState(response.Address, request.Power)
 
 	if err != nil {
-		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
-			panic(err)
-		} else {
+		if err, ok := err.(net.Error); ok && err.Timeout() {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusServiceUnavailable)
-			w.Write([]byte(`{"message":"Unable to contact the device."}`))
+			w.Write([]byte(`{"message":"device timed out"}`))
 			return
+		} else {
+			panic(err)
 		}
 	}
 

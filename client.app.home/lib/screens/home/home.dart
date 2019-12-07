@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-
-import 'package:home/screens/home/addons/devices.dart';
+import 'package:home/network/models/device.dart';
 
 import 'package:provider/provider.dart';
+
+import 'package:home/network/device_service.dart';
+import 'package:home/screens/home/addons/devices.dart';
 
 class Home extends StatelessWidget {
   @override
@@ -13,9 +15,10 @@ class Home extends StatelessWidget {
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
           children: <Widget>[
-            FutureProvider.value(
-              value: Devices.fetch(),
+            FutureProvider<List<Device>>.value(
+              value: DeviceService.fetch(),
               child: Devices(),
+              catchError: (context, error) => [],
             )
           ],
         ),
