@@ -5,19 +5,20 @@ import (
 	"encoding/xml"
 	"fmt"
 	"io/ioutil"
+	"net"
 	"net/http"
 	"net/url"
 )
 
 // Sonos :
 type Sonos struct {
-	Address string
+	Address net.IP
 }
 
 // Service :
 type Service struct {
 	Name       string
-	Address    string
+	Address    net.IP
 	Port       int
 	ControlURL string
 	EventURL   string
@@ -43,7 +44,7 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 
 	buffer := bytes.NewBufferString(fmt.Sprintf(`<?xml version="1.0" ?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>%s</s:Body></s:Envelope>`, body))
 
-	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, s.Address, s.Port, s.ControlURL), buffer)
+	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, s.Address.String(), s.Port, s.ControlURL), buffer)
 
 	if err != nil {
 		return err

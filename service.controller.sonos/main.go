@@ -1,25 +1,32 @@
 package main
 
 import (
-	"net/http"
-
-	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/service.controller.sonos/routes"
-	"github.com/cedricgrothues/httprouter"
+	"fmt"
+	"github.com/cedricgrothues/home-automation/service.controller.sonos/discovery"
+	"log"
 )
 
 func main() {
-	router := httprouter.New()
+	//router := httprouter.New()
+	//
+	//router.GET("/",func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	//	w.Header().Add("Content-Type", "application/json; charset=utf-8")
+	//	w.WriteHeader(http.StatusOK)
+	//	w.Write([]byte(`{"name":"service.controller.sonos"}`))
+	//})
+	//
+	//router.GET("/devices/:id", routes.GetState)
+	//router.PATCH("/devices/:id", routes.PatchState)
+	//
+	//panic(http.ListenAndServe(":4003", router))
 
-	router.GET("/",func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"name":"service.controller.sonos"}`))
-	})
+	speakers, err := discovery.Discover()
 
-	router.GET("/devices/:id", routes.GetState)
-	router.PATCH("/devices/:id", routes.PatchState)
+	if err != nil {
+		log.Fatal(err)
+	}
 
-	errors.Log("service.controller.sonos", "Failed to start with error:", http.ListenAndServe(":4003", router))
-
+	for i, speaker := range speakers {
+		fmt.Printf("%d: %s", i, speaker.Address.String())
+	}
 }
