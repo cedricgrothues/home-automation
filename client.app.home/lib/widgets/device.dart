@@ -37,8 +37,8 @@ class _DeviceCardState extends State<DeviceCard> {
         setState(() => widget.device.state = state);
       },
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 200),
-        opacity: _opacity(state: widget.device.state),
+        duration: Duration(milliseconds: 100),
+        opacity: (widget.device.state["power"]) ? 1 : 0.4,
         child: Container(
           width: 120,
           height: 120,
@@ -67,13 +67,6 @@ class _DeviceCardState extends State<DeviceCard> {
         ),
       ),
     );
-  }
-
-  static double _opacity({Map<String, dynamic> state}) {
-    if (state.containsKey("power") && state["power"] is bool) {
-      return state["power"] ? 1 : 0.4;
-    }
-    return 0.6;
   }
 }
 
