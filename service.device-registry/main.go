@@ -34,7 +34,7 @@ func main() {
 
 	router := httprouter.New()
 
-	router.GET("/",func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	router.GET("/", func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"name":"service.device-registry"}`))
