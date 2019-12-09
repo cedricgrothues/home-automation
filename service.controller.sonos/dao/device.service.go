@@ -1,28 +1,36 @@
 package dao
 
 // SetLEDState does what it says
-func (s *Sonos) SetLEDState(state string) {
-	service := Service{"DeviceProperties", s.Address, 1400, "/DeviceProperties/Control", "/DeviceProperties/Event"}
+func (s *Sonos) SetLEDState(on bool) (bool, error) {
 
 	options := make(map[string]interface{})
-	options["DesiredLEDState"] = state
 
-	err := service.request("SetLEDState", options)
+	if on == false {
+		options["DesiredLEDState"] = "Off"
+	} else {
+		options["DesiredLEDState"] = "On"
+	}
+
+	_, err := DeviceService.request(s.Address, "SetLEDState", options)
+
+	if err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+// GetLEDState does what it says
+func (s *Sonos) GetLEDState() {
+	options := make(map[string]interface{})
+
+	_, err := DeviceService.request(s.Address, "GetLEDState", options)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-// GetLEDState does what it says GetInvisible
-func (s *Sonos) GetLEDState() {
-	service := Service{"DeviceProperties", s.Address, 1400, "/DeviceProperties/Control", "/DeviceProperties/Control"}
+func (s *Sonos) SetFriendlyName() {
 
-	options := make(map[string]interface{})
-
-	err := service.request("GetLEDState", options)
-
-	if err != nil {
-		panic(err)
-	}
 }

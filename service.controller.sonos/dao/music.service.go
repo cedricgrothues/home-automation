@@ -2,11 +2,10 @@ package dao
 
 // ListAvailableServices does what it says
 func (s *Sonos) ListAvailableServices() {
-	service := Service{"MusicServices", s.Address, 1400, "/MusicServices/Control", "/MusicServices/Event"}
 
 	options := make(map[string]interface{})
 
-	err := service.request("ListAvailableServices", options)
+	_, err := MusicService.request(s.Address, "ListAvailableServices", options)
 
 	if err != nil {
 		panic(err)
@@ -15,11 +14,9 @@ func (s *Sonos) ListAvailableServices() {
 
 // GetSessionID does what it says
 func (s *Sonos) GetSessionID() {
-	service := Service{"MusicServices", s.Address, 1400, "/MusicServices/Control", "/MusicServices/Event"}
-
 	options := make(map[string]interface{})
 
-	err := service.request("GetSessionId", options)
+	_, err := MusicService.request(s.Address, "GetSessionId", options)
 
 	if err != nil {
 		panic(err)

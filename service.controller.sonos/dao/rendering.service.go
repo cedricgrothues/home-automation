@@ -3,79 +3,84 @@ package dao
 import "github.com/cedricgrothues/home-automation/service.controller.sonos/helper"
 
 // GetVolume gets the current volume
-func (s *Sonos) GetVolume() {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
-
+func (s *Sonos) GetVolume() error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 
-	err := service.request("GetVolume", options)
+	_, err := RenderingService.request(s.Address, "GetVolume", options)
 
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }
 
 // SetVolume sets the volume
-func (s *Sonos) SetVolume(desired int) {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
+func (s *Sonos) SetVolume(desired int) error {
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 	options["DesiredVolume"] = desired
 
-	err := service.request("SetVolume", options)
+	_, err := RenderingService.request(s.Address, "SetVolume", options)
 
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }
 
 // SetRelativeVolume adjusts the volume
-func (s *Sonos) SetRelativeVolume(adjustment int) {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
+func (s *Sonos) SetRelativeVolume(adjustment int) error {
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 	options["Adjustment"] = adjustment
 
-	err := service.request("SetRelativeVolume", options)
+	_, err := RenderingService.request(s.Address, "SetRelativeVolume", options)
 
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }
 
 // GetMute gets the current mute value
-func (s *Sonos) GetMute() {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
+func (s *Sonos) GetMute() bool {
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 
-	err := service.request("GetMute", options)
+	_, err := RenderingService.request(s.Address, "GetMute", options)
 
 	if err != nil {
 		panic(err)
 	}
+
+	// TODO: Implement return type
+	return false
 }
 
 // SetMute sets the mute
-func (s *Sonos) SetMute(mute bool) {
-	service := Service{"RenderingControl", s.Address, 1400, "/MediaRenderer/RenderingControl/Control", "/MediaRenderer/RenderingControl/Event"}
+func (s *Sonos) SetMute(mute bool) error {
 
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 	options["DesiredMute"] = helper.BoolToInt(mute)
 
-	err := service.request("SetMute", options)
+	_, err := RenderingService.request(s.Address, "SetMute", options)
 
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }

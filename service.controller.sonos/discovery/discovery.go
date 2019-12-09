@@ -10,8 +10,9 @@ import (
 	"time"
 )
 
+// Sonos represents the object the discovery service returns
 type Sonos struct {
-	Address net.IP `json:"address"`
+	Address  net.IP `json:"address"`
 	Friendly string `xml:"device>displayName" json:"friendly"`
 }
 

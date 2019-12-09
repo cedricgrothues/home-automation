@@ -2,23 +2,27 @@ package dao
 
 import (
 	"bytes"
-	"encoding/xml"
 	"fmt"
 	"io/ioutil"
 	"net"
 	"net/http"
-	"net/url"
 )
 
-// Sonos :
+var (
+	DeviceService    = Service{Name: "DeviceProperties", Port: 1400, ControlURL: "/DeviceProperties/Control", EventURL: "/DeviceProperties/Event"}
+	RenderingService = Service{Name: "RenderingControl", Port: 1400, ControlURL: "/MediaRenderer/RenderingControl/Control", EventURL: "/MediaRenderer/RenderingControl/Event"}
+	TransportService = Service{Name: "AVTransport", Port: 1400, ControlURL: "/MediaRenderer/AVTransport/Control", EventURL: "/MediaRenderer/AVTransport/Event"}
+	MusicService     = Service{Name: "MusicServices", Port: 1400, ControlURL: "/MusicServices/Control", EventURL: "/MusicServices/Event"}
+)
+
+// Sonos : Defines a speaker for the dao package
 type Sonos struct {
-	Address net.IP
+	Address net.IP `json:"address"`
 }
 
-// Service :
+// Service : Defines a sevice in the dao package
 type Service struct {
 	Name       string
-	Address    net.IP
 	Port       int
 	ControlURL string
 	EventURL   string
@@ -31,7 +35,7 @@ type Envelope struct {
 	TrackURI      string `xml:"Body>GetPositionInfoResponse>TrackURI"`
 }
 
-func (s *Service) request(a string, o map[string]interface{}) error {
+func (s *Service) request(address net.IP, a string, o map[string]interface{}) (string, error) {
 	action := fmt.Sprintf(`"urn:schemas-upnp-org:service:%s:1#%s"`, s.Name, a)
 	body := `<u:` + a + ` xmlns:u="urn:schemas-upnp-org:service:` + s.Name + `:1">`
 
@@ -44,10 +48,10 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 
 	buffer := bytes.NewBufferString(fmt.Sprintf(`<?xml version="1.0" ?><s:Envelope s:encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" xmlns:s="http://schemas.xmlsoap.org/soap/envelope/"><s:Body>%s</s:Body></s:Envelope>`, body))
 
-	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, s.Address.String(), s.Port, s.ControlURL), buffer)
+	req, err := http.NewRequest("POST", fmt.Sprintf(`http://%s:%d%s`, address.String(), s.Port, s.ControlURL), buffer)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	req.Header.Set("Content-Type", "text/xml; charset=utf8")
@@ -57,7 +61,7 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 	res, err := client.Do(req)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
 	defer res.Body.Close()
@@ -65,15 +69,8 @@ func (s *Service) request(a string, o map[string]interface{}) error {
 	bytes, err := ioutil.ReadAll(res.Body)
 
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	var XML Envelope
-	xml.Unmarshal(bytes, &XML)
-
-	fmt.Println(XML.TrackMetaData)
-	str, err := url.QueryUnescape(string(bytes))
-	fmt.Println("\n\n\n\n" + str)
-
-	return nil
+	return string(bytes), nil
 }
