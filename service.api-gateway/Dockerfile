@@ -4,7 +4,6 @@ FROM golang
 
 # Add Maintainer Info
 LABEL maintainer="Cedric Grothues <cedricgrothues@gmail.com>"
-RUN git config --global url."https://589b62795c79fff2fee9152874dc3dfcf6381ef6:@github.com/".insteadOf "https://github.com/"
 
 ADD ./libraries/go /go/src/github.com/cedricgrothues/home-automation/libraries/go
 ADD ./service.api-gateway /go/src/github.com/cedricgrothues/home-automation/service.api-gateway
