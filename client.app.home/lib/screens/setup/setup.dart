@@ -54,9 +54,7 @@ class _SetupState extends State<Setup> {
                   ),
                   Button(
                     title: "Connect to an existing system",
-                    onPressed: () {
-                      Navigator.of(context).pushReplacementNamed('/connect');
-                    },
+                    onPressed: () => Navigator.of(context).pushReplacementNamed('/connect'),
                     width: MediaQuery.of(context).size.width - 150,
                   ),
                   RichText(
@@ -67,7 +65,7 @@ class _SetupState extends State<Setup> {
                         TextSpan(
                           text: 'Visit the FAQ',
                           style: TextStyle(fontWeight: FontWeight.w700),
-                          recognizer: new TapGestureRecognizer()..onTap = help,
+                          recognizer: TapGestureRecognizer()..onTap = help,
                         )
                       ],
                     ),

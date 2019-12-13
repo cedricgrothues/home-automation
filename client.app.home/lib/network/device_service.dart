@@ -13,7 +13,7 @@ class DeviceService {
 
     Response response = await get("http://$gateway:4000/service.device-registry/devices");
 
-    if (response.statusCode != 200) throw StatusCodeError();
+    if (response.statusCode != 200) return [];
 
     List<dynamic> devices = json.decode(response.body) ?? [];
 

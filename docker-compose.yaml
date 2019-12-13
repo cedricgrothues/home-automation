@@ -44,15 +44,15 @@ services:
     depends_on:
       - service.device-registry
 
-  service.controller.sonos:
-    container_name: "service.controller.sonos"
-    build:
-      dockerfile: service.controller.sonos/Dockerfile
-      context: .
-    ports:
-      - 4003:4003
-    depends_on:
-      - service.device-registry
+#  service.controller.sonos:
+#    container_name: "service.controller.sonos"
+#    build:
+#      dockerfile: service.controller.sonos/Dockerfile
+#      context: .
+#    ports:
+#      - 4003:4003
+#    depends_on:
+#      - service.device-registry
 
 volumes:
   service.device-registry.database.data:

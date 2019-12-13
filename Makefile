@@ -4,13 +4,14 @@ GOLANG ?= $(shell which go)
 
 .PHONY: build
 ## build: Builds the directories docker-compose images
-build: clean
+build:
+	$(call clean)
 	@echo "Building..."
 	@$(compose) build --no-cache
 
 .PHONY: run
 ## run: Runs all docker containers
-run: build
+run:
 	@echo "Starting all containers..."
 	@$(COMPOSE) up --force-recreate 
 
