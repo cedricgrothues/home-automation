@@ -29,7 +29,7 @@ services:
 
 **Definition**
 
-`GET /<service-name>/<subquery>`
+`* /<service-name>/<subquery>`
 
 **Response**
 
