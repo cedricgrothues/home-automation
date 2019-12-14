@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-// GetState combines service.device-registry data, with device state
+// DiscoverDevices returns all devices found this service's network, using ssdp discovery
 func DiscoverDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	devices := make(chan *discovery.Sonos)
 	done := make(chan bool)

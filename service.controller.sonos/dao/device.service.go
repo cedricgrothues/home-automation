@@ -11,7 +11,7 @@ func (s *Sonos) SetLEDState(on bool) (bool, error) {
 		options["DesiredLEDState"] = "On"
 	}
 
-	_, err := DeviceService.request(s.Address, "SetLEDState", options)
+	_, err := deviceService.request(s.Address, "SetLEDState", options)
 
 	if err != nil {
 		return false, err
@@ -24,13 +24,13 @@ func (s *Sonos) SetLEDState(on bool) (bool, error) {
 func (s *Sonos) GetLEDState() {
 	options := make(map[string]interface{})
 
-	_, err := DeviceService.request(s.Address, "GetLEDState", options)
+	_, err := deviceService.request(s.Address, "GetLEDState", options)
 
 	if err != nil {
 		panic(err)
 	}
 }
 
-func (s *Sonos) SetFriendlyName() {
+// func (s *Sonos) SetFriendlyName() {
 
-}
+// }

@@ -45,7 +45,7 @@ func ListenAndServe(c *config.Configuration) error {
 	server := &http.Server{Addr: fmt.Sprintf(":%d", c.Port), Handler: router}
 
 	go run(server)
-	graceful(server, time.Second * 5)
+	graceful(server, time.Second*5)
 
 	return nil
 }

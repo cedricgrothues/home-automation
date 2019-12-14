@@ -8,7 +8,7 @@ func (s *Sonos) GetVolume() error {
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 
-	_, err := RenderingService.request(s.Address, "GetVolume", options)
+	_, err := renderingService.request(s.Address, "GetVolume", options)
 
 	if err != nil {
 		return err
@@ -25,7 +25,7 @@ func (s *Sonos) SetVolume(desired int) error {
 	options["Channel"] = "Master"
 	options["DesiredVolume"] = desired
 
-	_, err := RenderingService.request(s.Address, "SetVolume", options)
+	_, err := renderingService.request(s.Address, "SetVolume", options)
 
 	if err != nil {
 		return err
@@ -42,7 +42,7 @@ func (s *Sonos) SetRelativeVolume(adjustment int) error {
 	options["Channel"] = "Master"
 	options["Adjustment"] = adjustment
 
-	_, err := RenderingService.request(s.Address, "SetRelativeVolume", options)
+	_, err := renderingService.request(s.Address, "SetRelativeVolume", options)
 
 	if err != nil {
 		return err
@@ -58,7 +58,7 @@ func (s *Sonos) GetMute() bool {
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 
-	_, err := RenderingService.request(s.Address, "GetMute", options)
+	_, err := renderingService.request(s.Address, "GetMute", options)
 
 	if err != nil {
 		panic(err)
@@ -76,7 +76,7 @@ func (s *Sonos) SetMute(mute bool) error {
 	options["Channel"] = "Master"
 	options["DesiredMute"] = helper.BoolToInt(mute)
 
-	_, err := RenderingService.request(s.Address, "SetMute", options)
+	_, err := renderingService.request(s.Address, "SetMute", options)
 
 	if err != nil {
 		return err

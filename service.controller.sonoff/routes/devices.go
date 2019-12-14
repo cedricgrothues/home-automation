@@ -115,9 +115,8 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			w.WriteHeader(http.StatusServiceUnavailable)
 			w.Write([]byte(`{"message":"device timed out"}`))
 			return
-		} else {
-			panic(err)
 		}
+		panic(err)
 	}
 
 	response.State.Power = power

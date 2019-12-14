@@ -13,7 +13,7 @@ func (s *Sonos) Play() error {
 	options["InstanceID"] = 0
 	options["Speed"] = 1
 
-	_, err := TransportService.request(s.Address, "Play", options)
+	_, err := transportService.request(s.Address, "Play", options)
 
 	if err != nil {
 		return err
@@ -22,14 +22,14 @@ func (s *Sonos) Play() error {
 	return nil
 }
 
-// PlayURI
+// PlayURI plays the given uri on the device
 func (s *Sonos) PlayURI(uri, meta string) error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["CurrentURI"] = uri
 	options["CurrentURIMetaData"] = meta
 
-	_, err := TransportService.request(s.Address, "SetAVTransportURI", options)
+	_, err := transportService.request(s.Address, "SetAVTransportURI", options)
 
 	if err != nil {
 		return err
@@ -49,7 +49,7 @@ func (s *Sonos) Pause() error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 
-	_, err := TransportService.request(s.Address, "Pause", options)
+	_, err := transportService.request(s.Address, "Pause", options)
 
 	if err != nil {
 		return err
@@ -63,7 +63,7 @@ func (s *Sonos) Stop() error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 
-	_, err := TransportService.request(s.Address, "Stop", options)
+	_, err := transportService.request(s.Address, "Stop", options)
 
 	if err != nil {
 		return err
@@ -77,7 +77,7 @@ func (s *Sonos) Next() error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 
-	_, err := TransportService.request(s.Address, "Next", options)
+	_, err := transportService.request(s.Address, "Next", options)
 
 	if err != nil {
 		return err
@@ -86,6 +86,7 @@ func (s *Sonos) Next() error {
 	return nil
 }
 
+// Seek jups to a specific timestamp in the song
 func (s *Sonos) Seek(timestamp string) error {
 	if ok, _ := regexp.Match("^[0-9][0-9]:[0-9][0-9]:[0-9][0-9]$", []byte(timestamp)); !ok {
 		return errors.New("invalid timestamp, use HH:MM:SS format")
@@ -96,7 +97,7 @@ func (s *Sonos) Seek(timestamp string) error {
 	options["Unit"] = "REL_TIME"
 	options["Target"] = timestamp
 
-	_, err := TransportService.request(s.Address, "Seek", options)
+	_, err := transportService.request(s.Address, "Seek", options)
 
 	if err != nil {
 		return err
@@ -112,7 +113,7 @@ func (s *Sonos) Previous() error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 
-	_, err := TransportService.request(s.Address, "Previous", options)
+	_, err := transportService.request(s.Address, "Previous", options)
 
 	if err != nil {
 		return err
@@ -126,7 +127,7 @@ func (s *Sonos) GetPositionInfo() error {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 
-	_, err := TransportService.request(s.Address, "GetPositionInfo", options)
+	_, err := transportService.request(s.Address, "GetPositionInfo", options)
 
 	if err != nil {
 		return err
@@ -135,12 +136,13 @@ func (s *Sonos) GetPositionInfo() error {
 	return nil
 }
 
+// GetCurrentTrack returns a pointer to a track struct with useful information about the current track
 func (s *Sonos) GetCurrentTrack() (*Track, error) {
 	options := make(map[string]interface{})
 	options["InstanceID"] = 0
 	options["Channel"] = "Master"
 
-	xmlString, err := TransportService.request(s.Address, "GetPositionInfo", options)
+	xmlString, err := transportService.request(s.Address, "GetPositionInfo", options)
 
 	if err != nil {
 		return nil, err
@@ -167,7 +169,7 @@ func (s *Sonos) GetCurrentTrack() (*Track, error) {
 	track.Title = response.TrackMetaData.DIDLLite.Title
 	track.Artist = response.TrackMetaData.DIDLLite.Creator
 
-	track.Album = &Album{}
+	track.Album = &album{}
 	track.Album.Title = response.TrackMetaData.DIDLLite.Album
 	track.Album.Cover = response.TrackMetaData.DIDLLite.AlbumArtURI
 
@@ -182,13 +184,13 @@ func (s *Sonos) GetCurrentTrack() (*Track, error) {
 type Track struct {
 	Title    string `json:"title"`
 	Artist   string `json:"artist"`
-	Album    *Album `json:"album"`
+	Album    *album `json:"album"`
 	Duration string `json:"duration"`
 	Position string `json:"position"`
 	URI      string `json:"uri"`
 }
 
-type Album struct {
+type album struct {
 	Title string `json:"title"`
 	Cover string `json:"cover"`
 }

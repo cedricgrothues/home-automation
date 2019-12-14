@@ -9,10 +9,10 @@ import (
 )
 
 var (
-	DeviceService    = Service{Name: "DeviceProperties", Port: 1400, ControlURL: "/DeviceProperties/Control", EventURL: "/DeviceProperties/Event"}
-	RenderingService = Service{Name: "RenderingControl", Port: 1400, ControlURL: "/MediaRenderer/RenderingControl/Control", EventURL: "/MediaRenderer/RenderingControl/Event"}
-	TransportService = Service{Name: "AVTransport", Port: 1400, ControlURL: "/MediaRenderer/AVTransport/Control", EventURL: "/MediaRenderer/AVTransport/Event"}
-	MusicService     = Service{Name: "MusicServices", Port: 1400, ControlURL: "/MusicServices/Control", EventURL: "/MusicServices/Event"}
+	deviceService    = Service{Name: "DeviceProperties", Port: 1400, ControlURL: "/DeviceProperties/Control", EventURL: "/DeviceProperties/Event"}
+	renderingService = Service{Name: "RenderingControl", Port: 1400, ControlURL: "/MediaRenderer/RenderingControl/Control", EventURL: "/MediaRenderer/RenderingControl/Event"}
+	transportService = Service{Name: "AVTransport", Port: 1400, ControlURL: "/MediaRenderer/AVTransport/Control", EventURL: "/MediaRenderer/AVTransport/Event"}
+	musicService     = Service{Name: "MusicServices", Port: 1400, ControlURL: "/MusicServices/Control", EventURL: "/MusicServices/Event"}
 )
 
 // Sonos : Defines a speaker for the dao package

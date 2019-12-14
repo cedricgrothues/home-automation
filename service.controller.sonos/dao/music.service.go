@@ -5,7 +5,7 @@ func (s *Sonos) ListAvailableServices() {
 
 	options := make(map[string]interface{})
 
-	_, err := MusicService.request(s.Address, "ListAvailableServices", options)
+	_, err := musicService.request(s.Address, "ListAvailableServices", options)
 
 	if err != nil {
 		panic(err)
@@ -16,7 +16,7 @@ func (s *Sonos) ListAvailableServices() {
 func (s *Sonos) GetSessionID() {
 	options := make(map[string]interface{})
 
-	_, err := MusicService.request(s.Address, "GetSessionId", options)
+	_, err := musicService.request(s.Address, "GetSessionId", options)
 
 	if err != nil {
 		panic(err)
