@@ -9,18 +9,17 @@ import (
 
 	"github.com/cedricgrothues/httprouter"
 
+	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
 	"github.com/cedricgrothues/home-automation/service.api-gateway/config"
 )
 
 // ListenAndServe provides the config to the client
 func ListenAndServe(c *config.Configuration) error {
-	router := httprouter.New()
+	router, err := bootstrap.New("service.api-gateway")
 
-	router.GET("/", func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"name":"service.api-gateway"}`))
-	})
+	if err != nil {
+		return err
+	}
 
 	for _, service := range c.Services {
 		url, err := url.Parse(service.URL)

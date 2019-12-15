@@ -4,10 +4,9 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-	"net/http"
 
+	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
 	"github.com/cedricgrothues/home-automation/service.device-registry/routes"
-	"github.com/cedricgrothues/httprouter"
 	_ "github.com/lib/pq"
 )
 
@@ -32,13 +31,11 @@ func main() {
 
 	routes.Database = database
 
-	router := httprouter.New()
+	router, err := bootstrap.New("service.device-registry")
 
-	router.GET("/", func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
-		w.Header().Add("Content-Type", "application/json; charset=utf-8")
-		w.WriteHeader(http.StatusOK)
-		w.Write([]byte(`{"name":"service.device-registry"}`))
-	})
+	if err != nil {
+		panic(err)
+	}
 
 	router.GET("/devices", routes.AllDevices)
 	router.POST("/devices", routes.AddDevice)
@@ -52,5 +49,5 @@ func main() {
 	router.GET("/rooms/:id", routes.GetRoom)
 	router.DELETE("/rooms/:id", routes.DeleteRoom)
 
-	panic(http.ListenAndServe(":4001", router))
+	panic(bootstrap.Start(router, 4001))
 }

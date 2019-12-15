@@ -21,16 +21,16 @@ class Home extends StatelessWidget {
         child: ListView(
           children: <Widget>[
             Music(),
-            // FutureProvider<List<Scene>>.value(
-            //   value: SceneService.fetch(),
-            //   child: Scenes(),
-            //   catchError: (context, error) => [],
-            // )
-            // FutureProvider<List<Device>>.value(
-            //   value: DeviceService.fetch(),
-            //   child: Devices(),
-            //   catchError: (context, error) => [],
-            // )
+            FutureProvider<List<Scene>>.value(
+              value: SceneService.fetch(),
+              child: Scenes(),
+              catchError: (context, error) => [],
+            ),
+            FutureProvider<List<Device>>.value(
+              value: DeviceService.fetch(),
+              child: Devices(),
+              catchError: (context, error) => [],
+            )
           ],
         ),
       ),
