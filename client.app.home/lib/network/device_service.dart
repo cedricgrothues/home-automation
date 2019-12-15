@@ -4,7 +4,6 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import 'package:home/models/errors.dart';
 import 'package:home/network/models/device.dart';
 
 class DeviceService {

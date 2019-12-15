@@ -88,6 +88,16 @@ class App extends StatelessWidget {
               height: 1.2,
               color: Colors.black,
             ),
+            caption: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.black.withOpacity(0.7),
+            ),
+            subhead: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
           ),
         ),
         darkTheme: ThemeData(
@@ -144,6 +154,16 @@ class App extends StatelessWidget {
               height: 1.2,
               color: Colors.white,
             ),
+            caption: TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.w600,
+              color: Colors.white70,
+            ),
+            subhead: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.white,
+            ),
           ),
         ),
         initialRoute: '/',
@@ -152,7 +172,7 @@ class App extends StatelessWidget {
           switch (settings.name) {
             case '/':
               return NoTransitionRoute(
-                builder: (_) => Splash(),
+                builder: (_) => Home(),
                 settings: settings,
               );
             case '/home':
