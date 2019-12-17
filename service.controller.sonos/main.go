@@ -1,9 +1,9 @@
 package main
 
 import (
-	"github.com/cedricgrothues/home-automation/service.controller.sonos/dao"
-	"io"
-	"net"
+	"fmt"
+
+	"github.com/cedricgrothues/home-automation/service.controller.sonos/discovery"
 )
 
 func main() {
@@ -21,17 +21,23 @@ func main() {
 	//
 	//panic(http.ListenAndServe(":4003", router))
 
-	sonos := dao.Sonos{Address: net.ParseIP("192.168.2.158")}
+	devices, _ := discovery.Discover()
 
-	_, err := sonos.GetCurrentTrack()
-
-	if err != nil && err != io.EOF {
-		panic(err)
+	for _, device := range devices {
+		fmt.Println(device)
 	}
 
-	err = sonos.Seek("00:01:01")
+	// sonos := dao.Sonos{Address: net.ParseIP("192.168.2.158")}
 
-	if err != nil {
-		panic(err)
-	}
+	// _, err = sonos.GetCurrentTrack()
+
+	// if err != nil && err != io.EOF {
+	// 	panic(err)
+	// }
+
+	// err = sonos.Seek("00:01:01")
+
+	// if err != nil {
+	// 	panic(err)
+	// }
 }

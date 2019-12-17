@@ -17,28 +17,25 @@ type Sonos struct {
 }
 
 // Discover looks for new Devices on the local network
-func Discover(c chan *Sonos, e chan error, d chan bool) {
+func Discover() ([]*Sonos, error) {
 	search := []string{"M-SEARCH * HTTP/1.1", "HOST: 239.255.255.250:1900", "MAN: \"ssdp:discover\"", "MX: 1", "ST: urn:schemas-upnp-org:device:ZonePlayer:1"}
 
 	addr, err := net.ResolveUDPAddr("udp", ":1900")
 
 	if err != nil {
-		e <- err
-		return
+		return nil, err
 	}
 
 	connection, err := net.ListenUDP("udp", addr)
 
 	if err != nil {
-		e <- err
-		return
+		return nil, err
 	}
 
 	err = connection.SetReadDeadline(time.Now().Add(time.Second * 5))
 
 	if err != nil {
-		e <- err
-		return
+		return nil, err
 	}
 
 	defer connection.Close()
@@ -46,8 +43,7 @@ func Discover(c chan *Sonos, e chan error, d chan bool) {
 	multicast, err := net.ResolveUDPAddr("udp", "239.255.255.250:1900")
 
 	if err != nil {
-		e <- err
-		return
+		return nil, err
 	}
 
 	message := new(bytes.Buffer)
@@ -56,16 +52,16 @@ func Discover(c chan *Sonos, e chan error, d chan bool) {
 	_, err = connection.WriteTo(message.Bytes(), multicast)
 
 	if err != nil {
-		e <- err
-		return
+		return nil, err
 	}
+
+	var devices []*Sonos
 
 	for {
 		buf := make([]byte, 1024)
 		_, addr, err := connection.ReadFromUDP(buf)
 		if err, ok := err.(net.Error); ok && err.Timeout() {
-			d <- true
-			break
+			return devices, nil
 		}
 
 		sonos := Sonos{
@@ -75,18 +71,16 @@ func Discover(c chan *Sonos, e chan error, d chan bool) {
 		res, err := http.Get("http://" + sonos.Address.String() + ":1400/xml/device_description.xml")
 
 		if err != nil {
-			e <- err
-			break
+			return nil, err
 		}
 
 		err = xml.NewDecoder(res.Body).Decode(&sonos)
 		res.Body.Close()
 
 		if err != nil {
-			e <- err
-			break
+			return nil, err
 		}
 
-		c <- &sonos
+		devices = append(devices, &sonos)
 	}
 }
