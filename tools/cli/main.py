@@ -1,4 +1,5 @@
 import os
+import re
 import click
 import requests
 import zipfile
@@ -44,8 +45,9 @@ def setup(address):
         file = open("./tmp/tmp.zip", "wb+")
         file.write(repository.content)
         zip = zipfile.ZipFile(file)
-        print(zip.namelist())
-        zip.extract(zip.namelist()[-1], "./tmp/")
+        for f in zip.namelist():
+            if re.match('^.+\.(go|mod|sum|py)$', f):
+                zip.extract(re.sub(r'(?is)[0-9a-zA-Z\-]+/', '', f), "./tmp/")
         zip.close()
         file.close()
         os.remove("./tmp/tmp.zip")
