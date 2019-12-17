@@ -41,10 +41,27 @@ class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-class RouteUtils {
-  static RoutePredicate withNameLike(String name) {
-    return (Route<dynamic> route) {
-      return !route.willHandlePopInternally && route is ModalRoute && route.settings.name != null && route.settings.name.contains(name);
-    };
-  }
+/// FadeTransitionRoute
+/// Custom route with a fade transition
+class FadeTransitionRoute<T> extends PageRouteBuilder {
+  final Widget page;
+  FadeTransitionRoute({this.page})
+      : super(
+          pageBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+          ) =>
+              page,
+          transitionsBuilder: (
+            BuildContext context,
+            Animation<double> animation,
+            Animation<double> secondaryAnimation,
+            Widget child,
+          ) =>
+              FadeTransition(
+            opacity: animation,
+            child: child,
+          ),
+        );
 }

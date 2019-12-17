@@ -171,9 +171,8 @@ class App extends StatelessWidget {
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
             case '/':
-              return NoTransitionRoute(
-                builder: (_) => Home(),
-                settings: settings,
+              return FadeTransitionRoute(
+                page: Splash(),
               );
             case '/home':
               return NoTransitionRoute(

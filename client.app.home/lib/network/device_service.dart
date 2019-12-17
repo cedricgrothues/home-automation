@@ -27,7 +27,7 @@ class DeviceService {
       }
     }
 
-    return devices.map((dynamic device) => Device.fromJson(Map.from(device))).toList();
+    return devices != null ? devices.map((dynamic device) => Device.fromJson(Map.from(device))).toList() : [];
   }
 
   static Future<Map<String, dynamic>> update({Device device}) async {

@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
+import 'package:http/http.dart';
 
 import 'package:home/models/errors.dart';
 
@@ -20,7 +22,8 @@ class _SplashState extends State<Splash> {
     if (prefs != null) {
       if (prefs.containsKey("service.api-gateway")) {
         try {
-          http.Response response = await http.get("http://${prefs.getString("service.api-gateway")}:4000/");
+          Response response =
+              await get("http://${prefs.getString("service.api-gateway")}:4000/").timeout(const Duration(milliseconds: 200));
 
           if (response.statusCode != 200) throw StatusCodeError(code: response.statusCode);
 
@@ -29,10 +32,18 @@ class _SplashState extends State<Splash> {
           if (!map.containsKey("name") || map["name"] != "service.api-gateway") throw ResponseError();
 
           Navigator.of(context).pushReplacementNamed("/home");
+        } on SocketException {
+          Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: {"error": "socket"});
+        } on TimeoutException {
+          Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: {"error": "timeout"});
         } catch (error) {
-          // API Gateway could not be reached and an error was thrown...
+          // We could neither catch a SocketException nor the TimeoutException that is thrown after 200ms.
+          // I am not particularly sure if there is any other error that could possibly be thrown,
+          // but if for some reason that happens, we'll just log it and show the error screen.
+
+          print("Unhandled Exception $error of type: ${error.runtimeType}");
+
           Navigator.of(context).pushReplacementNamed("/connection_failed");
-          print(error);
         }
       } else
         Navigator.of(context).pushReplacementNamed("/setup");

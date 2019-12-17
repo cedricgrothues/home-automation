@@ -19,13 +19,14 @@ class Home extends StatelessWidget {
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ListView(
+          physics: AlwaysScrollableScrollPhysics(),
           children: <Widget>[
-            Music(),
-            FutureProvider<List<Scene>>.value(
-              value: SceneService.fetch(),
-              child: Scenes(),
-              catchError: (context, error) => [],
-            ),
+            // Music(),
+            // FutureProvider<List<Scene>>.value(
+            //   value: SceneService.fetch(),
+            //   child: Scenes(),
+            //   catchError: (context, error) => [],
+            // ),
             FutureProvider<List<Device>>.value(
               value: DeviceService.fetch(),
               child: Devices(),

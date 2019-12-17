@@ -6,7 +6,7 @@ client.app.home is a cross-platform control center for your home-automation syst
 
 ## Building
 
-`NOTE: You need to switch to the master channel to build and run this app`
+`NOTE: You need to switch to the beta channel to build and run this app for the web`
 
 Android (armeabi-v7a): `flutter build apk`
 Android (arm64-v8a): `flutter build apk --target=android-arm64`
