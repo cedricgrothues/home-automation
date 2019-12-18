@@ -38,7 +38,7 @@ class _SplashState extends State<Splash> {
           Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: {"error": "timeout"});
         } catch (error) {
           // We could neither catch a SocketException nor the TimeoutException that is thrown after 200ms.
-          // I am not particularly sure if there is any other error that could possibly be thrown,
+          // I am not particularly sure if there is any other error that could be thrown here,
           // but if for some reason that happens, we'll just log it and show the error screen.
 
           print("Unhandled Exception $error of type: ${error.runtimeType}");
