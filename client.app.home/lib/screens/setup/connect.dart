@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:home/components/icons.dart';
-
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -57,78 +55,5 @@ class _ConnectState extends State<Connect> {
 
   Future<bool> store(BuildContext context, {String address}) async {
     return (await SharedPreferences.getInstance()).setString('service.api-gateway', address);
-  }
-}
-
-class ManualConnect extends StatelessWidget {
-  static TextEditingController _controller = TextEditingController();
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        leading: IconButton(
-          icon: Icon(RegularIcons.times),
-          onPressed: () => Navigator.of(context).pop(),
-        ),
-      ),
-      body: Stack(
-        children: <Widget>[
-          Positioned(
-            top: 150,
-            left: 20,
-            right: 20,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(bottom: 15.0),
-                  child: Text(
-                    "Enter your Home Hub's IP Address",
-                    style: Theme.of(context).textTheme.body1,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                TextField(
-                  controller: _controller,
-                  keyboardType: TextInputType.number,
-                  style: Theme.of(context).textTheme.body1,
-                  decoration: InputDecoration(
-                    hintText: "127.0.0.1",
-                    hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.black45),
-                    focusedBorder: const UnderlineInputBorder(
-                      borderSide: const BorderSide(color: Colors.black45),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          Positioned(
-            left: 0,
-            right: 0,
-            bottom: MediaQuery.of(context).viewInsets.bottom,
-            height: 60,
-            child: CupertinoButton(
-              padding: EdgeInsets.all(0),
-              child: Container(
-                width: double.infinity,
-                height: double.infinity,
-                color: Theme.of(context).buttonColor,
-                alignment: Alignment.center,
-                child: Text(
-                  "Connect",
-                  style: Theme.of(context).textTheme.button.copyWith(fontSize: 16),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-              onPressed: () {},
-            ),
-          ),
-        ],
-      ),
-    );
   }
 }

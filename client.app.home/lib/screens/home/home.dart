@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:home/components/icons.dart';
 import 'package:home/network/models/device.dart';
 
 import 'package:provider/provider.dart';
@@ -16,6 +17,13 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: Colors.blue,
+        child: Icon(LightIcons.plus),
+        onPressed: () {
+          Navigator.of(context).pushNamed("/add");
+        },
+      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),
         child: ListView(

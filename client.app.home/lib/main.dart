@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:connectivity/connectivity.dart';
 
+import 'package:home/screens/add.dart';
 import 'package:home/screens/wifi.dart';
 import 'package:home/screens/splash.dart';
 import 'package:home/screens/home/home.dart';
@@ -43,6 +44,11 @@ class App extends StatelessWidget {
               color: Colors.black,
               size: 26,
             ),
+          ),
+          cupertinoOverrideTheme: CupertinoThemeData(
+            brightness: Brightness.light,
+            primaryColor: Colors.black,
+            barBackgroundColor: Colors.transparent,
           ),
           iconTheme: IconThemeData(
             color: Colors.black,
@@ -109,6 +115,11 @@ class App extends StatelessWidget {
               color: Colors.white,
               size: 26,
             ),
+          ),
+          cupertinoOverrideTheme: CupertinoThemeData(
+            primaryColor: Colors.white,
+            brightness: Brightness.light,
+            barBackgroundColor: Colors.transparent,
           ),
           iconTheme: IconThemeData(
             color: Colors.white,
@@ -200,6 +211,10 @@ class App extends StatelessWidget {
             case '/dimmable_light':
               return MaterialPageRoute(
                 builder: (_) => LightController(dimmable: true, id: "bedroom-lamp"),
+              );
+            case '/add':
+              return SlideTransitionRoute(
+                page: Add(),
               );
             default:
               return null;

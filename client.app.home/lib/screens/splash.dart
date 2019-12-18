@@ -34,7 +34,7 @@ class _SplashState extends State<Splash> {
     if (preferences.containsKey("service.api-gateway")) {
       try {
         Response response = await get("http://${preferences.getString("service.api-gateway")}:4000/").timeout(
-          const Duration(milliseconds: 200),
+          const Duration(milliseconds: 300),
         );
 
         // Here we won't accept any status code that is not `200` / http.StatusOK since we know
@@ -52,7 +52,7 @@ class _SplashState extends State<Splash> {
 
         Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
       } on TimeoutException catch (error) {
-        // The timeout exception is thrown, if there was no server response after 200ms to minimize initial loading time.
+        // The timeout exception is thrown, if there was no server response after 300ms to minimize initial loading time.
         // Since the server is most likely running on a local network, we'll just assume that it is unreachable.
 
         Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
