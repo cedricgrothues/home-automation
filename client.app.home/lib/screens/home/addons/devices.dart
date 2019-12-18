@@ -20,7 +20,9 @@ class _DevicesState extends State<Devices> {
       spacing: 10,
       runSpacing: 10,
       direction: Axis.horizontal,
-      children: devices != null ? devices.map((device) => DeviceCard(device)).toList() : [],
+      children: devices != null
+          ? devices.map((device) => DeviceCard(device)).toList()
+          : [],
     );
   }
 }

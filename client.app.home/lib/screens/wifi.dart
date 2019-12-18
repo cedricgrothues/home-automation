@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:home/components/regular_icons.dart';
+import 'package:home/components/icons.dart';
 
 import 'package:provider/provider.dart';
 import 'package:connectivity/connectivity.dart';
@@ -15,7 +15,8 @@ class NetworkAware extends StatelessWidget {
     return Stack(
       children: <Widget>[
         child,
-        if (Provider.of<ConnectivityResult>(context) != ConnectivityResult.wifi) NoWifi(),
+        if (Provider.of<ConnectivityResult>(context) != ConnectivityResult.wifi)
+          NoWifi(),
       ],
     );
   }
@@ -43,7 +44,8 @@ class NoWifi extends StatelessWidget {
                 child: Text(
                   "You need to be connected to a wireless network to use the Home App. Go to Settings > Wi-Fi on your device.",
                   textAlign: TextAlign.center,
-                  style: Theme.of(context).textTheme.subtitle.copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
+                  style: Theme.of(context).textTheme.subtitle.copyWith(
+                      height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                 ),
               ),
             ],

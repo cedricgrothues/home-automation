@@ -80,7 +80,10 @@ class StateLabel extends StatelessWidget {
     if (device.state.containsKey("error")) {
       return Text(
         "No Response",
-        style: Theme.of(context).textTheme.body2.copyWith(color: CupertinoColors.destructiveRed),
+        style: Theme.of(context)
+            .textTheme
+            .body2
+            .copyWith(color: CupertinoColors.destructiveRed),
         maxLines: 1,
         overflow: TextOverflow.ellipsis,
       );
@@ -88,13 +91,17 @@ class StateLabel extends StatelessWidget {
     return device.state["power"]
         ? Text(
             "On",
-            style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
+            style: Theme.of(context).textTheme.body2.copyWith(
+                color:
+                    Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           )
         : Text(
             "Off",
-            style: Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
+            style: Theme.of(context).textTheme.body2.copyWith(
+                color:
+                    Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           );

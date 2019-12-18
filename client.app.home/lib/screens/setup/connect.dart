@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
-import 'package:home/components/regular_icons.dart';
+import 'package:home/components/icons.dart';
 
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -22,7 +22,8 @@ class _ConnectState extends State<Connect> {
 
     WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
       if (ip != null && ip != "not_found") {
-        store(context, address: Provider.of<String>(context)).then((ok) => Navigator.of(context).pushReplacementNamed("/home"));
+        store(context, address: Provider.of<String>(context))
+            .then((ok) => Navigator.of(context).pushReplacementNamed("/home"));
       } else if (ip != null && ip == "not_found") {
         Navigator.of(context).pushReplacementNamed("/connection_failed");
       }
@@ -54,8 +55,9 @@ class _ConnectState extends State<Connect> {
     );
   }
 
-  Future<bool> store(BuildContext context, {String address}) {
-    return Provider.of<SharedPreferences>(context).setString('service.api-gateway', address);
+  Future<bool> store(BuildContext context, {String address}) async {
+    return (await SharedPreferences.getInstance())
+        .setString('service.api-gateway', address);
   }
 }
 
@@ -95,7 +97,10 @@ class ManualConnect extends StatelessWidget {
                   style: Theme.of(context).textTheme.body1,
                   decoration: InputDecoration(
                     hintText: "127.0.0.1",
-                    hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.black45),
+                    hintStyle: Theme.of(context)
+                        .textTheme
+                        .body1
+                        .copyWith(color: Colors.black45),
                     focusedBorder: const UnderlineInputBorder(
                       borderSide: const BorderSide(color: Colors.black45),
                     ),
@@ -118,7 +123,8 @@ class ManualConnect extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   "Connect",
-                  style: Theme.of(context).textTheme.button.copyWith(fontSize: 16),
+                  style:
+                      Theme.of(context).textTheme.button.copyWith(fontSize: 16),
                 ),
               ),
               onPressed: () {},

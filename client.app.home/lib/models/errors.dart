@@ -1,11 +1,7 @@
-class StatusCodeError extends Error {
-  final int code;
+/// The ResponseException is thrown any time there is a problem with the reponse of a http request.
+/// Example use cases: An invalid status code (`response.statusCode >= 300`) or an unexpected server response.
+class ResponseException implements Exception {}
 
-  StatusCodeError({this.code});
-}
-
-class ResponseError extends Error {}
-
-class PortError extends Error {}
-
-class NotFoundError extends Error {}
+/// PortExceptions should only be thrown in [NetworkAnalyzer] if an invalid port
+/// (`port < 1 || port > 65535`) was passed to the discover function
+class PortException implements Exception {}

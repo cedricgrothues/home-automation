@@ -23,8 +23,8 @@ class _MusicState extends State<Music> {
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image:
-                      NetworkImage("https://www.jumpradio.de/musik/interpret/avicii-128-resimage_v-variantBig24x9_w-1024.jpg?version=1577"),
+                  image: NetworkImage(
+                      "https://www.jumpradio.de/musik/interpret/avicii-128-resimage_v-variantBig24x9_w-1024.jpg?version=1577"),
                 ),
               ),
             ),
@@ -47,7 +47,10 @@ class _MusicState extends State<Music> {
                   ),
                   Text(
                     "Bastille",
-                    style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context)
+                        .textTheme
+                        .subhead
+                        .copyWith(fontWeight: FontWeight.w500),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -82,8 +85,16 @@ class _MusicState extends State<Music> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("0:05", style: Theme.of(context).textTheme.caption.copyWith(fontSize: 15)),
-                Text("-2:00", style: Theme.of(context).textTheme.caption.copyWith(fontSize: 15))
+                Text("0:05",
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(fontSize: 15)),
+                Text("-2:00",
+                    style: Theme.of(context)
+                        .textTheme
+                        .caption
+                        .copyWith(fontSize: 15))
               ],
             )
           ],

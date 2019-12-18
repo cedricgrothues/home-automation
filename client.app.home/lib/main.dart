@@ -4,7 +4,6 @@ import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:connectivity/connectivity.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:home/screens/wifi.dart';
 import 'package:home/screens/splash.dart';
@@ -15,10 +14,8 @@ import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/controls/lights.dart';
 
 import 'package:home/services/scanner.dart';
-
+import 'package:home/components/routes.dart';
 import 'package:home/components/splash_factory.dart';
-
-import 'components/routes.dart';
 
 void main() => runApp(App());
 
@@ -29,8 +26,9 @@ class App extends StatelessWidget {
 
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
-        FutureProvider<SharedPreferences>.value(value: SharedPreferences.getInstance()),
-        StreamProvider<ConnectivityResult>.value(value: Connectivity().onConnectivityChanged, initialData: ConnectivityResult.wifi),
+        StreamProvider<ConnectivityResult>.value(
+            value: Connectivity().onConnectivityChanged,
+            initialData: ConnectivityResult.wifi),
       ],
       child: MaterialApp(
         title: 'Home',
@@ -202,7 +200,8 @@ class App extends StatelessWidget {
               );
             case '/dimmable_light':
               return MaterialPageRoute(
-                builder: (_) => LightController(dimmable: true, id: "bedroom-lamp"),
+                builder: (_) =>
+                    LightController(dimmable: true, id: "bedroom-lamp"),
               );
             default:
               return null;

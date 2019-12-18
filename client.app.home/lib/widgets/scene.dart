@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:home/network/models/scene.dart';
-import 'package:home/components/regular_icons.dart';
+import 'package:home/components/icons.dart';
 
 import 'package:home/network/scenes_service.dart';
 

@@ -21,7 +21,7 @@ class NetworkAnalyzer {
     Duration timeout = const Duration(milliseconds: 400),
   }) async* {
     if (port < 1 || port > 65535) {
-      throw PortError();
+      throw PortException();
     }
 
     for (int i = 1; i <= 256; i++) {
@@ -50,7 +50,8 @@ Future<String> discover() async {
   final int port = 4000;
 
   // A lower timeout of 200ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
-  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 100));
+  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port,
+      timeout: Duration(milliseconds: 100));
   await for (NetworkAddress addr in stream) {
     if (addr == null || !addr.exists) continue;
 
@@ -60,7 +61,8 @@ Future<String> discover() async {
 
     Map map = json.decode(response.body);
 
-    if (!map.containsKey("name") || map["name"] != "service.api-gateway") continue;
+    if (!map.containsKey("name") || map["name"] != "service.api-gateway")
+      continue;
 
     return addr.address;
   }

@@ -5,7 +5,12 @@ class LightController extends StatefulWidget {
   final bool dimmable;
   final bool colorful;
 
-  const LightController({Key key, this.dimmable = false, this.colorful = false, @required this.id}) : super(key: key);
+  const LightController(
+      {Key key,
+      this.dimmable = false,
+      this.colorful = false,
+      @required this.id})
+      : super(key: key);
 
   @override
   _LightControllerState createState() => _LightControllerState();

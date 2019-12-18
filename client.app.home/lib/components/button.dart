@@ -2,7 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class Button extends StatelessWidget {
-  const Button({Key key, this.title, this.onPressed, this.width}) : super(key: key);
+  const Button({Key key, this.title, this.onPressed, this.width})
+      : super(key: key);
 
   final String title;
   final double width;
@@ -19,10 +20,13 @@ class Button extends StatelessWidget {
           borderRadius: BorderRadius.circular(10),
         ),
         alignment: Alignment.center,
+        constraints: BoxConstraints(maxWidth: 300),
         width: width ?? 100,
         child: Text(
           title,
+          maxLines: 1,
           style: Theme.of(context).textTheme.button,
+          overflow: TextOverflow.ellipsis,
         ),
       ),
       onPressed: onPressed,

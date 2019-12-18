@@ -4,13 +4,13 @@ import 'package:home/network/models/device.dart';
 
 import 'package:provider/provider.dart';
 
-import 'package:home/screens/home/addons/music.dart';
+// import 'package:home/screens/home/addons/music.dart';
 import 'package:home/screens/home/addons/devices.dart';
-import 'package:home/screens/home/addons/scenes.dart';
+// import 'package:home/screens/home/addons/scenes.dart';
 
 import 'package:home/network/device_service.dart';
-import 'package:home/network/scenes_service.dart';
-import 'package:home/network/models/scene.dart';
+// import 'package:home/network/scenes_service.dart';
+// import 'package:home/network/models/scene.dart';
 
 class Home extends StatelessWidget {
   @override

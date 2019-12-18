@@ -27,7 +27,13 @@ class Device {
   @JsonKey(name: "state")
   Map<String, dynamic> state;
 
-  Device({this.id, this.name, this.type, this.controller, this.address, this.room});
+  Device(
+      {this.id,
+      this.name,
+      this.type,
+      this.controller,
+      this.address,
+      this.room});
 
   factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
   Map<String, dynamic> toJson() => _$DeviceToJson(this);
