@@ -6,6 +6,13 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 <kbd><img src=".github/screenshots/setup_light.png" width=200/></kbd>
 <kbd><img src=".github/screenshots/setup_dark.png" width=200/></kbd>
 
+## Currently supported services
+
+| Service | Status |
+| --- | --- |
+| service.controller.sonoff | Supports plugs and non-dimmable lamps |
+| service.controller.sonos | Under development |
+
 ## Usage
 
 All responses will be JSON. Individual service's README's will detail the expected JSON value.
@@ -13,7 +20,7 @@ All responses will be JSON. Individual service's README's will detail the expect
 ### API Gateway Service
 
 The api gateway service reads data from `service.api-gateway/config.yaml` and distributes requests accordingly.
-Default config.yaml structure:
+Example config.yaml structure:
 ```yaml
 port: 4000
 
