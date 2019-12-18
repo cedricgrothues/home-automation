@@ -56,8 +56,7 @@ class _ConnectState extends State<Connect> {
   }
 
   Future<bool> store(BuildContext context, {String address}) async {
-    return (await SharedPreferences.getInstance())
-        .setString('service.api-gateway', address);
+    return (await SharedPreferences.getInstance()).setString('service.api-gateway', address);
   }
 }
 
@@ -89,6 +88,7 @@ class ManualConnect extends StatelessWidget {
                   child: Text(
                     "Enter your Home Hub's IP Address",
                     style: Theme.of(context).textTheme.body1,
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 TextField(
@@ -97,10 +97,7 @@ class ManualConnect extends StatelessWidget {
                   style: Theme.of(context).textTheme.body1,
                   decoration: InputDecoration(
                     hintText: "127.0.0.1",
-                    hintStyle: Theme.of(context)
-                        .textTheme
-                        .body1
-                        .copyWith(color: Colors.black45),
+                    hintStyle: Theme.of(context).textTheme.body1.copyWith(color: Colors.black45),
                     focusedBorder: const UnderlineInputBorder(
                       borderSide: const BorderSide(color: Colors.black45),
                     ),
@@ -123,8 +120,8 @@ class ManualConnect extends StatelessWidget {
                 alignment: Alignment.center,
                 child: Text(
                   "Connect",
-                  style:
-                      Theme.of(context).textTheme.button.copyWith(fontSize: 16),
+                  style: Theme.of(context).textTheme.button.copyWith(fontSize: 16),
+                  textAlign: TextAlign.center,
                 ),
               ),
               onPressed: () {},

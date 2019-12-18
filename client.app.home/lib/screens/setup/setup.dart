@@ -16,15 +16,13 @@ class _SetupState extends State<Setup> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewPadding.bottom + 30),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom + 30),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height / 6.5),
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 6.5),
                 child: Container(
                   constraints: BoxConstraints(
                     maxHeight: 250,
@@ -54,33 +52,28 @@ class _SetupState extends State<Setup> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.symmetric(
-                          vertical: MediaQuery.of(context).size.height / 12),
+                      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height / 12),
                       constraints: BoxConstraints(maxWidth: 320),
                       child: Text(
                         "All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.",
                         textAlign: TextAlign.center,
-                        style: Theme.of(context).textTheme.subtitle.copyWith(
-                            height: 2,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 15),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle
+                            .copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 5,
                       ),
                     ),
                     Button(
                       title: "Connect to an existing system",
-                      onPressed: () => Navigator.of(context)
-                          .pushReplacementNamed('/connect'),
+                      onPressed: () => Navigator.of(context).pushReplacementNamed('/connect'),
                       width: MediaQuery.of(context).size.width - 150,
                     ),
                     RichText(
                       text: TextSpan(
                         text: 'Need help? ',
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle
-                            .copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context).textTheme.subtitle.copyWith(fontWeight: FontWeight.w500),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Visit the FAQ',
@@ -100,6 +93,5 @@ class _SetupState extends State<Setup> {
     );
   }
 
-  void help() => launch(
-      "https://github.com/cedricgrothues/home-automation/blob/master/README.md");
+  void help() => launch("https://github.com/cedricgrothues/home-automation/blob/master/README.md");
 }

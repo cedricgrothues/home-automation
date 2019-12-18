@@ -20,8 +20,7 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.only(
-            bottom: MediaQuery.of(context).viewPadding.bottom + 30),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom + 30),
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -30,8 +29,7 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
             children: <Widget>[
               Container(
                 width: 90,
-                padding: EdgeInsets.only(
-                    top: MediaQuery.of(context).size.height / 4),
+                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
                 child: Icon(
                   LightIcons.broadcast_tower,
                   size: 90,
@@ -48,8 +46,10 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                     child: Text(
                       "We could not connect to your Home Hub. Please ensure it is plugged in, online and operational, then try again.",
                       textAlign: TextAlign.center,
-                      style: Theme.of(context).textTheme.subtitle.copyWith(
-                          height: 2, fontWeight: FontWeight.w400, fontSize: 15),
+                      style: Theme.of(context)
+                          .textTheme
+                          .subtitle
+                          .copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                   ),
                   TryAgain(),
@@ -64,8 +64,12 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
 }
 
 class TryAgain extends StatelessWidget {
-  final SnackBar snackbar =
-      SnackBar(content: Text("Failed to connect to the API Gateway service."));
+  final SnackBar snackbar = SnackBar(
+    content: Text(
+      "Failed to connect to the API Gateway service.",
+      textAlign: TextAlign.center,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -76,9 +80,7 @@ class TryAgain extends StatelessWidget {
 
         if (preferences.containsKey("service.api-gateway")) {
           try {
-            Response response = await get(
-                    "http://${preferences.getString("service.api-gateway")}:4000/")
-                .timeout(
+            Response response = await get("http://${preferences.getString("service.api-gateway")}:4000/").timeout(
               const Duration(milliseconds: 200),
             );
 
@@ -87,8 +89,7 @@ class TryAgain extends StatelessWidget {
             if (response.statusCode != 200) throw ResponseException();
 
             // There is no need to decode the json response. Simply check if the response contains the service name.
-            if (!response.body.contains("service.api-gateway"))
-              throw ResponseException();
+            if (!response.body.contains("service.api-gateway")) throw ResponseException();
 
             // The api gateway is available so we'll redirect the user to their home page
             Navigator.of(context).pushReplacementNamed("/home");

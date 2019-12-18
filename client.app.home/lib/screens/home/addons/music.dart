@@ -47,10 +47,7 @@ class _MusicState extends State<Music> {
                   ),
                   Text(
                     "Bastille",
-                    style: Theme.of(context)
-                        .textTheme
-                        .subhead
-                        .copyWith(fontWeight: FontWeight.w500),
+                    style: Theme.of(context).textTheme.subhead.copyWith(fontWeight: FontWeight.w500),
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
@@ -85,16 +82,8 @@ class _MusicState extends State<Music> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text("0:05",
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .copyWith(fontSize: 15)),
-                Text("-2:00",
-                    style: Theme.of(context)
-                        .textTheme
-                        .caption
-                        .copyWith(fontSize: 15))
+                Text("0:05", style: Theme.of(context).textTheme.caption.copyWith(fontSize: 15)),
+                Text("-2:00", style: Theme.of(context).textTheme.caption.copyWith(fontSize: 15))
               ],
             )
           ],

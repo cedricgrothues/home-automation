@@ -33,9 +33,7 @@ class _SplashState extends State<Splash> {
 
     if (preferences.containsKey("service.api-gateway")) {
       try {
-        Response response = await get(
-                "http://${preferences.getString("service.api-gateway")}:4000/")
-            .timeout(
+        Response response = await get("http://${preferences.getString("service.api-gateway")}:4000/").timeout(
           const Duration(milliseconds: 200),
         );
 
@@ -44,8 +42,7 @@ class _SplashState extends State<Splash> {
         if (response.statusCode != 200) throw ResponseException();
 
         // There is no need to decode the json response. Simply check if the response contains the service name.
-        if (!response.body.contains("service.api-gateway"))
-          throw ResponseException();
+        if (!response.body.contains("service.api-gateway")) throw ResponseException();
 
         // The api gateway is available so we'll redirect the user to their home page
         Navigator.of(context).pushReplacementNamed("/home");
@@ -53,21 +50,18 @@ class _SplashState extends State<Splash> {
         // SocketExceptions are thrown if there appears to be a problem with the users internet connection
         // or if a DNS lookup failed (latter should not be a problem at this point sice we're working with ip addresses instead of urls)
 
-        Navigator.of(context)
-            .pushReplacementNamed("/connection_failed", arguments: error);
+        Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
       } on TimeoutException catch (error) {
         // The timeout exception is thrown, if there was no server response after 200ms to minimize initial loading time.
         // Since the server is most likely running on a local network, we'll just assume that it is unreachable.
 
-        Navigator.of(context)
-            .pushReplacementNamed("/connection_failed", arguments: error);
+        Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
       } on ResponseException catch (error) {
         // A ResponseException is thrown if either the status code is not http.StatusOK or
         // if the response we got from the server did not contain the right keys / values
         // (In this case it's the service's identifier that should be contained in the response)
 
-        Navigator.of(context)
-            .pushReplacementNamed("/connection_failed", arguments: error);
+        Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
       } catch (error) {
         // We could neither catch a SocketException nor the TimeoutException that is thrown after 200ms.
         // I am not particularly sure if there is any other error that could be thrown here,

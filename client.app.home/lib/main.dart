@@ -27,8 +27,7 @@ class App extends StatelessWidget {
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
         StreamProvider<ConnectivityResult>.value(
-            value: Connectivity().onConnectivityChanged,
-            initialData: ConnectivityResult.wifi),
+            value: Connectivity().onConnectivityChanged, initialData: ConnectivityResult.wifi),
       ],
       child: MaterialApp(
         title: 'Home',
@@ -200,8 +199,7 @@ class App extends StatelessWidget {
               );
             case '/dimmable_light':
               return MaterialPageRoute(
-                builder: (_) =>
-                    LightController(dimmable: true, id: "bedroom-lamp"),
+                builder: (_) => LightController(dimmable: true, id: "bedroom-lamp"),
               );
             default:
               return null;
