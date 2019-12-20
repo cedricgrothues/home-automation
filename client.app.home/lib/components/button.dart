@@ -1,6 +1,11 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' show Theme;
 
+/// The [Button] class defines the standard style for a button in client.app.home.
+/// The title size is adjusted to fit the [Button]s width.
+///
+/// Since the [Button] relies on a [CupertinoButton], it'll have an onPressed animation.
+/// To disable the button, set the `onPressed` property to `null`
 class Button extends StatelessWidget {
   const Button({Key key, this.title, this.onPressed, this.width}) : super(key: key);
 

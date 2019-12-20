@@ -1,9 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:home/components/icons.dart';
-import 'package:home/network/models/device.dart';
-import 'package:home/network/models/room.dart';
-import 'package:home/widgets/device.dart';
 
 class Add extends StatefulWidget {
   @override

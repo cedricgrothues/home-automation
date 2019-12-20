@@ -12,6 +12,7 @@ import 'package:home/screens/home/home.dart';
 import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
+import 'package:home/screens/setup/account.dart';
 import 'package:home/screens/controls/lights.dart';
 
 import 'package:home/services/scanner.dart';
@@ -33,6 +34,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Home',
         theme: ThemeData(
+          primaryColor: Colors.black,
           scaffoldBackgroundColor: Color(0xFFFEFFFF),
           fontFamily: 'Open Sans',
           buttonColor: Colors.black,
@@ -104,6 +106,7 @@ class App extends StatelessWidget {
           ),
         ),
         darkTheme: ThemeData(
+          primaryColor: Colors.white,
           scaffoldBackgroundColor: Colors.black,
           fontFamily: 'Open Sans',
           buttonColor: Colors.white,
@@ -174,6 +177,9 @@ class App extends StatelessWidget {
             ),
           ),
         ),
+
+        // The initial route is required to be the spash screen if
+        // Hive is used, since it's initialized in Spash's initState
         initialRoute: '/',
         builder: (context, Widget child) => NetworkAware(child: child),
         onGenerateRoute: (RouteSettings settings) {
@@ -191,6 +197,10 @@ class App extends StatelessWidget {
               return NoTransitionRoute(
                 builder: (_) => Setup(),
                 settings: settings,
+              );
+            case '/account_setup':
+              return FadeTransitionRoute(
+                page: AccountSetup(),
               );
             case '/wifi_required':
               return NoTransitionRoute(

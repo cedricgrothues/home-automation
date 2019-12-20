@@ -1,5 +1,5 @@
 name: home
-description: The mobile, web and desktop application communicating with the cedricgrothues/home-automation api
+description: The mobile, web and desktop application communicating with cedricgrothues/home-automation's api
 
 version: 0.1.0-alpha
 
@@ -13,18 +13,32 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  url_launcher: ^5.2.5
-  provider: ^3.1.0+1
-  connectivity: ^0.4.5+3
+  provider: ^3.2.0
+
+  # get the database path
+  path_provider: ^1.5.1
+
+  # Open the Help URL
+  url_launcher: ^5.4.1
+
+  # Used to check if the user
+  # is connected to Wifi
+  connectivity: ^0.4.6+1
+
+  # HTTP Requests
   http: ^0.12.0+2
-  shared_preferences: ^0.5.6
+
+  # Data Storage
+  hive: ^1.1.1
+
+  # JSON Parsing
   json_annotation: ^3.0.0
   
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  build_runner: ^1.7.2
   json_serializable: ^3.2.3
+  build_runner: ^1.7.2
     
       
 

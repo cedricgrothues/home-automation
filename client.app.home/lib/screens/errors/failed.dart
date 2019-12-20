@@ -1,14 +1,14 @@
-import 'dart:io';
-import 'dart:async';
+import 'dart:io' show SocketException;
+import 'dart:async' show TimeoutException;
 
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 import 'package:home/models/errors.dart';
 import 'package:home/components/button.dart';
 import 'package:home/components/icons.dart';
 
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class ConnectionFailed extends StatefulWidget {
   @override
@@ -76,11 +76,11 @@ class TryAgain extends StatelessWidget {
     return Button(
       title: "Tap to try again",
       onPressed: () async {
-        SharedPreferences preferences = await SharedPreferences.getInstance();
+        Box<String> box = Hive.box('preferences');
 
-        if (preferences.containsKey("service.api-gateway")) {
+        if (box.containsKey("service.api-gateway")) {
           try {
-            Response response = await get("http://${preferences.getString("service.api-gateway")}:4000/").timeout(
+            Response response = await get("http://${box.get("service.api-gateway")}:4000/").timeout(
               const Duration(milliseconds: 200),
             );
 
@@ -119,7 +119,7 @@ class TryAgain extends StatelessWidget {
             Scaffold.of(context).showSnackBar(snackbar);
           }
         } else {
-          // The SharedPreferenes instance doesn't contain the requested key.
+          // The Hive Box doesn't contain the requested key.
           // This should not be allowed to happen, but if it does, we'll show the setup screen
 
           Navigator.of(context).pushReplacementNamed("/setup");

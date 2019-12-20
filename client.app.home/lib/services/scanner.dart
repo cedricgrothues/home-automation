@@ -1,9 +1,7 @@
-import 'dart:io';
-import 'dart:async';
-import 'dart:convert';
+import 'dart:io' show Socket, SocketException;
 
-import 'package:http/http.dart' as http;
-import 'package:connectivity/connectivity.dart';
+import 'package:http/http.dart' show get, Response;
+import 'package:connectivity/connectivity.dart' show Connectivity;
 
 import 'package:home/models/errors.dart';
 
@@ -46,7 +44,7 @@ Future<String> discover() async {
   final String ip = await Connectivity().getWifiIP();
   final String subnet = ip.substring(0, ip.lastIndexOf('.'));
 
-  /// Default API gateway port (change if necessary)
+  /// Default api gateway port (update if necessary)
   final int port = 4000;
 
   // A lower timeout of 200ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
@@ -54,13 +52,11 @@ Future<String> discover() async {
   await for (NetworkAddress addr in stream) {
     if (addr == null || !addr.exists) continue;
 
-    http.Response response = await http.get("http://${addr.address}:$port/");
+    Response response = await get("http://${addr.address}:$port/");
 
-    if (response.statusCode != 200) continue;
-
-    Map map = json.decode(response.body);
-
-    if (!map.containsKey("name") || map["name"] != "service.api-gateway") continue;
+    // There is no need to decode the json response, we'll simply check
+    // if the response body contains the service name
+    if (response.statusCode != 200 || !response.body.contains("service.api-gateway")) continue;
 
     return addr.address;
   }

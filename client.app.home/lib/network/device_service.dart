@@ -1,14 +1,13 @@
-import 'dart:async';
-import 'dart:convert';
+import 'dart:convert' show json;
 
+import 'package:hive/hive.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:home/network/models/device.dart';
 
 class DeviceService {
   static Future<List<Device>> fetch() async {
-    String gateway = (await SharedPreferences.getInstance()).getString("service.api-gateway");
+    String gateway = Hive.box<String>('preferences').get('service.api-gateway');
 
     Response response = await get("http://$gateway:4000/service.device-registry/devices");
 
@@ -31,7 +30,7 @@ class DeviceService {
   }
 
   static Future<Map<String, dynamic>> update({Device device}) async {
-    String gateaway = (await SharedPreferences.getInstance()).getString("service.api-gateway");
+    String gateaway = Hive.box<String>('preferences').get('service.api-gateway');
 
     try {
       Response result = await patch(
@@ -52,7 +51,7 @@ class DeviceService {
   }
 
   static Future<Map<String, dynamic>> refresh({Device device}) async {
-    String gateaway = (await SharedPreferences.getInstance()).getString("service.api-gateway");
+    String gateaway = Hive.box<String>('preferences').get('service.api-gateway');
 
     try {
       Response result = await get("http://$gateaway:4000/${device.controller}/devices/${device.id}");

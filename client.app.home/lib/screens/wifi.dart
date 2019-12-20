@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:home/components/icons.dart';
 
-import 'package:provider/provider.dart';
-import 'package:connectivity/connectivity.dart';
+import 'package:provider/provider.dart' show Provider;
+import 'package:connectivity/connectivity.dart' show ConnectivityResult;
 
 class NetworkAware extends StatelessWidget {
   const NetworkAware({Key key, @required this.child}) : super(key: key);

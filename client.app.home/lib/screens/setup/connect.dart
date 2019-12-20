@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:hive/hive.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class Connect extends StatefulWidget {
   @override
@@ -20,8 +20,9 @@ class _ConnectState extends State<Connect> {
 
     WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
       if (ip != null && ip != "not_found") {
-        store(context, address: Provider.of<String>(context))
-            .then((ok) => Navigator.of(context).pushReplacementNamed("/home"));
+        Box<String> box = Hive.box('preferences');
+        box.put('service.api-gateway', Provider.of<String>(context));
+        Navigator.of(context).pushReplacementNamed("/account_setup");
       } else if (ip != null && ip == "not_found") {
         Navigator.of(context).pushReplacementNamed("/connection_failed");
       }
@@ -51,9 +52,5 @@ class _ConnectState extends State<Connect> {
         ),
       ),
     );
-  }
-
-  Future<bool> store(BuildContext context, {String address}) async {
-    return (await SharedPreferences.getInstance()).setString('service.api-gateway', address);
   }
 }

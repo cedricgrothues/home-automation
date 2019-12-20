@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import 'package:hive/hive.dart';
+import 'package:provider/provider.dart';
+
 import 'package:home/components/icons.dart';
 import 'package:home/network/models/device.dart';
-
-import 'package:provider/provider.dart';
 
 // import 'package:home/screens/home/addons/music.dart';
 import 'package:home/screens/home/addons/devices.dart';
@@ -17,12 +19,30 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        backgroundColor: Colors.blue,
-        child: Icon(LightIcons.plus),
-        onPressed: () {
-          Navigator.of(context).pushNamed("/add");
-        },
+      appBar: CupertinoNavigationBar(
+        border: null,
+        leading: CupertinoButton(
+          child: Icon(
+            LightIcons.plus,
+          ),
+          padding: EdgeInsets.zero,
+          onPressed: () => Navigator.of(context).pushNamed("/add"),
+        ),
+        trailing: CupertinoButton(
+          child: Container(
+            width: 30,
+            height: 30,
+            decoration: BoxDecoration(
+              shape: BoxShape.circle,
+              color: Theme.of(context).buttonColor,
+            ),
+          ),
+          padding: EdgeInsets.zero,
+          onPressed: () {
+            Box<String> box = Hive.box('preferences');
+            box.delete('service.api-gateway');
+          },
+        ),
       ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: 16),

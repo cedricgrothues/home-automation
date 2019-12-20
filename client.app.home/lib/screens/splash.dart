@@ -1,10 +1,12 @@
-import 'dart:io';
-import 'dart:async';
+import 'dart:io' show SocketException;
+import 'dart:async' show TimeoutException;
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
+import 'package:hive/hive.dart';
 import 'package:http/http.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:path_provider/path_provider.dart';
 
 import 'package:home/models/errors.dart';
 
@@ -29,11 +31,13 @@ class _SplashState extends State<Splash> {
   /// The status function checks the connection to the API Gateway service and redirects the user to the appropriate screen.
   /// This function may not be called during build
   void status() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
+    if (!kIsWeb) Hive.init((await getApplicationDocumentsDirectory()).path);
 
-    if (preferences.containsKey("service.api-gateway")) {
+    Box<String> box = await Hive.openBox('preferences');
+
+    if (box.containsKey("service.api-gateway")) {
       try {
-        Response response = await get("http://${preferences.getString("service.api-gateway")}:4000/").timeout(
+        Response response = await get("http://${box.get("service.api-gateway")}:4000/").timeout(
           const Duration(milliseconds: 300),
         );
 
@@ -72,7 +76,7 @@ class _SplashState extends State<Splash> {
         Navigator.of(context).pushReplacementNamed("/connection_failed");
       }
     } else {
-      // The SharedPreferenes instance doesn't contain the requested key.
+      // The Hive Box doesn't contain the requested key.
       // That's most likely because the app isn't setup yet, so we'll just show the setup screen.
 
       Navigator.of(context).pushReplacementNamed("/setup");

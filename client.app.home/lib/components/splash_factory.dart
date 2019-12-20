@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// This class is supposed to be used to disable the splash
+/// animations with Material Components
 class NoSplashFactory extends InteractiveInkFeatureFactory {
   const NoSplashFactory();
 
