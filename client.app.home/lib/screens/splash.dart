@@ -38,7 +38,7 @@ class _SplashState extends State<Splash> {
     if (box.containsKey("service.api-gateway")) {
       try {
         Response response = await get("http://${box.get("service.api-gateway")}:4000/").timeout(
-          const Duration(milliseconds: 300),
+          const Duration(milliseconds: 500),
         );
 
         // Here we won't accept any status code that is not `200` / http.StatusOK since we know
@@ -67,7 +67,7 @@ class _SplashState extends State<Splash> {
 
         Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
       } catch (error) {
-        // We could neither catch a SocketException nor the TimeoutException that is thrown after 200ms.
+        // We could neither catch a SocketException nor the TimeoutException that is thrown after 500ms.
         // I am not particularly sure if there is any other error that could be thrown here,
         // but if for some reason that happens, we'll just log it and show the error screen.
 

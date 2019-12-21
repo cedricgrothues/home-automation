@@ -16,7 +16,7 @@ class DeviceService {
     List<dynamic> devices = json.decode(response.body) ?? [];
 
     for (Map<String, dynamic> device in devices) {
-      if (!(device.containsKey("controller") && device.containsKey("id"))) continue;
+      if (!device.containsKey("controller") || !device.containsKey("id")) continue;
 
       try {
         Response response = await get("http://$gateway:4000/${device['controller']}/devices/${device['id']}");

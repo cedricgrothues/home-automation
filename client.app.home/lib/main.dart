@@ -17,7 +17,7 @@ import 'package:home/screens/controls/lights.dart';
 
 import 'package:home/services/scanner.dart';
 import 'package:home/components/routes.dart';
-import 'package:home/components/splash_factory.dart';
+import 'package:home/components/splash.dart';
 
 void main() => runApp(App());
 

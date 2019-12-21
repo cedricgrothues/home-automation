@@ -90,7 +90,7 @@ An error will be indicated by a non-2xx status code. The response will include a
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-Please make sure to update tests as appropriate.
+Please make sure to update tests and screenshots as appropriate.
 
 ## Credits
 This project is based on [Jake Wright](https://github.com/jakewright)'s idea of a home-automation system, his youtube series and his home-automation repo.
