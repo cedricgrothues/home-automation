@@ -91,8 +91,15 @@ class TryAgain extends StatelessWidget {
             // There is no need to decode the json response. Simply check if the response contains the service name.
             if (!response.body.contains("service.api-gateway")) throw ResponseException();
 
-            // The api gateway is available so we'll redirect the user to their home page
-            Navigator.of(context).pushReplacementNamed("/home");
+            if (box.containsKey("username")) {
+              // The api gateway is available and the user finished the setup process
+              // so we'll redirect the user to their home page
+              Navigator.of(context).pushReplacementNamed("/home");
+            } else {
+              // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
+              // so we'll redirect them to the account setup page
+              Navigator.of(context).pushReplacementNamed("/account_setup");
+            }
           } on SocketException {
             // SocketExceptions are thrown if there appears to be a problem with the users internet connection
             // or if a DNS lookup failed (latter should not be a problem at this point sice we're working with ip addresses instead of urls)

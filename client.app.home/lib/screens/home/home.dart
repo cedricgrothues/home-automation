@@ -1,3 +1,6 @@
+import 'dart:convert';
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -33,8 +36,15 @@ class Home extends StatelessWidget {
             width: 30,
             height: 30,
             decoration: BoxDecoration(
+              image: DecorationImage(
+                image: MemoryImage(base64.decode(Hive.box<String>("preferences").get("picture"))),
+                fit: BoxFit.cover,
+              ),
               shape: BoxShape.circle,
-              color: Theme.of(context).buttonColor,
+              border: Border.all(
+                color: Theme.of(context).buttonColor,
+                width: 1,
+              ),
             ),
           ),
           padding: EdgeInsets.zero,
