@@ -24,20 +24,14 @@ class AccountSetup extends StatefulWidget {
 class _AccountSetupState extends State<AccountSetup> {
   PageController _controller;
   File _image;
-  double _current = 0;
+  int _current;
 
   @override
   void initState() {
-    // Initialize the PageController in [initState]
+    // Initialize the PageController and _current in [initState]
     // to access the non-final widget.initial parameter
-    _controller = PageController(initialPage: widget.initial, keepPage: true)
-      ..addListener(() {
-        // Usually calling setState in a listener isn't very good practice,
-        // but since user input for the page view is disabled it's alright in this case
-        setState(() {
-          _current = _controller.page;
-        });
-      });
+    _controller = PageController(initialPage: widget.initial, keepPage: true);
+    _current = widget.initial ?? 0;
 
     super.initState();
   }
@@ -45,7 +39,6 @@ class _AccountSetupState extends State<AccountSetup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.center,
         children: <Widget>[
@@ -93,6 +86,8 @@ class _AccountSetupState extends State<AccountSetup> {
                             Box<String> box = Hive.box<String>('preferences');
                             box.put("username", username);
 
+                            _current++;
+
                             _controller.nextPage(
                               curve: Curves.ease,
                               duration: Duration(milliseconds: 600),
@@ -110,7 +105,7 @@ class _AccountSetupState extends State<AccountSetup> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Container(
-                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 5),
+                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6),
                         constraints: BoxConstraints(maxWidth: 300),
                         child: Text(
                           "Hi, ${Hive.box<String>('preferences').get("username")}! Let's coose your profile picture...",
@@ -171,10 +166,10 @@ class _AccountSetupState extends State<AccountSetup> {
               crossAxisAlignment: CrossAxisAlignment.end,
               children: <Widget>[
                 Indicator(
-                  active: _current <= 0.5,
+                  active: _current < 1,
                 ),
                 Indicator(
-                  active: _current > 0.5,
+                  active: _current >= 1,
                 ),
               ],
             ),
@@ -183,26 +178,41 @@ class _AccountSetupState extends State<AccountSetup> {
           // Continue Button
           Positioned(
             bottom: MediaQuery.of(context).viewPadding.bottom,
-            child: Opacity(
-              child: Button(
-                title: _current <= 0.5 ? "Continue" : "Let's get started!",
-                onPressed: () {
-                  if (_current <= 0.5) {
-                    _controller.nextPage(
-                      curve: Curves.ease,
-                      duration: Duration(milliseconds: 600),
-                    );
-                  } else {
-                    Navigator.of(context).pushReplacement(FadeTransitionRoute(page: Home()));
-                  }
-                },
-                width: MediaQuery.of(context).size.width - 150,
-              ),
-              opacity: 1,
-            ),
+            child: Continue(controller: _controller, current: _current),
           ),
         ],
       ),
+
+      // Disable resizing since we'll handle it ourselfs
+      resizeToAvoidBottomInset: false,
+    );
+  }
+}
+
+class Continue extends StatelessWidget {
+  final int current;
+  final PageController controller;
+
+  const Continue({Key key, @required this.current, @required this.controller}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Opacity(
+      child: Button(
+        title: current < 1 ? "Continue" : "Let's get started!",
+        onPressed: () {
+          if (current < 1) {
+            controller.nextPage(
+              curve: Curves.ease,
+              duration: Duration(milliseconds: 600),
+            );
+          } else {
+            Navigator.of(context).pushReplacement(FadeTransitionRoute(page: Home()));
+          }
+        },
+        width: MediaQuery.of(context).size.width - 150,
+      ),
+      opacity: 1,
     );
   }
 }

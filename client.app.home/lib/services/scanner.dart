@@ -47,8 +47,8 @@ Future<String> discover() async {
   /// Default api gateway port (update if necessary)
   final int port = 4000;
 
-  // A lower timeout of 200ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
-  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 100));
+  // A lower timeout of 300ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
+  final Stream<NetworkAddress> stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 300));
   await for (NetworkAddress addr in stream) {
     if (addr == null || !addr.exists) continue;
 

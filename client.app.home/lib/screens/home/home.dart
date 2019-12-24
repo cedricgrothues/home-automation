@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -43,7 +42,7 @@ class Home extends StatelessWidget {
               shape: BoxShape.circle,
               border: Border.all(
                 color: Theme.of(context).buttonColor,
-                width: 1,
+                width: 1.5,
               ),
             ),
           ),
