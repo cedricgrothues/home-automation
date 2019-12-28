@@ -34,6 +34,7 @@ class App extends StatelessWidget {
       child: MaterialApp(
         title: 'Home',
         theme: ThemeData(
+          brightness: Brightness.light,
           primaryColor: Colors.black,
           scaffoldBackgroundColor: Color(0xFFFEFFFF),
           fontFamily: 'Open Sans',
@@ -106,6 +107,7 @@ class App extends StatelessWidget {
           ),
         ),
         darkTheme: ThemeData(
+          brightness: Brightness.dark,
           primaryColor: Colors.white,
           scaffoldBackgroundColor: Colors.black,
           fontFamily: 'Open Sans',

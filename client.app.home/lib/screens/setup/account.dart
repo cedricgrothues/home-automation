@@ -49,115 +49,34 @@ class _AccountSetupState extends State<AccountSetup> {
               scrollDirection: Axis.vertical,
               physics: NeverScrollableScrollPhysics(),
               children: <Widget>[
-                Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top + 60, left: 20, right: 20),
-                  child: Stack(
-                    children: <Widget>[
-                      Container(
-                        constraints: BoxConstraints(maxWidth: 300),
-                        child: Text(
-                          "Home Hub found! Let's get to know you a little better...",
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      AnimatedPositioned(
-                        bottom: (MediaQuery.of(context).viewInsets.bottom != 0)
-                            ? MediaQuery.of(context).viewInsets.bottom + 50
-                            : MediaQuery.of(context).size.height / 2.2,
-                        left: 0,
-                        right: 0,
-                        child: TextField(
-                          maxLength: 32,
-                          maxLengthEnforced: true,
-                          enableSuggestions: false,
-                          autocorrect: false,
-                          style: TextStyle(fontSize: 22),
-                          keyboardType: TextInputType.text,
-                          decoration: InputDecoration(
-                            hintText: "They call me...",
-                            hintStyle: TextStyle(fontSize: 22, color: Theme.of(context).buttonColor.withOpacity(0.4)),
-                            helperText: "Your name".toUpperCase(),
-                            helperStyle: TextStyle(fontSize: 12, color: Theme.of(context).buttonColor.withOpacity(0.2)),
-                            border: InputBorder.none,
-                          ),
-                          onSubmitted: (username) {
-                            if (username == "") return;
+                SetName(onSubmitted: (username) {
+                  if (username == "") return;
 
-                            Box<String> box = Hive.box<String>('preferences');
-                            box.put("username", username);
+                  Box<String> box = Hive.box<String>('preferences');
+                  box.put("username", username);
 
-                            _current++;
+                  _current++;
 
-                            _controller.nextPage(
-                              curve: Curves.ease,
-                              duration: Duration(milliseconds: 600),
-                            );
-                          },
-                        ),
-                        duration: Duration(milliseconds: 200),
-                      ),
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top + 60, left: 20, right: 20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Container(
-                        margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6),
-                        constraints: BoxConstraints(maxWidth: 300),
-                        child: Text(
-                          "Hi, ${Hive.box<String>('preferences').get("username")}! Let's coose your profile picture...",
-                          style: TextStyle(fontWeight: FontWeight.w700),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.center,
-                        child: GestureDetector(
-                          onTap: () async {
-                            _image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                            if (_image == null) return;
-                            setState(() {});
+                  _controller.nextPage(
+                    curve: Curves.ease,
+                    duration: Duration(milliseconds: 600),
+                  );
+                }),
+                SetImage(
+                  onTap: () async {
+                    _image = await ImagePicker.pickImage(source: ImageSource.gallery);
+                    if (_image == null) return;
+                    setState(() {});
 
-                            Box<String> box = Hive.box<String>('preferences');
-                            box.put("picture", base64.encode(_image.readAsBytesSync()));
-                          },
-                          child: Container(
-                            constraints: BoxConstraints(
-                              maxHeight: 180,
-                              maxWidth: 180,
-                              minHeight: 100,
-                              minWidth: 100,
-                            ),
-                            width: MediaQuery.of(context).size.height / 4,
-                            height: MediaQuery.of(context).size.height / 4,
-                            decoration: BoxDecoration(
-                              image: DecorationImage(
-                                image: _image == null
-                                    ? AssetImage(
-                                        "assets/images/setup.png",
-                                      )
-                                    : FileImage(_image),
-                                fit: BoxFit.cover,
-                              ),
-                              shape: BoxShape.circle,
-                              border: Border.all(
-                                color: Theme.of(context).buttonColor,
-                                width: 3,
-                              ),
-                            ),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
+                    Box<String> box = Hive.box<String>('preferences');
+                    box.put("picture", base64.encode(_image.readAsBytesSync()));
+                  },
+                  image: _image,
                 ),
               ],
             ),
           ),
 
-          // Indicators
           Positioned(
             top: MediaQuery.of(context).viewPadding.top + 60,
             right: 20,
@@ -175,7 +94,6 @@ class _AccountSetupState extends State<AccountSetup> {
             ),
           ),
 
-          // Continue Button
           Positioned(
             bottom: MediaQuery.of(context).viewPadding.bottom,
             child: Continue(controller: _controller, current: _current),
@@ -185,6 +103,113 @@ class _AccountSetupState extends State<AccountSetup> {
 
       // Disable resizing since we'll handle it ourselfs
       resizeToAvoidBottomInset: false,
+    );
+  }
+}
+
+class SetName extends StatelessWidget {
+  final Function(String) onSubmitted;
+
+  const SetName({Key key, @required this.onSubmitted}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top + 60, left: 20, right: 20),
+      child: Stack(
+        children: <Widget>[
+          Container(
+            constraints: BoxConstraints(maxWidth: 300),
+            child: Text(
+              "Home Hub found! Let's get to know you a little better...",
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+          AnimatedPositioned(
+            bottom: (MediaQuery.of(context).viewInsets.bottom != 0)
+                ? MediaQuery.of(context).viewInsets.bottom + 50
+                : MediaQuery.of(context).size.height / 2.2,
+            left: 0,
+            right: 0,
+            child: TextField(
+              maxLength: 32,
+              maxLengthEnforced: true,
+              enableSuggestions: false,
+              autocorrect: false,
+              style: TextStyle(fontSize: 22),
+              keyboardType: TextInputType.text,
+              keyboardAppearance: Theme.of(context).brightness,
+              decoration: InputDecoration(
+                hintText: "They call me...",
+                hintStyle: TextStyle(fontSize: 22, color: Theme.of(context).buttonColor.withOpacity(0.4)),
+                helperText: "Your name".toUpperCase(),
+                helperStyle: TextStyle(fontSize: 12, color: Theme.of(context).buttonColor.withOpacity(0.2)),
+                border: InputBorder.none,
+              ),
+              onSubmitted: onSubmitted,
+            ),
+            duration: Duration(milliseconds: 200),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class SetImage extends StatelessWidget {
+  final File image;
+  final Function() onTap;
+
+  const SetImage({Key key, this.image, this.onTap}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.only(top: MediaQuery.of(context).viewPadding.top + 60, left: 20, right: 20),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            margin: EdgeInsets.only(bottom: MediaQuery.of(context).size.height / 6),
+            constraints: BoxConstraints(maxWidth: 300),
+            child: Text(
+              "Hi, ${Hive.box<String>('preferences').get("username")}! Let's coose your profile picture...",
+              style: TextStyle(fontWeight: FontWeight.w700),
+            ),
+          ),
+          Align(
+            alignment: Alignment.center,
+            child: GestureDetector(
+              onTap: onTap,
+              child: Container(
+                constraints: BoxConstraints(
+                  maxHeight: 180,
+                  maxWidth: 180,
+                  minHeight: 100,
+                  minWidth: 100,
+                ),
+                width: MediaQuery.of(context).size.height / 4,
+                height: MediaQuery.of(context).size.height / 4,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: image == null
+                        ? AssetImage(
+                            "assets/images/setup.png",
+                          )
+                        : FileImage(image),
+                    fit: BoxFit.cover,
+                  ),
+                  shape: BoxShape.circle,
+                  border: Border.all(
+                    color: Theme.of(context).buttonColor,
+                    width: 3,
+                  ),
+                ),
+              ),
+            ),
+          )
+        ],
+      ),
     );
   }
 }
