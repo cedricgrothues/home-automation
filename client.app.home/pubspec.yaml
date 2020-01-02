@@ -15,6 +15,9 @@ dependencies:
     sdk: flutter
   provider: ^3.2.0
 
+  # get the database path
+  path_provider: ^1.5.1
+
   # Open the Help URL
   url_launcher: ^5.4.1
 
