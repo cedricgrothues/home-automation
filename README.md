@@ -16,6 +16,7 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 ## Usage
 
 All responses will be JSON. Individual service's README's will detail the expected JSON value.
+Start all docker containers with: `docker-compose up -d --build --force-recreate`
 
 ### API Gateway Service
 
@@ -28,15 +29,15 @@ services:
     service.device-registry:
         name: Device Registry
         prefix: service.device-registry
-        url: "http://192.168.2.117:4001"
+        upstream: "http://192.168.2.117:4001"
     service.controller.sonoff:
         name: Sonoff Controller
         prefix: service.controller.sonoff
-        url: "http://192.168.2.117:4002"
+        upstream: "http://192.168.2.117:4002"
     service.controller.sonos:
         name: Sonos Controller
         prefix: service.controller.sonos
-        url: "http://192.168.2.117:4003"
+        upstream: "http://192.168.2.117:4003"
 ```
 
 ### Controllers

@@ -1,4 +1,4 @@
-package config
+package routing
 
 import (
 	"io/ioutil"
@@ -14,10 +14,10 @@ type Configuration struct {
 
 // Service is a single Service definition
 type Service struct {
-	Name    string   `yaml:"name"`
-	Prefix  string   `yaml:"prefix"`
-	URL     string   `yaml:"url"`
-	Plugins []Plugin `yaml:"plugins"`
+	Name     string   `yaml:"name"`
+	Prefix   string   `yaml:"prefix"`
+	Upstream string   `yaml:"upstream"`
+	Plugins  []Plugin `yaml:"plugins"`
 }
 
 // Plugin is the configuration for a particular plugin

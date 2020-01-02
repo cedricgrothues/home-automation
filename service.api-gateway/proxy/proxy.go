@@ -1,4 +1,4 @@
-package server
+package proxy
 
 import (
 	"fmt"
@@ -7,22 +7,21 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/cedricgrothues/httprouter"
-
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
-	"github.com/cedricgrothues/home-automation/service.api-gateway/config"
+	"github.com/cedricgrothues/home-automation/service.api-gateway/routing"
+	"github.com/cedricgrothues/httprouter"
 )
 
 // ListenAndServe provides the config to the client
-func ListenAndServe(c *config.Configuration) error {
-	router, err := bootstrap.New("service.api-gateway")
+func ListenAndServe(c *routing.Configuration) error {
+	router, err := bootstrap.New("service.api-gateway.h")
 
 	if err != nil {
 		return err
 	}
 
 	for _, service := range c.Services {
-		url, err := url.Parse(service.URL)
+		url, err := url.Parse(service.Upstream)
 		if err != nil {
 			return err
 		}
@@ -33,8 +32,8 @@ func ListenAndServe(c *config.Configuration) error {
 
 		router.GET(prefix+"*s", handler(prefix, p))
 		router.POST(prefix+"*s", handler(prefix, p))
-		router.DELETE(prefix+"*s", handler(prefix, p))
 		router.PATCH(prefix+"*s", handler(prefix, p))
+		router.DELETE(prefix+"*s", handler(prefix, p))
 	}
 
 	return http.ListenAndServe(port(c.Port), router)
