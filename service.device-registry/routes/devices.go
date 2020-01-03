@@ -66,7 +66,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	if !(device.ID != "" && device.Name != "" && device.Type != "" && device.Controller != "" && device.RoomID != "" && device.Address != "" && device.Token != "") {
+	if !(device.ID != "" && device.Name != "" && device.Type != "" && device.Controller != "" && device.RoomID != "" && device.Address != "") {
 		errors.MissingParams(w)
 		return
 	}
