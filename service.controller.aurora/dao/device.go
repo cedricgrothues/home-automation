@@ -11,24 +11,24 @@ import (
 // State defines the returned device state
 type State struct {
 	Brightness struct {
-		Value int `json:"value,omitempty"`
+		Value int `json:"value"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"brightness,omitempty"`
 	ColorMode   string `json:"color_mode"`
 	Temperature struct {
-		Value int `json:"value,omitempty"`
+		Value int `json:"value"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"temperature,omitempty"`
 	Hue struct {
-		Value int `json:"value,omitempty"`
+		Value int `json:"value"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"hue,omitempty"`
 	Power      bool `json:"power"`
 	Saturation struct {
-		Value int `json:"value,omitempty"`
+		Value int `json:"value"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"saturation,omitempty"`
@@ -36,32 +36,40 @@ type State struct {
 
 // Aurora : The aurora response structure
 type Aurora struct {
-	Brightness struct {
-		Value int `json:"value,omitempty"`
-		Max   int `json:"max,omitempty"`
-		Min   int `json:"min,omitempty"`
-	} `json:"brightness,omitempty"`
-	ColorMode string `json:"colorMode,omitempty"`
-	Ct        struct {
-		Value int `json:"value,omitempty"`
-		Max   int `json:"max,omitempty"`
-		Min   int `json:"min,omitempty"`
-	} `json:"ct,omitempty"`
-	Hue struct {
-		Value int `json:"value,omitempty"`
-		Max   int `json:"max,omitempty"`
-		Min   int `json:"min,omitempty"`
-	} `json:"hue,omitempty"`
-	On  on `json:"on,omitempty"`
-	Sat struct {
-		Value int `json:"value,omitempty"`
-		Max   int `json:"max,omitempty"`
-		Min   int `json:"min,omitempty"`
-	} `json:"sat,omitempty"`
+	Brightness brightness `json:"brightness,omitempty"`
+	ColorMode  string     `json:"colorMode,omitempty"`
+	Ct         ct         `json:"ct,omitempty"`
+	Hue        hue        `json:"hue,omitempty"`
+	On         on         `json:"on,omitempty"`
+	Sat        sat        `json:"sat,omitempty"`
 }
 
 type on struct {
-	Value bool `json:"value,omitempty"`
+	Value bool `json:"value"`
+}
+
+type brightness struct {
+	Value int `json:"value"`
+	Max   int `json:"max,omitempty"`
+	Min   int `json:"min,omitempty"`
+}
+
+type ct struct {
+	Value int `json:"value"`
+	Max   int `json:"max,omitempty"`
+	Min   int `json:"min,omitempty"`
+}
+
+type hue struct {
+	Value int `json:"value"`
+	Max   int `json:"max,omitempty"`
+	Min   int `json:"min,omitempty"`
+}
+
+type sat struct {
+	Value int `json:"value"`
+	Max   int `json:"max,omitempty"`
+	Min   int `json:"min,omitempty"`
 }
 
 // GetState returns the given device's state
@@ -88,7 +96,7 @@ func GetState(device *Device) (*State, error) {
 // PatchState changes device state
 func PatchState(device *Device, state *State) error {
 
-	b, err := json.Marshal(Aurora{Brightness: state.Brightness, ColorMode: state.ColorMode, Ct: state.Temperature, Hue: state.Hue, On: on{Value: state.Power}, Sat: state.Saturation})
+	b, err := json.Marshal(Aurora{Brightness: brightness{Value: state.Brightness.Value}, ColorMode: state.ColorMode, Ct: ct{Value: state.Temperature.Value}, Hue: hue{Value: state.Hue.Value}, On: on{Value: state.Power}, Sat: sat{Value: state.Saturation.Value}})
 
 	if err != nil {
 		return err
