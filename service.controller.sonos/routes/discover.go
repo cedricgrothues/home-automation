@@ -13,7 +13,7 @@ func DiscoverDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params
 	done := make(chan bool)
 	errors := make(chan error)
 
-	go discovery.Discover(devices, errors, done)
+	go discovery.Discover()
 
 	var speakers []*discovery.Sonos
 

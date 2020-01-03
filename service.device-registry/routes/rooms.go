@@ -33,7 +33,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 		rows.Scan(&room.ID, &room.Name)
 
-		deviceRows, err := Database.Query(`SELECT id, name, type, controller, address FROM devices WHERE room_id=$1`, room.ID)
+		deviceRows, err := Database.Query(`SELECT id, name, type, controller, address, token FROM devices WHERE room_id=$1`, room.ID)
 
 		defer deviceRows.Close()
 
@@ -44,7 +44,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		for deviceRows.Next() {
 			var d models.Device
 
-			deviceRows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller, &d.Address)
+			deviceRows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller, &d.Address, &d.Token)
 			room.Devices = append(room.Devices, d)
 		}
 
@@ -121,7 +121,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	rows, err := Database.Query(`SELECT id, name, type, controller, address FROM devices WHERE room_id=$1`, p[0].Value)
+	rows, err := Database.Query(`SELECT id, name, type, controller, address, token FROM devices WHERE room_id=$1`, p[0].Value)
 
 	defer rows.Close()
 
@@ -132,7 +132,7 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	for rows.Next() {
 		var d models.Device
 
-		rows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller, &d.Address)
+		rows.Scan(&d.ID, &d.Name, &d.Type, &d.Controller, &d.Address, &d.Token)
 		room.Devices = append(room.Devices, d)
 	}
 

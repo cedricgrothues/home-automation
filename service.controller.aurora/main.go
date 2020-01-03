@@ -1,19 +1,21 @@
 package main
 
 import (
-	"fmt"
-
-	"github.com/cedricgrothues/home-automation/service.controller.aurora/discover"
+	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
+	"github.com/cedricgrothues/home-automation/service.controller.aurora/routes"
 )
 
 func main() {
-	addresses, err := discover.Discover()
+	router, err := bootstrap.New("service.controller.aurora")
 
 	if err != nil {
 		panic(err)
 	}
 
-	for _, ip := range addresses {
-		fmt.Println(ip)
-	}
+	router.GET("/discover", routes.DiscoverDevices)
+
+	router.GET("/devices/:id", routes.GetState)
+	router.PATCH("/devices/:id", routes.PatchState)
+
+	panic(bootstrap.Start(router, 4004))
 }

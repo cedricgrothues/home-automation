@@ -14,7 +14,7 @@ import (
 
 // ListenAndServe provides the config to the client
 func ListenAndServe(c *routing.Configuration) error {
-	router, err := bootstrap.New("service.api-gateway.h")
+	router, err := bootstrap.New("service.api-gateway")
 
 	if err != nil {
 		return err

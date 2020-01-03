@@ -9,6 +9,7 @@ type Device struct {
 	Address    string `json:"address"`
 	Room       *Room  `json:"room,omitempty"`
 	RoomID     string `json:"room_id,omitempty"`
+	Token      string `json:"token,omitempty"`
 }
 
 // Room has an id, name and devices

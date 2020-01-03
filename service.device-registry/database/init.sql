@@ -9,6 +9,7 @@ CREATE TABLE IF NOT EXISTS devices (
     type text NOT NULL,
     controller text NOT NULL,
     address text NOT NULL,
+    token text,
     room_id text NOT NULL,
     FOREIGN KEY (room_id) REFERENCES rooms (id) ON UPDATE CASCADE ON DELETE SET NULL
                                    );

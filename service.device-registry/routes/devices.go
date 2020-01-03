@@ -16,7 +16,7 @@ import (
 func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	params := r.URL.Query()
 
-	rows, err := Database.Query(`SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND (length(CAST($1 AS TEXT)) <= 0 OR d.controller=$1)`, params.Get("controller"))
+	rows, err := Database.Query(`SELECT d.id, d.name, d.type, d.controller, d.address, d.token, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND (length(CAST($1 AS TEXT)) <= 0 OR d.controller=$1)`, params.Get("controller"))
 
 	if err != nil {
 		panic(err)
@@ -28,7 +28,7 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		var device models.Device
 		room := &models.Room{}
 
-		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
+		err = rows.Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Token, &room.ID, &room.Name)
 
 		device.Room = room
 
@@ -66,7 +66,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	if !(device.ID != "" && device.Name != "" && device.Type != "" && device.Controller != "" && device.RoomID != "" && device.Address != "") {
+	if !(device.ID != "" && device.Name != "" && device.Type != "" && device.Controller != "" && device.RoomID != "" && device.Address != "" && device.Token != "") {
 		errors.MissingParams(w)
 		return
 	}
@@ -106,14 +106,14 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, address, room_id) values($1,$2,$3,$4,$5,$6)")
+	stmt, err := Database.Prepare("INSERT INTO devices(id, name, type, controller, address, room_id, token) values($1,$2,$3,$4,$5,$6,$7)")
 	defer stmt.Close()
 
 	if err != nil {
 		panic(err)
 	}
 
-	_, err = stmt.Exec(device.ID, device.Name, device.Type, device.Controller, device.Address, device.RoomID)
+	_, err = stmt.Exec(device.ID, device.Name, device.Type, device.Controller, device.Address, device.RoomID, device.Token)
 
 	if err != nil {
 		panic("A problem occured while inserting object into database: " + err.Error())
@@ -121,7 +121,7 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	var room models.Room
 
-	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1", device.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
+	err = Database.QueryRow("SELECT d.id, d.name, d.type, d.controller, d.address, d.token, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1", device.ID).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Token, &room.ID, &room.Name)
 
 	device.Room = &room
 	device.RoomID = ""
@@ -145,7 +145,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	var device models.Device
 	room := &models.Room{}
 
-	err := Database.QueryRow(`SELECT d.id, d.name, d.type, d.controller, d.address, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND (length(CAST($2 AS TEXT)) <= 0 OR d.controller=$2)`, p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &room.ID, &room.Name)
+	err := Database.QueryRow(`SELECT d.id, d.name, d.type, d.controller, d.address, d.token, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND (length(CAST($2 AS TEXT)) <= 0 OR d.controller=$2)`, p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Token, &room.ID, &room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {

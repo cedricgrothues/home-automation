@@ -56,6 +56,7 @@ Available on port `4001` by default
 - `"type":string` the type of device, accepted types: `plug`, `speaker`, `lamp`, `lamp-dimmable`, `lamp-color`
 - `"room_id":string` the globally unique ID of the room
 - `"controller":string` the name of the device's controller
+- `"token":string` the device api token
 
 If the ID already exists, an error will be thrown.
 
