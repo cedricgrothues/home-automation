@@ -23,6 +23,8 @@ dependencies:
 
   # Used to check if the user
   # is connected to Wifi
+  # remove connectivity_macos when it's integrated
+  # in connectivity
   connectivity: ^0.4.6+1
   connectivity_macos: ^0.0.2+1
 
