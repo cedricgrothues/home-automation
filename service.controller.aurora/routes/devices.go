@@ -48,7 +48,7 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // PatchState updates a device state
 func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	var state dao.State
+	var state dao.SetState
 
 	err := json.NewDecoder(r.Body).Decode(&state)
 
