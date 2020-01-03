@@ -48,17 +48,30 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // PatchState updates a device state
 func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	var request struct {
-		Power bool `json:"power"`
-	}
+	var state dao.State
 
-	err := json.NewDecoder(r.Body).Decode(&request)
+	err := json.NewDecoder(r.Body).Decode(&state)
 
 	// Check if all params are present, if not abort with 400 error
 	if err != nil {
 		errors.MissingParams(w)
 		return
 	}
+
+	device, err := dao.GetDeviceInfo(p[0].Value)
+
+	if err != nil {
+		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
+			panic(err)
+		} else {
+			w.Header().Add("Content-Type", "application/json; charset=utf-8")
+			w.WriteHeader(http.StatusFailedDependency)
+			w.Write([]byte(`{"message":"Unable to contact the device-registry service."}`))
+			return
+		}
+	}
+
+	dao.PatchState(device, &state)
 
 	if err != nil {
 		// undesirable solution, update in the near future
@@ -72,7 +85,5 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	w.Header().Add("Content-Type", "application/json; charset=utf-8")
-	w.WriteHeader(http.StatusFailedDependency)
-	w.Write([]byte(`{"message":"Unable to contact the device."}`))
+	w.WriteHeader(http.StatusNoContent)
 }
