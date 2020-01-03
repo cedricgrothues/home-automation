@@ -10,8 +10,10 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 | Service | Status |
 | --- | --- |
-| service.controller.sonoff | Supports plugs and non-dimmable lamps |
-| service.controller.sonos | Under development |
+| service.controller.aurora | Alpha |
+| service.controller.sonoff | Alpha |
+| service.controller.sonos  | WIP   |
+| service.controller.hue    | Planned |
 
 ## Usage
 
