@@ -13,3 +13,7 @@ services:
         name: Sonos Controller
         prefix: service.controller.sonos
         upstream: http://service.controller.sonos:4003
+    service.controller.aurora:
+        name: Nanoleaf Aurora Controller
+        prefix: service.controller.aurora
+        upstream: http://service.controller.aurora:4004
