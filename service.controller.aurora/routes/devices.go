@@ -48,7 +48,7 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 // PatchState updates a device state
 func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	var state dao.SetState
+	state := make(map[string]interface{})
 
 	err := json.NewDecoder(r.Body).Decode(&state)
 
@@ -71,7 +71,25 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	dao.PatchState(device, &state)
+	desired := make(map[string]dao.Value)
+
+	if val, ok := state["brightness"]; ok {
+		desired["brightness"] = dao.Value{Value: val}
+
+	} else if val, ok := state["power"]; ok {
+		desired["on"] = dao.Value{Value: val}
+
+	} else if val, ok := state["hue"]; ok {
+		desired["hue"] = dao.Value{Value: val}
+
+	} else if val, ok := state["saturation"]; ok {
+		desired["sat"] = dao.Value{Value: val}
+
+	} else if val, ok := state["temperature"]; ok {
+		desired["ct"] = dao.Value{Value: val}
+	}
+
+	dao.PatchState(device, desired)
 
 	if err != nil {
 		// undesirable solution, update in the near future

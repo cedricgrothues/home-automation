@@ -34,16 +34,6 @@ type State struct {
 	} `json:"saturation"`
 }
 
-// SetState defines the set device state
-type SetState struct {
-	Brightness  int    `json:"brightness"`
-	ColorMode   string `json:"color_mode"`
-	Temperature int    `json:"temperature"`
-	Hue         int    `json:"hue"`
-	Power       bool   `json:"power"`
-	Saturation  int    `json:"saturation"`
-}
-
 // Aurora : The aurora response structure
 type Aurora struct {
 	Brightness struct {
@@ -72,38 +62,9 @@ type Aurora struct {
 	} `json:"sat"`
 }
 
-// SetAurora : The aurora request structure
-type SetAurora struct {
-	Brightness brightness `json:"brightness"`
-	ColorMode  string     `json:"colorMode"`
-	Ct         ct         `json:"ct"`
-	Hue        hue        `json:"hue"`
-	On         on         `json:"on"`
-	Sat        sat        `json:"sat"`
-}
-
-type brightness struct {
-	Value     int `json:"value,omitempty"`
-	Increment int `json:"increment,omitempty"`
-}
-
-type ct struct {
-	Value     int `json:"value,omitempty"`
-	Increment int `json:"increment,omitempty"`
-}
-
-type hue struct {
-	Value     int `json:"value,omitempty"`
-	Increment int `json:"increment,omitempty"`
-}
-
-type on struct {
-	Value bool `json:"value,omitempty"`
-}
-
-type sat struct {
-	Value     int `json:"value,omitempty"`
-	Increment int `json:"increment,omitempty"`
+// Value : the device value
+type Value struct {
+	Value interface{} `json:"value"`
 }
 
 // GetState returns the given device's state
@@ -128,9 +89,9 @@ func GetState(device *Device) (*State, error) {
 }
 
 // PatchState changes device state
-func PatchState(device *Device, state *SetState) error {
+func PatchState(device *Device, state map[string]Value) error {
 
-	b, err := json.Marshal(SetAurora{Brightness: brightness{Value: state.Brightness}, ColorMode: state.ColorMode, Ct: ct{Value: state.Temperature}, Hue: hue{Value: state.Hue}, On: on{Value: state.Power}, Sat: sat{Value: state.Saturation}})
+	b, err := json.Marshal(state)
 
 	if err != nil {
 		return err
