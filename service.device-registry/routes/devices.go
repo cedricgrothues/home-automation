@@ -71,6 +71,12 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
+	// device.Token is required for device.Controller == "service.controller.aurora"
+	if device.Controller == "service.controller.aurora" && device.Token == "" {
+		errors.MissingParams(w)
+		return
+	}
+
 	if match, _ := regexp.MatchString(`^[a-z-_]+$`, device.ID); !match {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusBadRequest)
