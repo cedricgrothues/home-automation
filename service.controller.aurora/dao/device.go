@@ -11,24 +11,24 @@ import (
 // State defines the returned device state
 type State struct {
 	Brightness struct {
-		Value int `json:"value"`
+		Value int `json:"value,omitempty"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"brightness,omitempty"`
 	ColorMode   string `json:"color_mode"`
 	Temperature struct {
-		Value int `json:"value"`
+		Value int `json:"value,omitempty"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"temperature,omitempty"`
 	Hue struct {
-		Value int `json:"value"`
+		Value int `json:"value,omitempty"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"hue,omitempty"`
 	Power      bool `json:"power"`
 	Saturation struct {
-		Value int `json:"value"`
+		Value int `json:"value,omitempty"`
 		Max   int `json:"max,omitempty"`
 		Min   int `json:"min,omitempty"`
 	} `json:"saturation,omitempty"`
@@ -45,29 +45,29 @@ type Aurora struct {
 }
 
 type on struct {
-	Value bool `json:"value"`
+	Value bool `json:"value,omitempty"`
 }
 
 type brightness struct {
-	Value int `json:"value"`
+	Value int `json:"value,omitempty"`
 	Max   int `json:"max,omitempty"`
 	Min   int `json:"min,omitempty"`
 }
 
 type ct struct {
-	Value int `json:"value"`
+	Value int `json:"value,omitempty"`
 	Max   int `json:"max,omitempty"`
 	Min   int `json:"min,omitempty"`
 }
 
 type hue struct {
-	Value int `json:"value"`
+	Value int `json:"value,omitempty"`
 	Max   int `json:"max,omitempty"`
 	Min   int `json:"min,omitempty"`
 }
 
 type sat struct {
-	Value int `json:"value"`
+	Value int `json:"value,omitempty"`
 	Max   int `json:"max,omitempty"`
 	Min   int `json:"min,omitempty"`
 }
