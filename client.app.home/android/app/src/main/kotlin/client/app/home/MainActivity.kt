@@ -1,4 +1,4 @@
-package app.home.home
+package client.app.home
 
 import androidx.annotation.NonNull;
 import io.flutter.embedding.android.FlutterActivity

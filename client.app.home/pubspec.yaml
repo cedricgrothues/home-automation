@@ -24,6 +24,7 @@ dependencies:
   # Used to check if the user
   # is connected to Wifi
   connectivity: ^0.4.6+1
+  connectivity_macos: ^0.0.2+1
 
   # HTTP Requests
   http: ^0.12.0+2
