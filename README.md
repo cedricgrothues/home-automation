@@ -52,19 +52,34 @@ Controllers must implement a standardised interface for fetching and updating de
 
 ```json
 {
-  "identifier": "table-lamp",
-  "name": "Table Lamp",
-  "type": "lamp",
-  "controller": "service.controller.hue",
-  "state": {
-    "brightness": {
-      "type": "int",
-      "min": 0,
-      "max": 254,
-      "interpolation": "continuous",
-      "value": 100
+    "id": "lightpanels",
+    "name": "Desk Lamp",
+    "type": "lamp-color",
+    "controller": "service.controller.aurora",
+    "state": {
+        "brightness": {
+            "value": 50,
+            "max": 100,
+            "min": 0
+        },
+        "color_mode": "hs",
+        "temperature": {
+            "value": 4000,
+            "max": 6500,
+            "min": 1200
+        },
+        "hue": {
+            "value": 123,
+            "max": 360,
+            "min": 0
+        },
+        "power": true,
+        "saturation": {
+            "value": 100,
+            "max": 100,
+            "min": 0
+        }
     }
-  }
 }
 ```
 

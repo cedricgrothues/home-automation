@@ -8,8 +8,16 @@ import (
 	"net/http"
 )
 
-// State defines the returned device state
-type State struct {
+// ReturnState defines the returned device state
+type ReturnState struct {
+	ID         string `json:"id"`
+	Name       string `json:"name"`
+	Type       string `json:"type"`
+	Controller string `json:"controller"`
+	State      state  `json:"state"`
+}
+
+type state struct {
 	Brightness struct {
 		Value int `json:"value"`
 		Max   int `json:"max"`
@@ -68,7 +76,7 @@ type Value struct {
 }
 
 // GetState returns the given device's state
-func GetState(device *Device) (*State, error) {
+func GetState(device *Device) (*ReturnState, error) {
 	response, err := http.Get(fmt.Sprintf("http://%s:16021/api/v1/%s/state", device.Address, device.Token))
 
 	if err != nil {
@@ -85,7 +93,7 @@ func GetState(device *Device) (*State, error) {
 		return nil, err
 	}
 
-	return &State{Brightness: aurora.Brightness, ColorMode: aurora.ColorMode, Temperature: aurora.Ct, Hue: aurora.Hue, Power: aurora.On.Value, Saturation: aurora.Sat}, nil
+	return &ReturnState{ID: device.ID, Name: device.Name, Type: device.Type, Controller: device.Controller, State: state{Brightness: aurora.Brightness, ColorMode: aurora.ColorMode, Temperature: aurora.Ct, Hue: aurora.Hue, Power: aurora.On.Value, Saturation: aurora.Sat}}, nil
 }
 
 // PatchState changes device state
