@@ -17,4 +17,4 @@ RUN go install github.com/cedricgrothues/home-automation/service.advertise.ssdp
 ENTRYPOINT /go/bin/service.advertise.ssdp
 
 # Document that the service listens on port 1900.
-EXPOSE 1900
+EXPOSE 1900/udp

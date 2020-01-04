@@ -7,7 +7,7 @@ services:
       dockerfile: service.advertise.ssdp/Dockerfile
       context: .
     ports:
-      - 1900:1900
+      - 1900:1900/udp
 
   service.api-gateway:
     container_name: "service.api-gateway"
