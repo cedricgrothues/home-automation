@@ -1,6 +1,14 @@
 version: '3.7'
 
 services:
+  service.advertise.ssdp:
+    container_name: "service.advertise.ssdp"
+    build:
+      dockerfile: service.advertise.ssdp/Dockerfile
+      context: .
+    ports:
+      - 1900:1900
+
   service.api-gateway:
     container_name: "service.api-gateway"
     build:
