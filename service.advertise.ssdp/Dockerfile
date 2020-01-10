@@ -1,20 +1,18 @@
-# Start from a Debian image with the latest version of Go installed
-# and a workspace (GOPATH) configured at /go.
-FROM golang
+FROM node:10
 
-# Add Maintainer Info
-LABEL maintainer="Cedric Grothues <cedricgrothues@gmail.com>"
+# Create app directory
+WORKDIR /usr/src/app
 
-ADD ./service.advertise.ssdp /go/src/github.com/cedricgrothues/home-automation/service.advertise.ssdp
+# Install app dependencies
+# A wildcard is used to ensure both package.json AND package-lock.json are copied
+# where available (npm@5+)
+COPY package*.json ./
 
-# Build the service.advertise.ssdp command inside the container.
-# (You may fetch or manage dependencies here,
-# either manually or with a tool like "godep".)
-RUN go get -v -t -d github.com/cedricgrothues/home-automation/service.advertise.ssdp/...
-RUN go install github.com/cedricgrothues/home-automation/service.advertise.ssdp
+RUN npm install
+# If you are building your code for production
+# RUN npm ci --only=production
 
-# Run the service.advertise.ssdp command by default when the container starts.
-ENTRYPOINT /go/bin/service.advertise.ssdp
+# Bundle app source
+COPY . .
 
-# Document that the service listens on port 1900.
-EXPOSE 1900/udp
+CMD [ "node", "client.js" ]
