@@ -15,6 +15,8 @@ class NetworkAware extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TargetPlatform.macOS;
+
     return Stack(
       children: <Widget>[
         child,
@@ -38,13 +40,17 @@ class NoWifi extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Icon(
-                RegularIcons.wifi_slash,
+                LightIcons.wifi_slash,
                 size: 40,
-                color: Theme.of(context).buttonColor,
+                color: Theme.of(context).buttonColor.withOpacity(0.2),
               ),
               SizedBox(height: 60),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 80),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 80),
+                constraints: BoxConstraints(
+                  minWidth: 200,
+                  maxWidth: 300,
+                ),
                 child: Text(
                   "You need to be connected to a wireless network to use the Home App. Go to Settings > Wi-Fi on your device.",
                   textAlign: TextAlign.center,

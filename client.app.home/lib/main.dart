@@ -199,12 +199,11 @@ class App extends StatelessWidget {
           switch (settings.name) {
             case '/':
               return FadeTransitionRoute(
-                page: Splash(),
+                child: Splash(),
               );
             case '/home':
-              return NoTransitionRoute(
-                builder: (_) => Home(),
-                settings: settings,
+              return FadeTransitionRoute(
+                child: Home(),
               );
             case '/setup':
               return NoTransitionRoute(
@@ -213,7 +212,7 @@ class App extends StatelessWidget {
               );
             case '/account_setup':
               return FadeTransitionRoute(
-                page: AccountSetup(),
+                child: AccountSetup(),
               );
             case '/wifi_required':
               return NoTransitionRoute(

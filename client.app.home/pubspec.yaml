@@ -2,10 +2,8 @@ name: home
 description: The mobile, web and desktop application communicating with cedricgrothues/home-automation's api
 
 version: 0.1.0-alpha
-
-repository: https://www.github.com/cedricgrothues/home-automation
-
 author: Cedric Grothues <cedricgrothues@gmail.com>
+repository: https://www.github.com/cedricgrothues/home-automation
 
 environment:
   sdk: ">=2.3.0 <3.0.0"
@@ -61,6 +59,7 @@ flutter:
     - family: Light
       fonts:
         - asset: assets/fonts/Light.ttf
+
     - family: Open Sans
       fonts:
         - asset: assets/fonts/OpenSans-Light.ttf
@@ -86,6 +85,34 @@ flutter:
         - asset: assets/fonts/OpenSans-ExtraBold.ttf
           weight: 800
         - asset: assets/fonts/OpenSans-ExtraBoldItalic.ttf
+          weight: 800
+          style: italic
+
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat-Light.ttf
+          weight: 300
+        - asset: assets/fonts/Montserrat-LightItalic.ttf
+          weight: 300
+          style: italic
+        - asset: assets/fonts/Montserrat-Regular.ttf
+          weight: 400
+        - asset: assets/fonts/Montserrat-Italic.ttf
+          weight: 400
+          style: italic
+        - asset: assets/fonts/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
+          weight: 600
+          style: italic
+        - asset: assets/fonts/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat-BoldItalic.ttf
+          weight: 700
+          style: italic
+        - asset: assets/fonts/Montserrat-ExtraBold.ttf
+          weight: 800
+        - asset: assets/fonts/Montserrat-ExtraBoldItalic.ttf
           weight: 800
           style: italic
 

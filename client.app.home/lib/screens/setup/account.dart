@@ -78,7 +78,7 @@ class _AccountSetupState extends State<AccountSetup> {
           ),
 
           Positioned(
-            top: MediaQuery.of(context).viewPadding.top + 60,
+            top: MediaQuery.of(context).viewPadding.top + 70,
             right: 20,
             child: Column(
               mainAxisSize: MainAxisSize.min,
@@ -181,29 +181,20 @@ class SetImage extends StatelessWidget {
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: onTap,
-              child: Container(
-                constraints: BoxConstraints(
-                  maxHeight: 180,
-                  maxWidth: 180,
-                  minHeight: 100,
-                  minWidth: 100,
-                ),
-                width: MediaQuery.of(context).size.height / 4,
-                height: MediaQuery.of(context).size.height / 4,
+              child: DecoratedBox(
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: image == null
-                        ? AssetImage(
-                            "assets/images/setup.png",
-                          )
-                        : FileImage(image),
-                    fit: BoxFit.cover,
-                  ),
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context).buttonColor,
                     width: 3,
                   ),
+                ),
+                child: CircleAvatar(
+                  maxRadius: 100,
+                  minRadius: 80,
+                  backgroundImage: image != null ? FileImage(image) : null,
+                  //backgroundColor: Colors.red,
+                  child: Text(Hive.box<String>('preferences').get("username")),
                 ),
               ),
             ),
@@ -232,7 +223,7 @@ class Continue extends StatelessWidget {
               duration: Duration(milliseconds: 600),
             );
           } else {
-            Navigator.of(context).pushReplacement(FadeTransitionRoute(page: Home()));
+            Navigator.of(context).pushReplacement(FadeTransitionRoute(child: Home()));
           }
         },
         width: MediaQuery.of(context).size.width - 150,
@@ -250,7 +241,7 @@ class Indicator extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return AnimatedOpacity(
-      opacity: active ? 1 : 0.1,
+      opacity: active ? 1 : 0.2,
       child: Container(
         margin: const EdgeInsets.only(bottom: 10),
         width: 7,

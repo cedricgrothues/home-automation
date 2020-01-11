@@ -47,15 +47,16 @@ class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
 /// FadeTransitionRoute
 /// Custom route with a fade transition
 class FadeTransitionRoute<T> extends PageRouteBuilder {
-  final Widget page;
-  FadeTransitionRoute({this.page})
+  final Widget child;
+
+  FadeTransitionRoute({this.child})
       : super(
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              page,
+              child,
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
