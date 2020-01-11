@@ -15,8 +15,6 @@ class NetworkAware extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TargetPlatform.macOS;
-
     return Stack(
       children: <Widget>[
         child,
