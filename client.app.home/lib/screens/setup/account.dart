@@ -13,8 +13,8 @@ import 'package:image_picker/image_picker.dart';
 class AccountSetup extends StatefulWidget {
   const AccountSetup({Key key, this.initial = 0}) : super(key: key);
 
-  /// Set the PageViews initial page
-  /// if the user hasn't finished the setup process yet.
+  /// Set the PageViews initial page if the user
+  /// hasn't finished the setup process yet.
   final int initial;
 
   @override

@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart' show SystemChrome, DeviceOrientation;
+import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'package:provider/provider.dart';
 import 'package:connectivity/connectivity.dart';
@@ -24,12 +24,19 @@ void main() => runApp(App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    // This locks the device orientation to a portrait up position.
+    // Edit this list to add other device orientations
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
+        // Register a stream provider that listens to the connectivity result
+        // This is used in screens/wifi to show a 'not connected' page, if wifi is
+        // not availiable. Register all other global providers here.
         StreamProvider<ConnectivityResult>.value(
-            value: Connectivity().onConnectivityChanged, initialData: ConnectivityResult.wifi),
+          value: Connectivity().onConnectivityChanged,
+          initialData: ConnectivityResult.wifi,
+        ),
       ],
       child: MaterialApp(
         title: 'Home',
@@ -183,6 +190,10 @@ class App extends StatelessWidget {
         // The initial route is required to be the spash screen if
         // Hive is used, since it's initialized in Spash's initState
         initialRoute: '/',
+
+        // As mentioned above, every child is wrapped in a NetworkAware widget
+        // to detect network state changes and show an error message if the
+        // client is not connected to wifi.
         builder: (context, Widget child) => NetworkAware(child: child),
         onGenerateRoute: (RouteSettings settings) {
           switch (settings.name) {
@@ -232,7 +243,12 @@ class App extends StatelessWidget {
               return null;
           }
         },
-        locale: const Locale('en', 'US'),
+
+        // Add all supported locales here.
+        // Currently only en-UK is available.
+        locale: const Locale('en', 'UK'),
+
+        // Remove the bright red debug banner if we're in debug mode
         debugShowCheckedModeBanner: false,
       ),
     );

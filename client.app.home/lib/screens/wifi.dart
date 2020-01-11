@@ -5,6 +5,9 @@ import 'package:home/components/icons.dart';
 import 'package:provider/provider.dart' show Provider;
 import 'package:connectivity/connectivity.dart' show ConnectivityResult;
 
+/// NetworkAware: This widget renders a `NoWifi()` screen above the current `child`
+/// if it detects a state change from the `ConnectivityResult Provider` defined in main.dart's
+/// `MultiProvider` Widget. If this provider is not present, the widgit will throw an exception.
 class NetworkAware extends StatelessWidget {
   const NetworkAware({Key key, @required this.child}) : super(key: key);
 
@@ -21,6 +24,8 @@ class NetworkAware extends StatelessWidget {
   }
 }
 
+/// This class defines the widget that is rendered above NetworkAware's current child.
+/// See `NetworkAware` for more information on this.
 class NoWifi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

@@ -20,6 +20,8 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
+    // Add the status() function as post frame callback so it's called
+    // after _SplashState's first build
     WidgetsBinding.instance.addPostFrameCallback((_) => status());
   }
 
@@ -28,8 +30,8 @@ class _SplashState extends State<Splash> {
     return Container(color: Theme.of(context).scaffoldBackgroundColor);
   }
 
-  /// The status function checks the connection to the API Gateway service and redirects the user to the appropriate screen.
-  /// This function may not be called during build
+  /// The status function checks the connection to the API Gateway service and redirects
+  /// the user to the appropriate screen. This function may not be called during build.
   void status() async {
     if (!kIsWeb) Hive.init(Platform.isMacOS ? Directory.current.path : (await getApplicationDocumentsDirectory()).path);
 
