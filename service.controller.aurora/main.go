@@ -12,8 +12,6 @@ func main() {
 		panic(err)
 	}
 
-	router.GET("/discover", routes.DiscoverDevices)
-
 	router.GET("/devices/:id", routes.GetState)
 	router.PUT("/devices/:id", routes.PutState)
 
