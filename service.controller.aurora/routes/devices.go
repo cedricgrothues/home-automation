@@ -71,28 +71,27 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	desired := make(map[string]dao.Value)
+	desired := make(map[string]interface{})
 
-	if val, ok := state["brightness"]; ok {
-		desired["brightness"] = dao.Value{Value: val}
-
-	} else if val, ok := state["power"]; ok {
-		desired["on"] = dao.Value{Value: val}
-
-	} else if val, ok := state["hue"]; ok {
-		desired["hue"] = dao.Value{Value: val}
-
-	} else if val, ok := state["saturation"]; ok {
-		desired["sat"] = dao.Value{Value: val}
-
-	} else if val, ok := state["temperature"]; ok {
-		desired["ct"] = dao.Value{Value: val}
+	for k, v := range state {
+		switch k {
+		case "brightness":
+			desired["brightness"] = v
+		case "power":
+			desired["on"] = v
+		case "hue":
+			desired["hue"] = v
+		case "saturation":
+			desired["sat"] = v
+		case "temperature":
+			desired["ct"] = v
+		}
 	}
 
 	dao.PatchState(device, desired)
 
 	if err != nil {
-		// undesirable solution, update in the near future
+		// undesirable solution, update in the near future (Go's new error handling)
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
 			panic(err)
 		} else {

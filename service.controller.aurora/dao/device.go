@@ -1,11 +1,11 @@
 package dao
 
 import (
-	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
+	"strings"
 )
 
 // ReturnState defines the returned device state
@@ -97,27 +97,24 @@ func GetState(device *Device) (*ReturnState, error) {
 }
 
 // PatchState changes device state
-func PatchState(device *Device, state map[string]Value) error {
-
-	b, err := json.Marshal(state)
-
-	if err != nil {
-		return err
-	}
+func PatchState(device *Device, state map[string]interface{}) error {
 
 	client := &http.Client{}
-	req, err := http.NewRequest(http.MethodPut, fmt.Sprintf("http://%s:16021/api/v1/%s/state", device.Address, device.Token), bytes.NewReader(b))
 
-	if err != nil {
-		return err
-	}
+	for k, v := range state {
+		req, err := http.NewRequest(http.MethodPut, fmt.Sprintf("http://%s:16021/api/v1/%s/state", device.Address, device.Token), strings.NewReader(fmt.Sprintf("{'%s': '%v'}", k, v)))
 
-	response, err := client.Do(req)
+		if err != nil {
+			return err
+		}
 
-	if err != nil {
-		return err
-	} else if response.StatusCode != 204 {
-		return errors.New("invalid status code")
+		response, err := client.Do(req)
+
+		if err != nil {
+			return err
+		} else if response.StatusCode != 204 {
+			return errors.New("invalid status code")
+		}
 	}
 
 	return nil
