@@ -117,4 +117,4 @@ This project is based on [Jake Wright](https://github.com/jakewright)'s idea of 
 [MIT](https://choosealicense.com/licenses/mit/)
 
 ---
-<sup>1</sup> <a class="anchor" id="1">Core services are required to be written Go, other services may be written in Python or NodeJS.</a>
+<sup>1</sup> <a class="anchor" id="1">Core services are required to be written Go, other services, like controllers, may be written in Python or NodeJS.</a>

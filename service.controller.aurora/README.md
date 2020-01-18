@@ -57,10 +57,11 @@ This controller can communicate with Nanoleaf Aurora devices
 
 **Arguments**
 
-- `"power":boolean` the power state of the device
-- `"brightness":int` the brightness of the device
-- `"saturation":int` the saturation of the device
-- `"temperature":int` the temperature of the device
+- `"power":boolean`     the power state of the device
+- `"brightness":int`    the brightness of the device
+- `"saturation":int`    the saturation of the device
+- `"temperature":int`   the color temperature of the device
+- `"hue":int`           the hue of the device
 
 **Response**
 

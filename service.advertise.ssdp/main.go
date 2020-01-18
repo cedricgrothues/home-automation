@@ -2,9 +2,7 @@ package main
 
 import (
 	"net"
-	"os"
-	"os/signal"
-	"time"
+	"sync"
 
 	"github.com/cedricgrothues/home-automation/service.advertise.ssdp/ssdp"
 )
@@ -22,9 +20,9 @@ func main() {
 
 	ad, err := ssdp.Advertise(
 		"home-automation:hub",
-		"hub:c01d7cf6-ec3f-47f0-9556-a5d6e9009a43",
+		"hub:C02P-HPER-FVH3",
 		"http://"+addr.IP.String()+":4000/",
-		"http://github.com/cedricgrothues/home-automation",
+		"https://github.com/cedricgrothues/home-automation",
 		60,
 	)
 
@@ -32,20 +30,9 @@ func main() {
 		panic(err)
 	}
 
-	quit := make(chan os.Signal, 1)
-	signal.Notify(quit, os.Interrupt)
-
-	alive := time.Tick(300 * time.Second)
-
-loop:
-	for {
-		select {
-		case <-alive:
-			ad.Alive()
-		case <-quit:
-			break loop
-		}
-	}
+	var wg sync.WaitGroup
+	wg.Add(1)
+	wg.Wait()
 
 	ad.Bye()
 	ad.Close()
