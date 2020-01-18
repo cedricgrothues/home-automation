@@ -6,7 +6,7 @@ import 'package:hub/src/install.dart';
 import 'package:hub/src/update.dart';
 
 void main(List<String> args) {
-  CommandRunner runner = CommandRunner("hub", "Home Hub ")
+  CommandRunner runner = CommandRunner("hub", "Home Hub Controller")
     ..addCommand(new UpdateCommand())
     ..addCommand(new InstallCommand());
 

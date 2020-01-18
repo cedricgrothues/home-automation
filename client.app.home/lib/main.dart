@@ -46,6 +46,7 @@ class App extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFEFFFF),
           fontFamily: 'Open Sans',
           buttonColor: Colors.black,
+          canvasColor: Colors.black12,
           appBarTheme: AppBarTheme(
             brightness: Brightness.light,
             color: Colors.transparent,
@@ -117,6 +118,7 @@ class App extends StatelessWidget {
           brightness: Brightness.dark,
           primaryColor: Colors.white,
           scaffoldBackgroundColor: Colors.black,
+          canvasColor: Colors.white10,
           fontFamily: 'Open Sans',
           buttonColor: Colors.white,
           appBarTheme: AppBarTheme(

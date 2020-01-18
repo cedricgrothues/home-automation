@@ -53,24 +53,23 @@ class Home extends StatelessWidget {
           },
         ),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 16),
-        child: ListView(
-          physics: AlwaysScrollableScrollPhysics(),
-          children: <Widget>[
-            // Music(),
-            // FutureProvider<List<Scene>>.value(
-            //   value: SceneService.fetch(),
-            //   child: Scenes(),
-            //   catchError: (context, error) => [],
-            // ),
-            FutureProvider<List<Device>>.value(
-              value: DeviceService.fetch(),
-              child: Devices(),
-              catchError: (context, error) => [],
-            )
-          ],
-        ),
+      body: CustomScrollView(
+        slivers: <Widget>[
+          SliverPadding(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+            sliver: SliverList(
+              delegate: SliverChildListDelegate(
+                [
+                  FutureProvider<List<Device>>.value(
+                    value: DeviceService.fetch(),
+                    child: Devices(),
+                    catchError: (context, error) => [],
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
     );
   }

@@ -32,24 +32,36 @@ class _ConnectState extends State<Connect> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            CupertinoActivityIndicator(
+      body: Stack(
+        alignment: Alignment.center,
+        children: <Widget>[
+          Center(
+            child: CupertinoActivityIndicator(
               radius: 12,
             ),
-            Padding(
-              padding: const EdgeInsets.only(top: 40.0),
-              child: Text(
-                "Looking for a Home Hub...",
-                textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-              ),
-            )
-          ],
-        ),
+          ),
+          Positioned(
+            child: Row(
+              children: <Widget>[
+                Image.asset(
+                  "assets/images/logo.png",
+                  height: 15,
+                  fit: BoxFit.cover,
+                  color: Theme.of(context).canvasColor,
+                ),
+                SizedBox(width: 10),
+                Text(
+                  "HOME",
+                  style: TextStyle(
+                    color: Theme.of(context).canvasColor,
+                    fontWeight: FontWeight.w800,
+                  ),
+                ),
+              ],
+            ),
+            bottom: MediaQuery.of(context).viewInsets.bottom + 50,
+          )
+        ],
       ),
     );
   }

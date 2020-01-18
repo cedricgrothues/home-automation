@@ -38,7 +38,7 @@ class _DeviceCardState extends State<DeviceCard> {
       },
       child: AnimatedOpacity(
         duration: Duration(milliseconds: 100),
-        opacity: (widget.device.state["power"]) ? 1 : 0.4,
+        opacity: (widget.device.state["power"] ?? false) ? 1 : 0.4,
         child: Container(
           width: 120,
           height: 120,

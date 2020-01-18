@@ -181,20 +181,26 @@ class SetImage extends StatelessWidget {
             alignment: Alignment.center,
             child: GestureDetector(
               onTap: onTap,
-              child: DecoratedBox(
+              child: Container(
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context).buttonColor,
-                    width: 3,
+                    width: 4,
                   ),
                 ),
                 child: CircleAvatar(
                   maxRadius: 100,
                   minRadius: 80,
                   backgroundImage: image != null ? FileImage(image) : null,
-                  //backgroundColor: Colors.red,
-                  child: Text(Hive.box<String>('preferences').get("username")),
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  child: image != null
+                      ? null
+                      : Text(
+                          Hive.box<String>('preferences').get("username").substring(0, 1),
+                          style: TextStyle(
+                              color: Theme.of(context).buttonColor, fontWeight: FontWeight.w600, fontSize: 70),
+                        ),
                 ),
               ),
             ),
