@@ -1,6 +1,6 @@
 # Home Automation
 
-Home Automation is a distributed smart home system largely written in Go.
+Home Automation is a distributed smart home system largely written in Go[<sup>1</sup>](#1).
 It's mostly meant as a learning opportunity rather than a production-ready system.
 
 <kbd><img src=".github/screenshots/setup_light.png" width=200/></kbd>
@@ -115,3 +115,6 @@ This project is based on [Jake Wright](https://github.com/jakewright)'s idea of 
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
+
+---
+<a class="anchor" id="1">Core services are required to be written Go, other services may be written in Python or NodeJS</a>
