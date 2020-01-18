@@ -1,4 +1,4 @@
-package dao
+package registry
 
 import (
 	"encoding/json"
@@ -23,7 +23,7 @@ type Device struct {
 
 // GetDeviceInfo returns the requested devices info and an optional error
 func GetDeviceInfo(id string) (*Device, error) {
-	resp, err := http.Get(fmt.Sprintf(`http://service.api-gateway:4000/service.device-registry/devices/%s?controller=%s`, id, "service.controller.aurora"))
+	resp, err := http.Get(fmt.Sprintf(`http://hub.local:4000/service.device-registry/devices/%s?controller=%s`, id, "service.controller.aurora"))
 
 	if err != nil {
 		return nil, err

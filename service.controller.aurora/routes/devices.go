@@ -2,18 +2,20 @@ package routes
 
 import (
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/service.controller.aurora/dao"
+	"github.com/cedricgrothues/home-automation/service.controller.aurora/nanoleaf"
+	"github.com/cedricgrothues/home-automation/service.controller.aurora/registry"
 	"github.com/cedricgrothues/httprouter"
 )
 
 // GetState combines service.device-registry data, with device state
 func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	device, err := dao.GetDeviceInfo(p[0].Value)
+	device, err := registry.GetDeviceInfo(p[0].Value)
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -26,15 +28,51 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	result, err := dao.GetState(device)
+	client, err := nanoleaf.New(device.Address+":16021", device.Token)
+	result, err := client.GetInfo()
+
+	rv := struct {
+		ID         string `json:"id,omitempty"`
+		Name       string `json:"name,omitempty"`
+		Type       string `json:"type,omitempty"`
+		Controller string `json:"controller,omitempty"`
+		State      struct {
+			Brightness  *nanoleaf.RangedValue `json:"brightness,omitempty"`
+			ColorMode   *string               `json:"color_mode,omitempty"`
+			Temperature *nanoleaf.RangedValue `json:"temperature,omitempty"`
+			Hue         *nanoleaf.RangedValue `json:"hue,omitempty"`
+			Power       *bool                 `json:"power,omitempty"`
+			Saturation  *nanoleaf.RangedValue `json:"saturation,omitempty"`
+		} `json:"state,omitempty"`
+	}{
+		ID:         device.ID,
+		Name:       device.Name,
+		Type:       device.Type,
+		Controller: device.Controller,
+		State: struct {
+			Brightness  *nanoleaf.RangedValue `json:"brightness,omitempty"`
+			ColorMode   *string               `json:"color_mode,omitempty"`
+			Temperature *nanoleaf.RangedValue `json:"temperature,omitempty"`
+			Hue         *nanoleaf.RangedValue `json:"hue,omitempty"`
+			Power       *bool                 `json:"power,omitempty"`
+			Saturation  *nanoleaf.RangedValue `json:"saturation,omitempty"`
+		}{
+			Brightness:  result.State.Brightness,
+			ColorMode:   result.State.ColorMode,
+			Temperature: result.State.CT,
+			Hue:         result.State.Hue,
+			Power:       result.State.On.Value,
+			Saturation:  result.State.Sat,
+		},
+	}
 
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
 	}
 
 	w.Header().Add("Content-Type", "application/json; charset=utf-8")
 
-	bytes, err := json.Marshal(result)
+	bytes, err := json.Marshal(rv)
 
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
@@ -45,10 +83,16 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// PatchState updates a device state
-func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+// PutState updates a device state
+func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
-	state := make(map[string]interface{})
+	state := struct {
+		Power       *bool `json:"power"`
+		Brightness  *int  `json:"brightness"`
+		Temperature *int  `json:"temperature"`
+		Hue         *int  `json:"hue"`
+		Saturation  *int  `json:"saturation"`
+	}{}
 
 	err := json.NewDecoder(r.Body).Decode(&state)
 
@@ -58,7 +102,7 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	device, err := dao.GetDeviceInfo(p[0].Value)
+	device, err := registry.GetDeviceInfo(p[0].Value)
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -71,36 +115,25 @@ func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		}
 	}
 
-	desired := make(map[string]interface{})
+	client, _ := nanoleaf.New(device.Address+":16021", device.Token)
 
-	for k, v := range state {
-		switch k {
-		case "brightness":
-			desired["brightness"] = v
-		case "power":
-			desired["on"] = v
-		case "hue":
-			desired["hue"] = v
-		case "saturation":
-			desired["sat"] = v
-		case "temperature":
-			desired["ct"] = v
-		}
-	}
-
-	dao.PatchState(device, desired)
-
-	if err != nil {
-		// undesirable solution, update in the near future (Go's new error handling)
-		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
-			panic(err)
-		} else {
-			w.Header().Add("Content-Type", "application/json; charset=utf-8")
-			w.WriteHeader(http.StatusFailedDependency)
-			w.Write([]byte(`{"message":"Unable to contact the device-registry service."}`))
-			return
-		}
-	}
+	client.SetState(&nanoleaf.State{
+		On: &nanoleaf.OnValue{
+			Value: state.Power,
+		},
+		Brightness: &nanoleaf.RangedValue{
+			Value: state.Brightness,
+		},
+		Hue: &nanoleaf.RangedValue{
+			Value: state.Hue,
+		},
+		Sat: &nanoleaf.RangedValue{
+			Value: state.Saturation,
+		},
+		CT: &nanoleaf.RangedValue{
+			Value: state.Temperature,
+		},
+	})
 
 	w.WriteHeader(http.StatusNoContent)
 }

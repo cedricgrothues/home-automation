@@ -15,7 +15,7 @@ func main() {
 	router.GET("/discover", routes.DiscoverDevices)
 
 	router.GET("/devices/:id", routes.GetState)
-	router.PATCH("/devices/:id", routes.PatchState)
+	router.PUT("/devices/:id", routes.PutState)
 
 	panic(bootstrap.Start(router, 4004))
 }
