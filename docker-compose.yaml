@@ -1,12 +1,12 @@
 version: '3.7'
 
 services:
-  service.advertise.ssdp:
-    container_name: "service.advertise.ssdp"
-    build:
-      dockerfile: Dockerfile
-      context: ./service.advertise.ssdp
-    network_mode: host
+  # service.advertise.ssdp:
+  #   container_name: "service.advertise.ssdp"
+  #   build:
+  #     dockerfile: Dockerfile
+  #     context: ./service.advertise.ssdp
+  #   network_mode: host
 
   service.api-gateway:
     container_name: "service.api-gateway"
