@@ -95,6 +95,22 @@ Controllers must implement a standardised interface for fetching and updating de
 }
 ```
 
+`PUT service.controller.<controller-identifier>/device/<device-identifier>`
+
+- JSON body:
+
+```json
+{
+    "power": true,
+    "brightness": {
+        "value": 100,
+        "duration": 10
+    }
+}
+```
+
+- 204: success
+
 ### Errors
 
 An error will be indicated by a non-2xx status code. The response will include a message.
