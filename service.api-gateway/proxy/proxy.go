@@ -31,6 +31,7 @@ func ListenAndServe(c *routing.Configuration) error {
 		prefix := addSlashes(service.Prefix)
 
 		router.GET(prefix+"*s", handler(prefix, p))
+		router.PUT(prefix+"*s", handler(prefix, p))
 		router.POST(prefix+"*s", handler(prefix, p))
 		router.PATCH(prefix+"*s", handler(prefix, p))
 		router.DELETE(prefix+"*s", handler(prefix, p))
