@@ -31,7 +31,7 @@ This controller can communicate with all Sonoff devices, including plugs and lam
 
 **Definition**
 
-`PATCH /devices/<id>`
+`PUT /devices/<id>`
 
 **Arguments**
 

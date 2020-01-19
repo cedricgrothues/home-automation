@@ -66,8 +66,8 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	w.Write(bytes)
 }
 
-// PatchState updates a device state
-func PatchState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+// PutState updates a device state
+func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 
 	var request struct {
 		Power bool `json:"power"`
