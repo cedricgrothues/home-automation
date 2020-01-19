@@ -4,10 +4,10 @@ part 'room.g.dart';
 
 @JsonSerializable()
 class Room {
-  @JsonKey(name: "id")
+  @JsonKey(name: "id", defaultValue: "")
   String id;
 
-  @JsonKey(name: "name")
+  @JsonKey(name: "name", defaultValue: "")
   String name;
 
   Room({this.id, this.name});

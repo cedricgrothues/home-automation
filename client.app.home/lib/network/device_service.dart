@@ -3,6 +3,7 @@ import 'dart:convert' show json;
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
+import 'package:home/network/models/state.dart';
 import 'package:home/network/models/device.dart';
 
 class DeviceService {
@@ -11,7 +12,7 @@ class DeviceService {
 
     Response response = await get("http://$gateway:4000/service.device-registry/devices");
 
-    if (response.statusCode != 200) return [];
+    if (response.statusCode < 200 || response.statusCode > 299) return [];
 
     List<dynamic> devices = json.decode(response.body) ?? [];
 
@@ -20,51 +21,54 @@ class DeviceService {
 
       try {
         Response response = await get("http://$gateway:4000/${device['controller']}/devices/${device['id']}");
-        device.putIfAbsent("state", () => json.decode(response.body)["state"] ?? {"error": "not available"});
+
+        device["state"] = json.decode(response.body)["state"] ?? {"error": true};
       } catch (error) {
-        device.putIfAbsent("state", () => {"error": "not available"});
+        device["state"] = {"error": true};
       }
     }
 
     return devices != null ? devices.map((dynamic device) => Device.fromJson(Map.from(device))).toList() : [];
   }
 
-  static Future<Map<String, dynamic>> update({Device device}) async {
-    String gateaway = Hive.box<String>('preferences').get('service.api-gateway');
+  static Future<DeviceState> update({Device device}) async {
+    String gateway = Hive.box<String>('preferences').get('service.api-gateway');
 
     try {
-      Response result = await patch(
-        "http://$gateaway:4000/${device.controller}/devices/${device.id}",
-        body: json.encode({"power": !device.state["power"]}),
+      Response result = await put(
+        "http://$gateway:4000/${device.controller}/devices/${device.id}",
+        body: json.encode({"power": !device.state.power}),
       );
 
-      if (result.statusCode != 200) return {"error": "failed to reload"};
+      if (result.statusCode < 200 || result.statusCode > 299) return DeviceState(error: true);
 
-      Map decoded = json.decode(result.body);
+      Response response = await get("http://$gateway:4000/${device.controller}/devices/${device.id}");
 
-      if (!decoded.containsKey("state")) return {"error": "state not available"};
+      Map decoded = json.decode(response.body);
 
-      return decoded["state"];
+      if (!decoded.containsKey("state")) return DeviceState(error: true);
+
+      return DeviceState.fromJson(decoded["state"]);
     } catch (error) {
-      return {"error": "$error"};
+      return DeviceState(error: true);
     }
   }
 
-  static Future<Map<String, dynamic>> refresh({Device device}) async {
-    String gateaway = Hive.box<String>('preferences').get('service.api-gateway');
+  static Future<DeviceState> refresh({Device device}) async {
+    String gateway = Hive.box<String>('preferences').get('service.api-gateway');
 
     try {
-      Response result = await get("http://$gateaway:4000/${device.controller}/devices/${device.id}");
+      Response result = await get("http://$gateway:4000/${device.controller}/devices/${device.id}");
 
-      if (result.statusCode != 200) return {"error": "failed to reload"};
+      if (result.statusCode < 200 || result.statusCode > 299) return DeviceState(error: true);
 
       Map decoded = json.decode(result.body);
 
-      if (!decoded.containsKey("state")) return {"error": "state not available"};
+      if (!decoded.containsKey("state")) return DeviceState(error: true);
 
-      return decoded["state"];
+      return DeviceState.fromJson(decoded["state"]);
     } catch (error) {
-      return {"error": "$error"};
+      return DeviceState(error: true);
     }
   }
 }

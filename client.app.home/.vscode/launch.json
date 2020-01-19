@@ -8,6 +8,12 @@
             "name": "Client App",
             "request": "launch",
             "type": "dart"
-        }
+        },
+        {
+            "name": "Release",
+            "request": "launch",
+            "type": "dart",
+            "flutterMode": "release"
+        },
     ]
 }

@@ -13,7 +13,7 @@ import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/setup/account.dart';
-import 'package:home/screens/controls/lights.dart';
+import 'package:home/screens/controls/details.dart';
 
 import 'package:home/services/scanner.dart';
 import 'package:home/components/routes.dart';
@@ -25,7 +25,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // This locks the device orientation to a portrait up position.
-    // Edit this list to add other device orientations
+    // After sufficient testing, edit this list to enable other device orientations.
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MultiProvider(
@@ -43,7 +43,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.black,
-          scaffoldBackgroundColor: Color(0xFFFEFFFF),
+          scaffoldBackgroundColor: Color(0xFFfefefe),
           fontFamily: 'Open Sans',
           buttonColor: Colors.black,
           canvasColor: Colors.black12,
@@ -68,7 +68,7 @@ class App extends StatelessWidget {
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
           splashFactory: NoSplashFactory(),
-          cardColor: Color(0xfff2f2f7),
+          cardColor: Color(0xFFFEFEFE),
           textTheme: TextTheme(
             headline: TextStyle(
               fontSize: 35,
@@ -232,10 +232,6 @@ class App extends StatelessWidget {
               return NoTransitionRoute(
                 builder: (_) => ConnectionFailed(),
               );
-            case '/dimmable_light':
-              return MaterialPageRoute(
-                builder: (_) => LightController(dimmable: true, id: "bedroom-lamp"),
-              );
             case '/add':
               return SlideTransitionRoute(
                 page: Add(),
@@ -245,9 +241,8 @@ class App extends StatelessWidget {
           }
         },
 
-        // Add all supported locales here.
-        // Currently only en-UK is available.
-        locale: const Locale('en', 'UK'),
+        // Add all supported locales here:
+        supportedLocales: [const Locale('en', 'UK')],
 
         // Remove the bright red debug banner if we're in debug mode
         debugShowCheckedModeBanner: false,

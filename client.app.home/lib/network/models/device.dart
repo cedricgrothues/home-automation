@@ -1,5 +1,6 @@
 import 'package:json_annotation/json_annotation.dart';
 
+import 'package:home/network/models/state.dart';
 import 'package:home/network/models/room.dart';
 
 part 'device.g.dart';
@@ -9,7 +10,7 @@ class Device {
   @JsonKey(name: "id")
   String id;
 
-  @JsonKey(name: "name")
+  @JsonKey(name: "name", defaultValue: "")
   String name;
 
   @JsonKey(name: "type")
@@ -25,7 +26,7 @@ class Device {
   Room room;
 
   @JsonKey(name: "state")
-  Map<String, dynamic> state;
+  DeviceState state;
 
   Device({this.id, this.name, this.type, this.controller, this.address, this.room});
 

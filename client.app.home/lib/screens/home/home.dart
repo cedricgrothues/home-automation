@@ -1,23 +1,24 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
 
 import 'package:home/components/icons.dart';
-import 'package:home/network/models/device.dart';
-
-// import 'package:home/screens/home/addons/music.dart';
-import 'package:home/screens/home/addons/devices.dart';
-// import 'package:home/screens/home/addons/scenes.dart';
-
 import 'package:home/network/device_service.dart';
-// import 'package:home/network/scenes_service.dart';
-// import 'package:home/network/models/scene.dart';
+import 'package:home/network/models/device.dart';
+import 'package:home/screens/home/sections/control.dart';
+import 'package:home/screens/home/sections/today.dart';
 
 class Home extends StatelessWidget {
+  final Uint8List _image = base64.decode(Hive.box<String>("preferences").get("picture"));
+
+  // Futures for the underlying widgets are defines here,
+  // so the FutureBuilder doesn't fire unintentionally
+  final Future<List<Device>> _devices = DeviceService.fetch();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +37,7 @@ class Home extends StatelessWidget {
             height: 30,
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: MemoryImage(base64.decode(Hive.box<String>("preferences").get("picture"))),
+                image: MemoryImage(_image),
                 fit: BoxFit.cover,
               ),
               shape: BoxShape.circle,
@@ -48,27 +49,15 @@ class Home extends StatelessWidget {
           ),
           padding: EdgeInsets.zero,
           onPressed: () {
-            Box<String> box = Hive.box('preferences');
-            box.delete('service.api-gateway');
+            // Open the profile screen here
           },
         ),
       ),
-      body: CustomScrollView(
-        slivers: <Widget>[
-          SliverPadding(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
-            sliver: SliverList(
-              delegate: SliverChildListDelegate(
-                [
-                  FutureProvider<List<Device>>.value(
-                    value: DeviceService.fetch(),
-                    child: Devices(),
-                    catchError: (context, error) => [],
-                  )
-                ],
-              ),
-            ),
-          )
+      body: PageView(
+        physics: AlwaysScrollableScrollPhysics(),
+        children: <Widget>[
+          Today(),
+          DeviceControl(devices: _devices),
         ],
       ),
     );
