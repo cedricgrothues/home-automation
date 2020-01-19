@@ -97,7 +97,7 @@ Controllers must implement a standardised interface for fetching and updating de
 
 `PUT service.controller.<controller-identifier>/device/<device-identifier>`
 
-- JSON body:
+JSON request body:
 
 ```json
 {
