@@ -70,8 +70,6 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         duration: Duration(milliseconds: 100),
         opacity: widget.device.state.power ?? false ? 1 : 0.4,
         child: Container(
-          width: 120,
-          height: 120,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
             color: Theme.of(context).cardColor,
@@ -118,9 +116,9 @@ class StateLabel extends StatelessWidget {
     if (device.state.error) {
       return Text(
         "No Response",
-        style: Theme.of(context).textTheme.body2.copyWith(color: CupertinoColors.destructiveRed),
+        style: Theme.of(context).textTheme.body2.copyWith(color: CupertinoColors.destructiveRed, fontSize: 14),
         maxLines: 1,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.start,
         overflow: TextOverflow.ellipsis,
       );
     } else if (!device.state.power) {
@@ -129,7 +127,7 @@ class StateLabel extends StatelessWidget {
         style:
             Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
         maxLines: 1,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.start,
         overflow: TextOverflow.ellipsis,
       );
     } else if (device.state.power) {
@@ -138,7 +136,7 @@ class StateLabel extends StatelessWidget {
         style:
             Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
         maxLines: 1,
-        textAlign: TextAlign.center,
+        textAlign: TextAlign.start,
         overflow: TextOverflow.ellipsis,
       );
     }
@@ -148,7 +146,7 @@ class StateLabel extends StatelessWidget {
       style:
           Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
       maxLines: 1,
-      textAlign: TextAlign.center,
+      textAlign: TextAlign.start,
       overflow: TextOverflow.ellipsis,
     );
   }

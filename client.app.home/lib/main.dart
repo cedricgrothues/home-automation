@@ -13,7 +13,6 @@ import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/setup/account.dart';
-import 'package:home/screens/controls/details.dart';
 
 import 'package:home/services/scanner.dart';
 import 'package:home/components/routes.dart';
@@ -26,7 +25,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     // This locks the device orientation to a portrait up position.
     // After sufficient testing, edit this list to enable other device orientations.
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
 
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
