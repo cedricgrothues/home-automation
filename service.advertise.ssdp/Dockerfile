@@ -5,8 +5,8 @@ FROM golang
 # Add Maintainer Info
 LABEL maintainer="Cedric Grothues <cedricgrothues@gmail.com>"
 
-COPY .git/ /go/src/github.com/cedricgrothues/home-automation/.git/
-ADD ./libraries/go /go/src/github.com/cedricgrothues/home-automation/libraries/go
+# COPY .git/ /go/src/github.com/cedricgrothues/home-automation/.git/
+# ADD ./libraries/go /go/src/github.com/cedricgrothues/home-automation/libraries/go
 ADD ./service.advertise.ssdp /go/src/github.com/cedricgrothues/home-automation/service.advertise.ssdp
 
 # Build the service.advertise.ssdp command inside the container.
