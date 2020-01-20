@@ -2,26 +2,28 @@ package helper
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
 )
 
 // PowerBool parses the power value from a tasmota response
-func PowerBool(body io.ReadCloser) (bool, error) {
+func PowerBool(body io.ReadCloser) ([]bool, error) {
+	var results []bool
+
 	r := make(map[string]interface{})
 
 	err := json.NewDecoder(body).Decode(&r)
 
 	if err != nil {
-		return false, err
+		return nil, err
 	}
 
-	if r["POWER"] == "ON" {
-		return true, nil
-	} else if r["POWER"] == "OFF" {
-		return false, nil
+	for _, v := range r {
+		if v == "ON" {
+			results = append(results, true)
+		} else {
+			results = append(results, false)
+		}
 	}
 
-	return false, fmt.Errorf("Can't parse power value %v", r["POWER"])
-
+	return results, nil
 }

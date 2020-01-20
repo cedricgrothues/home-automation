@@ -9,12 +9,24 @@ import (
 )
 
 // GetState returns the requested devices state and an optional error
-func GetState(address string) (bool, error) {
+func GetState(address string, token string) (bool, error) {
 	client := http.Client{
 		Timeout: 5 * time.Second,
 	}
 
-	resp, err := client.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power`, address))
+	var auth string
+
+	if token != "" {
+		auth = fmt.Sprintf("user=admin&password=%s&", token)
+	}
+
+	fmt.Println(auth)
+
+	url := fmt.Sprintf(`http://%s/cm?%scmnd=Power`, address, auth)
+
+	fmt.Println(url)
+
+	resp, err := client.Get(url)
 
 	if err != nil {
 		return false, err
@@ -28,7 +40,11 @@ func GetState(address string) (bool, error) {
 
 	defer resp.Body.Close()
 
-	return power, nil
+	if len(power) < 1 {
+		return false, fmt.Errorf("no result")
+	}
+
+	return power[0], nil
 }
 
 // SetState updates the requested devices state and returns the power state and an optional error
@@ -41,14 +57,13 @@ func SetState(address string, state bool, token string) (bool, error) {
 		cmnd = "0"
 	}
 
-	var resp *http.Response
-	var err error
+	var auth string
 
 	if token != "" {
-		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?user=admin&password=%s&cmnd=Power%%20%s`, address, token, cmnd))
-	} else {
-		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power%%20%s`, address, cmnd))
+		auth = fmt.Sprintf("user=admin&password=%s&", token)
 	}
+
+	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?%scmnd=Power%%20%s`, address, auth, cmnd))
 
 	if err != nil {
 		return false, err
@@ -61,5 +76,10 @@ func SetState(address string, state bool, token string) (bool, error) {
 	if err != nil {
 		return false, err
 	}
-	return power, nil
+
+	if len(power) < 1 {
+		return false, fmt.Errorf("no result")
+	}
+
+	return power[0], nil
 }

@@ -43,7 +43,7 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		Address: device.Address,
 	}
 
-	power, err := dao.GetState(response.Address)
+	power, err := dao.GetState(response.Address, device.Token)
 
 	if err != nil {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
@@ -116,7 +116,11 @@ func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 			w.Write([]byte(`{"message":"device timed out"}`))
 			return
 		}
-		panic(err)
+
+		w.Header().Add("Content-Type", "application/json; charset=utf-8")
+		w.WriteHeader(http.StatusFailedDependency)
+		w.Write([]byte(`{"message":"Failed to connect to the device."}`))
+		return
 	}
 
 	response.State.Power = power
