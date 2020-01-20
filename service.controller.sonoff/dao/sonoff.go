@@ -45,7 +45,7 @@ func SetState(address string, state bool, token string) (bool, error) {
 	var err error
 
 	if token != "" {
-		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?user=admin&password=%s&cmnd=Power%%20%s`, token, address, cmnd))
+		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?user=admin&password=%s&cmnd=Power%%20%s`, address, token, cmnd))
 	} else {
 		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power%%20%s`, address, cmnd))
 	}
