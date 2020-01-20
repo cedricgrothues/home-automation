@@ -107,7 +107,7 @@ func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	power, err := dao.SetState(response.Address, request.Power)
+	power, err := dao.SetState(response.Address, request.Power, device.Token)
 
 	if err != nil {
 		if err, ok := err.(net.Error); ok && err.Timeout() {

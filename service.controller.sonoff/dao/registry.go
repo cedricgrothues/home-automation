@@ -18,6 +18,7 @@ type Device struct {
 		Name    string   `json:"name"`
 		Devices []Device `json:"devices,omitempty"`
 	} `json:"room,omitempty"`
+	Token string `json:"token,omitempty"`
 }
 
 // GetDeviceInfo returns the requested devices info and an optional error

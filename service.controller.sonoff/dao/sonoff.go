@@ -32,7 +32,7 @@ func GetState(address string) (bool, error) {
 }
 
 // SetState updates the requested devices state and returns the power state and an optional error
-func SetState(address string, state bool) (bool, error) {
+func SetState(address string, state bool, token string) (bool, error) {
 	var cmnd string
 
 	if state == true {
@@ -41,7 +41,14 @@ func SetState(address string, state bool) (bool, error) {
 		cmnd = "0"
 	}
 
-	resp, err := http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power%%20%s`, address, cmnd))
+	var resp *http.Response
+	var err error
+
+	if token != "" {
+		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?user=admin&password=%s&cmnd=Power%%20%s`, token, address, cmnd))
+	} else {
+		resp, err = http.Get(fmt.Sprintf(`http://%s/cm?cmnd=Power%%20%s`, address, cmnd))
+	}
 
 	if err != nil {
 		return false, err
