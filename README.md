@@ -5,6 +5,8 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 <kbd><img src=".github/screenshots/setup_light.png" width=200/></kbd>
 <kbd><img src=".github/screenshots/setup_dark.png" width=200/></kbd>
+<kbd><img src=".github/screenshots/home_dark.png" width=200/></kbd>
+<kbd><img src=".github/screenshots/profile_dark.png" width=200/></kbd>
 
 ## Currently supported services
 
