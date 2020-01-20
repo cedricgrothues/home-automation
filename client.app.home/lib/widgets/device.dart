@@ -1,8 +1,10 @@
 import 'dart:async' show Timer;
 
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/services.dart' show HapticFeedback;
+import 'package:flutter/cupertino.dart' show showCupertinoModalPopup;
 
+import 'package:home/components/labels.dart';
 import 'package:home/network/models/state.dart';
 import 'package:home/network/models/device.dart';
 import 'package:home/network/device_service.dart';
@@ -55,6 +57,10 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
       onTap: () async {
         if (widget.device.state.error) return;
 
+        // Simulate a short tap to give
+        // the user haptic feedback
+        HapticFeedback.heavyImpact();
+
         DeviceState state = await DeviceService.update(device: widget.device);
 
         // Only rebuild if the device state differs
@@ -64,11 +70,18 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         setState(() => widget.device.state = state);
       },
       onLongPress: () {
-        showModalBottomSheet(context: context, builder: (_) => Details(device: widget.device));
+        // Simulate a short tap to give
+        // the user haptic feedback
+        HapticFeedback.heavyImpact();
+
+        showCupertinoModalPopup(
+          context: context,
+          builder: (context) => DeviceDetails(widget.device),
+        );
       },
       child: AnimatedOpacity(
         duration: Duration(milliseconds: 100),
-        opacity: widget.device.state.power ?? false ? 1 : 0.4,
+        opacity: widget.device.state.power ?? false ? 1 : 0.5,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -80,6 +93,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
                   widget.device.room.name,
@@ -96,58 +110,15 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                StateLabel(device: widget.device),
+                StateLabel(
+                  device: widget.device,
+                  style: Theme.of(context).textTheme.body2.copyWith(color: Color(0xFF99999E)),
+                ),
               ],
             ),
           ),
         ),
       ),
-    );
-  }
-}
-
-class StateLabel extends StatelessWidget {
-  final Device device;
-
-  const StateLabel({Key key, this.device}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    if (device.state.error) {
-      return Text(
-        "No Response",
-        style: Theme.of(context).textTheme.body2.copyWith(color: CupertinoColors.destructiveRed, fontSize: 14),
-        maxLines: 1,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-      );
-    } else if (!device.state.power) {
-      return Text(
-        "Off",
-        style:
-            Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
-        maxLines: 1,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-      );
-    } else if (device.state.power) {
-      return Text(
-        device.state.brightness != null ? "${device.state.brightness.value}%" : "On",
-        style:
-            Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
-        maxLines: 1,
-        textAlign: TextAlign.start,
-        overflow: TextOverflow.ellipsis,
-      );
-    }
-
-    return Text(
-      "...",
-      style:
-          Theme.of(context).textTheme.body2.copyWith(color: Theme.of(context).textTheme.body2.color.withOpacity(0.5)),
-      maxLines: 1,
-      textAlign: TextAlign.start,
-      overflow: TextOverflow.ellipsis,
     );
   }
 }

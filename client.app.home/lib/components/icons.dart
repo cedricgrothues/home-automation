@@ -1,5 +1,6 @@
 import 'package:flutter/widgets.dart' show IconData;
 
+/// FontAwesome's [LightIcons]
 class LightIcons {
   LightIcons._();
 
@@ -1736,6 +1737,7 @@ class LightIcons {
   static const IconData yin_yang = const IconData(0xeec0, fontFamily: _fontFamily);
 }
 
+/// FontAwesome's [RegularIcons]
 class RegularIcons {
   RegularIcons._();
 

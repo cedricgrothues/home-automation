@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoButton;
 import 'package:home/components/icons.dart';
 
+/// SceneCard shows basic information about it's [scene].
+/// For all types of scenes the name together with the
+/// appropriate icon will be shown.
 class SceneCard extends StatefulWidget {
   @override
   _SceneCardState createState() => _SceneCardState();
@@ -13,6 +16,8 @@ class _SceneCardState extends State<SceneCard> {
     return GestureDetector(
       onTap: () {},
       child: Container(
+        height: 100,
+        width: 160,
         decoration: BoxDecoration(
           color: Colors.teal[300],
           borderRadius: BorderRadius.circular(15),

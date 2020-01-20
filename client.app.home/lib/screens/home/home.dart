@@ -7,11 +7,10 @@ import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 import 'package:home/components/icons.dart';
+import 'package:home/components/sheets.dart';
 import 'package:home/network/device_service.dart';
 import 'package:home/network/models/device.dart';
 import 'package:home/screens/home/sections/control.dart';
-import 'package:home/screens/home/sections/scenes.dart';
-import 'package:home/screens/home/sections/today.dart';
 
 class Home extends StatelessWidget {
   final Uint8List _image = base64.decode(Hive.box<String>("preferences").get("picture"));
@@ -36,7 +35,12 @@ class Home extends StatelessWidget {
                 LightIcons.plus,
               ),
               padding: EdgeInsets.zero,
-              onPressed: () => Navigator.of(context).pushNamed("/add"),
+              onPressed: () {
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) => AddSheet(),
+                );
+              },
             ),
             trailing: CupertinoButton(
               child: Container(
@@ -56,14 +60,14 @@ class Home extends StatelessWidget {
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
-                // Open the profile screen here
+                showCupertinoModalPopup(
+                  context: context,
+                  builder: (context) => ProfileSheet(_image),
+                );
               },
             ),
           ),
-          body: PageView(
-            physics: AlwaysScrollableScrollPhysics(),
-            children: <Widget>[Today(), DeviceControl(devices: _devices), Scenes()],
-          ),
+          body: DeviceControl(devices: _devices),
         ),
       ),
     );

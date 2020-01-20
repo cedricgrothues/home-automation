@@ -25,7 +25,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     // This locks the device orientation to a portrait up position.
     // After sufficient testing, edit this list to enable other device orientations.
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeLeft]);
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp, DeviceOrientation.landscapeRight]);
 
     return MultiProvider(
       providers: <SingleChildCloneableWidget>[
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
         theme: ThemeData(
           brightness: Brightness.light,
           primaryColor: Colors.black,
-          scaffoldBackgroundColor: Color(0xFFfefefe),
+          scaffoldBackgroundColor: Color(0xFFFEFEFE),
           fontFamily: 'Open Sans',
           buttonColor: Colors.black,
           canvasColor: Colors.black12,
@@ -55,6 +55,11 @@ class App extends StatelessWidget {
               size: 26,
             ),
           ),
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor: Color(0xFFFEFEFE),
+            elevation: 0,
+            actionTextColor: Colors.black,
+          ),
           cupertinoOverrideTheme: CupertinoThemeData(
             brightness: Brightness.light,
             primaryColor: Colors.black,
@@ -66,14 +71,17 @@ class App extends StatelessWidget {
           ),
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
+          toggleButtonsTheme: ToggleButtonsThemeData(
+            fillColor: Color(0xFFEEEEEF),
+            color: Color(0xFF828287),
+          ),
           splashFactory: NoSplashFactory(),
           cardColor: Color(0xFFFEFEFE),
           textTheme: TextTheme(
             headline: TextStyle(
-              fontSize: 35,
-              color: Colors.black,
-              fontWeight: FontWeight.w700,
-              letterSpacing: 2,
+              fontSize: 24,
+              color: Color(0xFF121112),
+              fontWeight: FontWeight.w600,
             ),
             button: TextStyle(
               color: Colors.white,
@@ -96,7 +104,7 @@ class App extends StatelessWidget {
               fontSize: 19,
             ),
             body2: TextStyle(
-              fontSize: 15,
+              fontSize: 13,
               fontWeight: FontWeight.w700,
               height: 1.2,
               color: Colors.black,
@@ -104,7 +112,7 @@ class App extends StatelessWidget {
             caption: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.black.withOpacity(0.7),
+              color: Color(0xFF9A9A9E),
             ),
             subhead: TextStyle(
               fontSize: 16,
@@ -131,12 +139,21 @@ class App extends StatelessWidget {
           ),
           cupertinoOverrideTheme: CupertinoThemeData(
             primaryColor: Colors.white,
-            brightness: Brightness.light,
+            brightness: Brightness.dark,
             barBackgroundColor: Colors.transparent,
+          ),
+          snackBarTheme: SnackBarThemeData(
+            backgroundColor: Colors.black,
+            elevation: 0,
+            actionTextColor: Colors.white,
           ),
           iconTheme: IconThemeData(
             color: Colors.white,
             size: 26,
+          ),
+          toggleButtonsTheme: ToggleButtonsThemeData(
+            fillColor: Color(0xFF313135),
+            color: Color(0xFFA1A1A8),
           ),
           highlightColor: Colors.transparent,
           splashColor: Colors.transparent,
@@ -144,10 +161,9 @@ class App extends StatelessWidget {
           cardColor: Color(0xFF1C1C1E),
           textTheme: TextTheme(
             headline: TextStyle(
-              fontSize: 35,
+              fontSize: 23,
               color: Colors.white,
               fontWeight: FontWeight.w700,
-              letterSpacing: 2,
             ),
             button: TextStyle(
               color: Colors.black,
@@ -170,7 +186,7 @@ class App extends StatelessWidget {
               fontSize: 19,
             ),
             body2: TextStyle(
-              fontSize: 15,
+              fontSize: 13,
               fontWeight: FontWeight.w700,
               height: 1.2,
               color: Colors.white,
@@ -178,7 +194,7 @@ class App extends StatelessWidget {
             caption: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w600,
-              color: Colors.white70,
+              color: Color(0xFF8C8C91),
             ),
             subhead: TextStyle(
               fontSize: 16,
