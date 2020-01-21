@@ -41,7 +41,7 @@ class DeviceService {
     } catch (error) {
       // We could neither catch a SocketException nor the TimeoutException that is thrown after 1 second.
       // I am not particularly sure if there is any other error that could be thrown here,
-      // but if for some reason that happens, we'll just log it and show the error screen.
+      // but if for some reason that happens, we'll just log it.
 
       print("Unhandled Exception $error of type: ${error.runtimeType}");
 
@@ -77,7 +77,7 @@ class DeviceService {
       } catch (error) {
         // We could neither catch a SocketException nor the TimeoutException that is thrown after 1 second.
         // I am not particularly sure if there is any other error that could be thrown here,
-        // but if for some reason that happens, we'll just log it and show the error screen.
+        // but if for some reason that happens, we'll just log it.
 
         print("Unhandled Exception $error of type: ${error.runtimeType}");
 
@@ -129,7 +129,7 @@ class DeviceService {
     } catch (error) {
       // We could neither catch a SocketException nor the TimeoutException that is thrown after 1 second.
       // I am not particularly sure if there is any other error that could be thrown here,
-      // but if for some reason that happens, we'll just log it and show the error screen.
+      // but if for some reason that happens, we'll just log it.
 
       print("Unhandled Exception $error of type: ${error.runtimeType}");
 
@@ -170,7 +170,7 @@ class DeviceService {
     } catch (error) {
       // We could neither catch a SocketException nor the TimeoutException that is thrown after 1 second.
       // I am not particularly sure if there is any other error that could be thrown here,
-      // but if for some reason that happens, we'll just log it and show the error screen.
+      // but if for some reason that happens, we'll just log it.
 
       print("Unhandled Exception $error of type: ${error.runtimeType}");
 
