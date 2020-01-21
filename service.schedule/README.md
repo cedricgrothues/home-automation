@@ -1,4 +1,4 @@
 # service.schedule
 
-Available on port `4000`
-This service executes actions at specific points in time
+Available on port `4005`
+This service is used to define recurring actions

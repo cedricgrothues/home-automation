@@ -17,70 +17,74 @@ class DeviceDetails extends StatefulWidget {
   _DeviceDetailsState createState() => _DeviceDetailsState();
 }
 
-class _DeviceDetailsState extends State<DeviceDetails> with SingleTickerProviderStateMixin {
+class _DeviceDetailsState extends State<DeviceDetails> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       bottom: false,
-      child: Container(
-        height: MediaQuery.of(context).size.height * 0.85,
-        decoration: BoxDecoration(
-          color: Theme.of(context).cardColor,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(10),
-            topRight: Radius.circular(10),
+      child: Align(
+        alignment: Alignment.bottomLeft,
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.85,
+          constraints: BoxConstraints(maxWidth: 420),
+          decoration: BoxDecoration(
+            color: Theme.of(context).cardColor,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10),
+              topRight: Radius.circular(10),
+            ),
           ),
-        ),
-        child: Scaffold(
-          backgroundColor: Colors.transparent,
-          body: Stack(
-            children: <Widget>[
-              Align(
-                alignment: Alignment.topRight,
-                child: CupertinoButton(
-                  padding: EdgeInsets.all(18),
-                  child: Container(
-                    width: 30,
-                    height: 30,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).toggleButtonsTheme.fillColor,
-                    ),
-                    alignment: Alignment.center,
-                    child: Icon(
-                      LightIcons.times,
-                      color: Theme.of(context).toggleButtonsTheme.color,
-                      size: 20,
-                    ),
-                  ),
-                  onPressed: () => Navigator.of(context).pop(),
-                ),
-              ),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.only(bottom: 4.0),
-                        child: Text(
-                          widget.device.name,
-                          style: Theme.of(context).textTheme.headline,
-                          textAlign: TextAlign.start,
-                        ),
+          child: Scaffold(
+            backgroundColor: Colors.transparent,
+            body: Stack(
+              children: <Widget>[
+                Align(
+                  alignment: Alignment.topRight,
+                  child: CupertinoButton(
+                    padding: EdgeInsets.all(18),
+                    child: Container(
+                      width: 30,
+                      height: 30,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).toggleButtonsTheme.fillColor,
                       ),
-                      StateLabel(
-                        device: widget.device,
-                        style: Theme.of(context).textTheme.caption,
-                        long: true,
-                      )
-                    ],
+                      alignment: Alignment.center,
+                      child: Icon(
+                        LightIcons.times,
+                        color: Theme.of(context).toggleButtonsTheme.color,
+                        size: 20,
+                      ),
+                    ),
+                    onPressed: () => Navigator.of(context).pop(),
                   ),
                 ),
-              ),
-            ],
+                Align(
+                  alignment: Alignment.topLeft,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 30, horizontal: 25),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.only(bottom: 4.0),
+                          child: Text(
+                            widget.device.name,
+                            style: Theme.of(context).textTheme.headline,
+                            textAlign: TextAlign.start,
+                          ),
+                        ),
+                        StateLabel(
+                          device: widget.device,
+                          style: Theme.of(context).textTheme.caption,
+                          long: true,
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

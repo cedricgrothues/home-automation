@@ -4,17 +4,22 @@ import 'package:flutter/material.dart';
 import 'package:home/network/models/device.dart';
 import 'package:home/widgets/device.dart';
 
-class DeviceControl extends StatelessWidget {
+class DeviceControl extends StatefulWidget {
   final Future<List<Device>> devices;
 
   const DeviceControl({Key key, @required this.devices}) : super(key: key);
 
   @override
+  _DeviceControlState createState() => _DeviceControlState();
+}
+
+class _DeviceControlState extends State<DeviceControl> {
+  @override
   Widget build(BuildContext context) {
     return CustomScrollView(
       slivers: <Widget>[
         FutureBuilder<List<Device>>(
-          future: devices,
+          future: widget.devices,
           builder: (context, snapshot) {
             final List<DeviceCard> cards =
                 snapshot.data.map((device) => DeviceCard(device, key: Key(device.id))).toList();

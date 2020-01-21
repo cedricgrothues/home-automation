@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 
 import 'package:hive/hive.dart';
-import 'package:provider/provider.dart';
+import 'package:home/models/errors.dart';
+
+import 'package:home/services/scanner.dart' show discover;
 
 class Connect extends StatefulWidget {
   @override
@@ -11,19 +13,22 @@ class Connect extends StatefulWidget {
 
 class _ConnectState extends State<Connect> {
   @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
+  void initState() {
+    super.initState();
 
-    String ip = Provider.of<String>(context);
+    WidgetsBinding.instance.addPostFrameCallback((Duration duration) async {
+      try {
+        String gateway = await discover();
 
-    if (ip == null) return;
+        // discover() did not throw an Exception, so we can assume that
+        // `gateway` contains service.api-gateway's ip address and is not null
+        Hive.box('preferences').put('service.api-gateway', gateway);
 
-    WidgetsBinding.instance.addPostFrameCallback((Duration duration) {
-      if (ip != null && ip != "not_found") {
-        Box<String> box = Hive.box('preferences');
-        box.put('service.api-gateway', Provider.of<String>(context));
         Navigator.of(context).pushReplacementNamed("/account_setup");
-      } else if (ip != null && ip == "not_found") {
+      } on NotFoundException {
+        // NotFoundExceptions are thrown if `service.api-gateway` was not found
+        // with in the device's subnet.
+
         Navigator.of(context).pushReplacementNamed("/connection_failed");
       }
     });
@@ -43,13 +48,15 @@ class _ConnectState extends State<Connect> {
           Positioned(
             child: Row(
               children: <Widget>[
-                Image.asset(
-                  "assets/images/logo.png",
-                  height: 15,
-                  fit: BoxFit.cover,
-                  color: Theme.of(context).canvasColor,
+                Padding(
+                  padding: const EdgeInsets.only(right: 10.0),
+                  child: Image.asset(
+                    "assets/images/logo.png",
+                    height: 15,
+                    fit: BoxFit.cover,
+                    color: Theme.of(context).canvasColor,
+                  ),
                 ),
-                SizedBox(width: 10),
                 Text(
                   "HOME",
                   style: TextStyle(

@@ -142,7 +142,7 @@ class DeviceService {
 
     try {
       Response result = await get("http://$gateway:4000/${device.controller}/devices/${device.id}").timeout(
-        const Duration(seconds: 1),
+        const Duration(seconds: 2),
       );
 
       if (result.statusCode < 200 || result.statusCode > 299) throw ResponseException();
@@ -163,6 +163,7 @@ class DeviceService {
 
       return DeviceState(error: true);
     } on TimeoutException {
+      print("TIMEOUT");
       // The timeout exception is thrown, if there was no server response after 1 second to minimize initial loading time.
       // Since the server is most definitely running on a local network, we'll just assume that it is unreachable.
 

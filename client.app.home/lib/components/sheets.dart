@@ -2,6 +2,7 @@ import 'dart:typed_data' show Uint8List;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:hive/hive.dart';
 
 /// [AddSheet] defines the `CupertinoActionSheet` the user sees,
 /// when home.dart's add button is pressed
@@ -29,11 +30,16 @@ class AddSheet extends StatelessWidget {
 
 /// [ProfileSheet] defines the `CupertinoActionSheet` the user sees,
 /// when the profile image is tapped
-class ProfileSheet extends StatelessWidget {
+class ProfileSheet extends StatefulWidget {
   final Uint8List bytes;
 
   const ProfileSheet(this.bytes, {Key key}) : super(key: key);
 
+  @override
+  _ProfileSheetState createState() => _ProfileSheetState();
+}
+
+class _ProfileSheetState extends State<ProfileSheet> {
   @override
   Widget build(BuildContext context) {
     return CupertinoActionSheet(
@@ -44,10 +50,10 @@ class ProfileSheet extends StatelessWidget {
           Container(
             width: 100,
             height: 100,
-            margin: const EdgeInsets.symmetric(vertical: 15),
+            margin: const EdgeInsets.symmetric(vertical: 25),
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: MemoryImage(bytes),
+                image: MemoryImage(widget.bytes),
                 fit: BoxFit.cover,
               ),
               shape: BoxShape.circle,
@@ -57,18 +63,14 @@ class ProfileSheet extends StatelessWidget {
               ),
             ),
           ),
-          Text("Cedric Grothues", style: TextStyle(color: Colors.white, fontSize: 18))
+          Text(Hive.box<String>("preferences").get("username"), style: TextStyle(color: Colors.white, fontSize: 18))
         ],
       ),
-      message: Text("Manage your account, update your profile picture, change your display name or open the settings."),
+      message: Text("Copyright © 2020 Cedric Grothues. All rights reserved."),
       actions: <Widget>[
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text("Update your profile picture"),
-        ),
-        CupertinoActionSheetAction(
-          onPressed: () => null,
-          child: Text("Change your display name"),
+          child: Text("About this app"),
         ),
         CupertinoActionSheetAction(
           onPressed: () => null,

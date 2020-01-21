@@ -199,7 +199,10 @@ class SetImage extends StatelessWidget {
                       : Text(
                           Hive.box<String>('preferences').get("username").substring(0, 1),
                           style: TextStyle(
-                              color: Theme.of(context).buttonColor, fontWeight: FontWeight.w600, fontSize: 70),
+                            color: Theme.of(context).buttonColor,
+                            fontWeight: FontWeight.w600,
+                            fontSize: 70,
+                          ),
                         ),
                 ),
               ),

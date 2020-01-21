@@ -10,7 +10,6 @@ environment:
 
 dependencies:
   args: ^1.5.2
-#  path: ^1.6.0
 
 dev_dependencies:
   test: ^1.6.0

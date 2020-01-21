@@ -238,10 +238,7 @@ class App extends StatelessWidget {
               );
             case '/connect':
               return NoTransitionRoute(
-                builder: (_) => FutureProvider<String>.value(
-                  value: discover(),
-                  child: Connect(),
-                ),
+                builder: (_) => Connect(),
               );
             case '/connection_failed':
               return NoTransitionRoute(

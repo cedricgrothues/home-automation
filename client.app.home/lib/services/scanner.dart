@@ -61,5 +61,5 @@ Future<String> discover() async {
     return addr.address;
   }
 
-  return "not_found";
+  throw NotFoundException();
 }
