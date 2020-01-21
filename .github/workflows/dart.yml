@@ -4,7 +4,7 @@ on:
   push:
     branches: master
     paths: 
-      - "client.app.home"
+      - /client.app.home
 
 jobs:
   build:
