@@ -20,11 +20,7 @@ func GetState(address string, token string) (bool, error) {
 		auth = fmt.Sprintf("user=admin&password=%s&", token)
 	}
 
-	fmt.Println(auth)
-
 	url := fmt.Sprintf(`http://%s/cm?%scmnd=Power`, address, auth)
-
-	fmt.Println(url)
 
 	resp, err := client.Get(url)
 

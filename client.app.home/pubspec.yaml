@@ -88,32 +88,4 @@ flutter:
           weight: 800
           style: italic
 
-    - family: Montserrat
-      fonts:
-        - asset: assets/fonts/Montserrat-Light.ttf
-          weight: 300
-        - asset: assets/fonts/Montserrat-LightItalic.ttf
-          weight: 300
-          style: italic
-        - asset: assets/fonts/Montserrat-Regular.ttf
-          weight: 400
-        - asset: assets/fonts/Montserrat-Italic.ttf
-          weight: 400
-          style: italic
-        - asset: assets/fonts/Montserrat-SemiBold.ttf
-          weight: 600
-        - asset: assets/fonts/Montserrat-SemiBoldItalic.ttf
-          weight: 600
-          style: italic
-        - asset: assets/fonts/Montserrat-Bold.ttf
-          weight: 700
-        - asset: assets/fonts/Montserrat-BoldItalic.ttf
-          weight: 700
-          style: italic
-        - asset: assets/fonts/Montserrat-ExtraBold.ttf
-          weight: 800
-        - asset: assets/fonts/Montserrat-ExtraBoldItalic.ttf
-          weight: 800
-          style: italic
-
 publish_to: none
