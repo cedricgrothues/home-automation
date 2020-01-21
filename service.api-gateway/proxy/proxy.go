@@ -28,7 +28,7 @@ func ListenAndServe(c *routing.Configuration) error {
 
 		p := httputil.NewSingleHostReverseProxy(url)
 
-		prefix := addSlashes(service.Prefix)
+		prefix := addSlashes(service.Identifier)
 
 		router.GET(prefix+"*s", handler(prefix, p))
 		router.PUT(prefix+"*s", handler(prefix, p))

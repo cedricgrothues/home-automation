@@ -16,7 +16,7 @@ RUN go get -v -t -d github.com/cedricgrothues/home-automation/service.api-gatewa
 RUN go install github.com/cedricgrothues/home-automation/service.api-gateway
 
 # Run the service.api-gateway command by default when the container starts.
-ENTRYPOINT /go/bin/service.api-gateway /go/src/github.com/cedricgrothues/home-automation/service.api-gateway/config.yaml
+ENTRYPOINT /go/bin/service.api-gateway /go/src/github.com/cedricgrothues/home-automation/service.api-gateway/config.json
 
 # Document that the service listens on port 4000.
 EXPOSE 4000

@@ -1,41 +1,45 @@
 package routing
 
 import (
-	"io/ioutil"
-
-	"gopkg.in/yaml.v2"
+	"encoding/json"
+	"os"
 )
 
 // Configuration represents the config loaded from the YAML file
 type Configuration struct {
-	Port     int                 `yaml:"port"`
-	Services map[string]*Service `yaml:"services"`
+	Port     int        `json:"port"`
+	Services []*Service `json:"services"`
 }
 
 // Service is a single Service definition
 type Service struct {
-	Name     string   `yaml:"name"`
-	Prefix   string   `yaml:"prefix"`
-	Upstream string   `yaml:"upstream"`
-	Plugins  []Plugin `yaml:"plugins"`
+	Name       string   `json:"name"`
+	Identifier string   `json:"identifier"`
+	Upstream   string   `json:"upstream"`
+	Plugins    []Plugin `json:"plugins"`
 }
 
 // Plugin is the configuration for a particular plugin
 type Plugin struct {
-	Name    string                 `yaml:"name"`
-	Enabled bool                   `yaml:"enabled"`
-	Config  map[string]interface{} `yaml:"config"`
+	Name    string                 `json:"name"`
+	Enabled bool                   `json:"enabled"`
+	Config  map[string]interface{} `json:"config"`
 }
 
-// Load reads a YAML file and returns a Configuration struct
+// Load reads a JSON file and returns a Configuration struct
 func Load(filename string) (*Configuration, error) {
-	b, err := ioutil.ReadFile(filename)
+	f, err := os.Open(filename)
+
 	if err != nil {
 		return nil, err
 	}
 
+	defer f.Close()
+
 	var c Configuration
-	err = yaml.Unmarshal(b, &c)
+
+	err = json.NewDecoder(f).Decode(&c)
+
 	if err != nil {
 		return nil, err
 	}
