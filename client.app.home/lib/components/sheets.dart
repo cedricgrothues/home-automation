@@ -57,6 +57,7 @@ class ProfileSheet extends StatelessWidget {
               ),
             ),
           ),
+          Text("Cedric Grothues", style: TextStyle(color: Colors.white, fontSize: 18))
         ],
       ),
       message: Text("Manage your account, update your profile picture, change your display name or open the settings."),

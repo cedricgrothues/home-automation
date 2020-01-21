@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 
 import 'package:home/models/errors.dart';
 import 'package:home/components/button.dart';
-import 'package:home/components/icons.dart';
 
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
@@ -28,12 +27,12 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
             mainAxisSize: MainAxisSize.max,
             children: <Widget>[
               Container(
-                width: 90,
                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 4),
-                child: Icon(
-                  LightIcons.broadcast_tower,
-                  size: 90,
-                  color: Theme.of(context).iconTheme.color.withOpacity(0.2),
+                child: Image.asset(
+                  "assets/images/logo.png",
+                  fit: BoxFit.contain,
+                  height: 90,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
               Column(
