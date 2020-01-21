@@ -24,24 +24,34 @@ Start all docker containers with: `docker-compose up -d --build --force-recreate
 
 ### API Gateway Service
 
-The api gateway service reads data from `service.api-gateway/config.yaml` and distributes requests accordingly.
-Example config.yaml structure:
-```yaml
-port: 4000
-
-services:
-    service.device-registry:
-        name: Device Registry
-        prefix: service.device-registry
-        upstream: "http://192.168.2.117:4001"
-    service.controller.sonoff:
-        name: Sonoff Controller
-        prefix: service.controller.sonoff
-        upstream: "http://192.168.2.117:4002"
-    service.controller.sonos:
-        name: Sonos Controller
-        prefix: service.controller.sonos
-        upstream: "http://192.168.2.117:4003"
+The api gateway service reads data from `service.api-gateway/config.json` and distributes requests accordingly.
+Example config.json structure:
+```json
+{
+    "port": 4000,
+    "services": [
+        {
+            "identifier": "service.device-registry",
+            "name": "Device Registry",
+            "upstream": "http://service.device-registry:4001"
+        },
+        {
+            "identifier": "service.controller.sonoff",
+            "name": "Sonoff Controller",
+            "upstream": "http://service.controller.sonoff:4002"
+        },
+        {
+            "identifier": "service.controller.sonos",
+            "name": "Sonos Controller",
+            "upstream": "http://service.controller.sonos:4003"
+        },
+        {
+            "identifier": "service.controller.aurora",
+            "name": "Nanoleaf Aurora Controller",
+            "upstream": "http://service.controller.aurora:4004"
+        }
+    ]
+}
 ```
 
 ### Controllers

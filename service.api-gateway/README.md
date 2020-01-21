@@ -4,25 +4,35 @@ Available on port `4000`
 This service redirects traffic to the according controllers / services
 
 ## Setup
-All configurations for `service.api-gateway` are available at ./config.yaml.
+All configurations for `service.api-gateway` are available at ./config.json.
 
 Example config.yaml:
-```yaml
-port: 4000
-
-services:
-    service.device-registry:
-        name: Device Registry
-        prefix: service.device-registry
-        url: "http://192.168.2.117:4001"
-    service.controller.sonoff:
-        name: Sonoff Controller
-        prefix: service.controller.sonoff
-        url: "http://192.168.2.117:4002"
-    service.controller.sonos:
-        name: Sonos Controller
-        prefix: service.controller.sonos
-        url: "http://192.168.2.117:4003"
+```json
+{
+    "port": 4000,
+    "services": [
+        {
+            "identifier": "service.device-registry",
+            "name": "Device Registry",
+            "upstream": "http://service.device-registry:4001"
+        },
+        {
+            "identifier": "service.controller.sonoff",
+            "name": "Sonoff Controller",
+            "upstream": "http://service.controller.sonoff:4002"
+        },
+        {
+            "identifier": "service.controller.sonos",
+            "name": "Sonos Controller",
+            "upstream": "http://service.controller.sonos:4003"
+        },
+        {
+            "identifier": "service.controller.aurora",
+            "name": "Nanoleaf Aurora Controller",
+            "upstream": "http://service.controller.aurora:4004"
+        }
+    ]
+}
 ```
 
 ## Usage
