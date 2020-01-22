@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoButton;
+
 import 'package:home/components/icons.dart';
 
 /// SceneCard shows basic information about it's [scene].

@@ -3,11 +3,11 @@ import 'dart:async' show TimeoutException;
 
 import 'package:flutter/material.dart';
 
-import 'package:home/models/errors.dart';
-import 'package:home/components/button.dart';
-
 import 'package:hive/hive.dart';
 import 'package:http/http.dart';
+
+import 'package:home/models/errors.dart';
+import 'package:home/components/button.dart';
 
 class ConnectionFailed extends StatefulWidget {
   @override

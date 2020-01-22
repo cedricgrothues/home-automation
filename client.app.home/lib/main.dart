@@ -14,7 +14,6 @@ import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/setup/account.dart';
 
-import 'package:home/services/scanner.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/components/splash.dart';
 

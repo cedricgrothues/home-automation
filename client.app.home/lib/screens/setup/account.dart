@@ -3,12 +3,13 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
+
 import 'package:hive/hive.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'package:home/components/button.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/screens/home/home.dart';
-import 'package:image_picker/image_picker.dart';
 
 class AccountSetup extends StatefulWidget {
   const AccountSetup({Key key, this.initial = 0}) : super(key: key);

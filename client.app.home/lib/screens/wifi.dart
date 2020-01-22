@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-import 'package:home/components/icons.dart';
-
 import 'package:provider/provider.dart' show Provider;
 import 'package:connectivity/connectivity.dart' show ConnectivityResult;
+
+import 'package:home/components/icons.dart';
 
 /// NetworkAware: This widget renders a `NoWifi()` screen above the current `child`
 /// if it detects a state change from the `ConnectivityResult Provider` defined in main.dart's

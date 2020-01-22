@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 
 import 'package:hive/hive.dart';
-import 'package:home/models/errors.dart';
 
-import 'package:home/services/scanner.dart' show discover;
+import 'package:home/models/errors.dart';
+import 'package:home/services/scanner.dart';
 
 class Connect extends StatefulWidget {
   @override
