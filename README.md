@@ -12,22 +12,22 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 
 | Controller | Description | Status |
 | --- | --- | --- |
-| service.controller.aurora | A controller for Nanoleaf Aurora lightpanels      | Alpha |
-| service.controller.sonoff | A controller for sonoff tasmota lights and plugs  | Alpha |
-| service.controller.sonos  | A controller for all types of sonos speakers      | WIP   |
-| service.controller.hue    | tbd                                               | Planned |
+| modules.aurora | A controller for Nanoleaf Aurora lightpanels      | Alpha |
+| modules.sonoff | A controller for sonoff tasmota lights and plugs  | Alpha |
+| modules.sonos  | A controller for all types of sonos speakers      | WIP   |
+| modules.hue    | tbd                                               | Planned |
 
 ## All services
 
 | Service | Description | Status |
 | --- | --- | --- |
-| service.api-gateway           | The API Gateway                                   | Alpha |
-| service.device-registry       | The Device Registry Service                       | Alpha |
+| core.api-gateway           | The API Gateway                                   | Alpha |
+| core.device-registry       | The Device Registry Service                       | Alpha |
 | service.automation.scene      | The scene controller                              | WIP   |
 | service.automation.schedule   | The schedule controller                           | WIP   |
-| service.controller.aurora     | A controller for Nanoleaf Aurora lightpanels      | Alpha |
-| service.controller.sonoff     | A controller for sonoff tasmota lights and plugs  | Alpha |
-| service.controller.sonos      | A controller for all types of sonos speakers      | WIP   |
+| modules.aurora     | A controller for Nanoleaf Aurora lightpanels      | Alpha |
+| modules.sonoff     | A controller for sonoff tasmota lights and plugs  | Alpha |
+| modules.sonos      | A controller for all types of sonos speakers      | WIP   |
 
 ## Usage
 
@@ -36,31 +36,31 @@ Start all docker containers with: `docker-compose up -d --build --force-recreate
 
 ### API Gateway Service
 
-The api gateway service reads data from `service.api-gateway/config.json` and distributes requests accordingly.
+The api gateway service reads data from `core.api-gateway/config.json` and distributes requests accordingly.
 Example config.json structure:
 ```json
 {
     "port": ,
     "services": [
         {
-            "identifier": "service.device-registry",
+            "identifier": "core.device-registry",
             "name": "Device Registry",
-            "upstream": "http://service.device-registry:4001"
+            "upstream": "http://core.device-registry:4001"
         },
         {
-            "identifier": "service.controller.sonoff",
+            "identifier": "modules.sonoff",
             "name": "Sonoff Controller",
-            "upstream": "http://service.controller.sonoff:4002"
+            "upstream": "http://modules.sonoff:4002"
         },
         {
-            "identifier": "service.controller.sonos",
+            "identifier": "modules.sonos",
             "name": "Sonos Controller",
-            "upstream": "http://service.controller.sonos:4003"
+            "upstream": "http://modules.sonos:4003"
         },
         {
-            "identifier": "service.controller.aurora",
+            "identifier": "modules.aurora",
             "name": "Nanoleaf Aurora Controller",
-            "upstream": "http://service.controller.aurora:4004"
+            "upstream": "http://modules.aurora:4004"
         }
     ]
 }
@@ -70,7 +70,7 @@ Example config.json structure:
 
 Controllers must implement a standardised interface for fetching and updating device state.
 
-`GET service.controller.<controller-identifier>/device/<device-identifier>`
+`GET modules.<controller-identifier>/device/<device-identifier>`
 
 - 200: success
 
@@ -79,7 +79,7 @@ Controllers must implement a standardised interface for fetching and updating de
     "id": "lightpanels",
     "name": "Desk Lamp",
     "type": "lamp-color",
-    "controller": "service.controller.aurora",
+    "controller": "modules.aurora",
     "state": {
         "brightness": {
             "value": 50,
@@ -112,14 +112,14 @@ Controllers must implement a standardised interface for fetching and updating de
   "identifier": "bedroom-plug",
   "name": "Bedroom Plug",
   "type": "plug",
-  "controller": "service.controller.hue",
+  "controller": "modules.hue",
   "state": {
     "power": true
   }
 }
 ```
 
-`PUT service.controller.<controller-identifier>/device/<device-identifier>`
+`PUT modules.<controller-identifier>/device/<device-identifier>`
 
 JSON request body:
 

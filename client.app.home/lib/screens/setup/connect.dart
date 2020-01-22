@@ -1,10 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 
-import 'package:hive/hive.dart';
-
 import 'package:home/models/errors.dart';
-import 'package:home/services/scanner.dart';
 
 class Connect extends StatefulWidget {
   @override
@@ -18,16 +17,15 @@ class _ConnectState extends State<Connect> {
 
     WidgetsBinding.instance.addPostFrameCallback((Duration duration) async {
       try {
-        String gateway = await discover();
+        InternetAddress.lookup("http://hub.local");
 
-        // discover() did not throw an Exception, so we can assume that
-        // `gateway` contains service.api-gateway's ip address and is not null
-        Hive.box('preferences').put('service.api-gateway', gateway);
+        // did not throw an Exception, so we can assume that
+        // `gateway` contains core.api-gateway's ip address and is not null
 
         Navigator.of(context).pushReplacementNamed("/account_setup");
-      } on NotFoundException {
-        // NotFoundExceptions are thrown if `service.api-gateway` was not found
-        // with in the device's subnet.
+      } on SocketException {
+        // SocketException are thrown if `hub.local` was not found
+        // with in the device's network.
 
         Navigator.of(context).pushReplacementNamed("/connection_failed");
       }

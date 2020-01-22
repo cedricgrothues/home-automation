@@ -56,7 +56,7 @@ Future<String> discover() async {
 
     // There is no need to decode the json response, we'll simply check
     // if the response body contains the service name
-    if (response.statusCode != 200 || !response.body.contains("service.api-gateway")) continue;
+    if (response.statusCode != 200 || !response.body.contains("core.api-gateway")) continue;
 
     return addr.address;
   }

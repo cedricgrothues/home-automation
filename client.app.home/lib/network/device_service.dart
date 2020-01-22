@@ -2,7 +2,6 @@ import 'dart:io' show SocketException;
 import 'dart:async' show TimeoutException;
 import 'dart:convert' show json;
 
-import 'package:hive/hive.dart';
 import 'package:http/http.dart';
 
 import 'package:home/models/errors.dart';
@@ -13,10 +12,8 @@ class DeviceService {
   static Future<List<Device>> fetch() async {
     List<dynamic> devices = [];
 
-    String gateway = Hive.box<String>('preferences').get('service.api-gateway');
-
     try {
-      Response response = await get("http://$gateway:4000/service.device-registry/devices").timeout(
+      Response response = await get("http://hub.local:4000/core.device-registry/devices").timeout(
         const Duration(seconds: 1),
       );
 
@@ -52,7 +49,7 @@ class DeviceService {
       if (!device.containsKey("controller") || !device.containsKey("id")) continue;
 
       try {
-        Response response = await get("http://$gateway:4000/${device['controller']}/devices/${device['id']}").timeout(
+        Response response = await get("http://hub.local:4000/${device['controller']}/devices/${device['id']}").timeout(
           const Duration(seconds: 1),
         );
 
@@ -89,11 +86,9 @@ class DeviceService {
   }
 
   static Future<DeviceState> update({Device device}) async {
-    String gateway = Hive.box<String>('preferences').get('service.api-gateway');
-
     try {
       Response result = await put(
-        "http://$gateway:4000/${device.controller}/devices/${device.id}",
+        "http://hub.local:4000/${device.controller}/devices/${device.id}",
         body: json.encode({"power": !device.state.power}),
       ).timeout(
         const Duration(seconds: 1),
@@ -101,7 +96,7 @@ class DeviceService {
 
       if (result.statusCode < 200 || result.statusCode > 299) throw ResponseException();
 
-      Response response = await get("http://$gateway:4000/${device.controller}/devices/${device.id}").timeout(
+      Response response = await get("http://hub.local:4000/${device.controller}/devices/${device.id}").timeout(
         const Duration(seconds: 1),
       );
 
@@ -138,10 +133,8 @@ class DeviceService {
   }
 
   static Future<DeviceState> refresh({Device device}) async {
-    String gateway = Hive.box<String>('preferences').get('service.api-gateway');
-
     try {
-      Response result = await get("http://$gateway:4000/${device.controller}/devices/${device.id}").timeout(
+      Response result = await get("http://hub.local:4000/${device.controller}/devices/${device.id}").timeout(
         const Duration(seconds: 2),
       );
 
@@ -163,7 +156,6 @@ class DeviceService {
 
       return DeviceState(error: true);
     } on TimeoutException {
-      print("TIMEOUT");
       // The timeout exception is thrown, if there was no server response after 1 second to minimize initial loading time.
       // Since the server is most definitely running on a local network, we'll just assume that it is unreachable.
 
