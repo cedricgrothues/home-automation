@@ -2,10 +2,9 @@ package routes
 
 import (
 	"encoding/json"
-	"net/http"
-
-	"github.com/cedricgrothues/home-automation/service.controller/sonos/discovery"
+	"github.com/cedricgrothues/home-automation/service.controller.sonos/discovery"
 	"github.com/cedricgrothues/httprouter"
+	"net/http"
 )
 
 // DiscoverDevices returns all devices found this service's network, using ssdp discovery

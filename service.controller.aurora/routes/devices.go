@@ -7,8 +7,8 @@ import (
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/service.controllers/aurora/nanoleaf"
-	"github.com/cedricgrothues/home-automation/service.controllers/aurora/registry"
+	"github.com/cedricgrothues/home-automation/service.controller.aurora/nanoleaf"
+	"github.com/cedricgrothues/home-automation/service.controller.aurora/registry"
 	"github.com/cedricgrothues/httprouter"
 )
 
