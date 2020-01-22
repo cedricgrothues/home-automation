@@ -5,7 +5,7 @@ services:
   core.api-gateway:
     restart: always
     build:
-     dockerfile: modules/api-gateway/Dockerfile
+     dockerfile: ./modules/api-gateway/Dockerfile
      context: .
     ports:
       - 4000:4000
@@ -13,7 +13,7 @@ services:
   core.device-registry:
     restart: always
     build:
-      dockerfile: modules/device-registry/Dockerfile
+      dockerfile: ./modules/device-registry/Dockerfile
       context: .
     ports:
       - 4001:4001
@@ -37,7 +37,7 @@ services:
   modules.sonoff:
     restart: always
     build:
-      dockerfile: modules/sonoff/Dockerfile
+      dockerfile: ./modules/sonoff/Dockerfile
       context: .
     ports:
       - 4002:4002
