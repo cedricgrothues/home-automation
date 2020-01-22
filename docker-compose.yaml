@@ -3,6 +3,7 @@ version: '3.7'
 services:
   # core
   core.api-gateway:
+    container_name: "core.api-gateway"
     restart: always
     build:
      dockerfile: ./core/api-gateway/Dockerfile
@@ -11,6 +12,7 @@ services:
       - 4000:4000
 
   core.device-registry:
+    container_name: "core.device-registry"
     restart: always
     build:
       dockerfile: ./core/device-registry/Dockerfile
@@ -21,6 +23,7 @@ services:
       - core.persistence.database
 
   core.persistence.database:
+    container_name: "core.persistence.database"
     image: postgres:latest
     restart: always
     environment:
@@ -35,6 +38,7 @@ services:
 
   # modules
   modules.sonoff:
+    container_name: "modules.sonoff"
     restart: always
     build:
       dockerfile: ./modules/sonoff/Dockerfile
@@ -56,6 +60,7 @@ services:
 #      - core.device-registry
 
   modules.aurora:
+    container_name: "modules.aurora"
     restart: always
     build:
       dockerfile: ./modules/aurora/Dockerfile
