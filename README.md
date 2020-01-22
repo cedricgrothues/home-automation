@@ -28,7 +28,7 @@ The api gateway service reads data from `service.api-gateway/config.json` and di
 Example config.json structure:
 ```json
 {
-    "port": 4000,
+    "port": ,
     "services": [
         {
             "identifier": "service.device-registry",

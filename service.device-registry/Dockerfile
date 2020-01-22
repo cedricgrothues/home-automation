@@ -19,5 +19,5 @@ RUN go install github.com/cedricgrothues/home-automation/service.device-registry
 # Run the outyet command by default when the container starts.
 ENTRYPOINT /go/bin/service.device-registry
 
-# Document that the service listens on port 8080.
+# Document that the service listens on port 4001.
 EXPOSE 4001
