@@ -8,14 +8,26 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 <kbd><img src=".github/screenshots/home_dark.png" width=200/></kbd>
 <kbd><img src=".github/screenshots/profile_dark.png" width=200/></kbd>
 
-## Currently supported services
+## Currently supported controllers
 
-| Service | Description | Status |
+| Controller | Description | Status |
 | --- | --- | --- |
 | service.controller.aurora | A controller for Nanoleaf Aurora lightpanels      | Alpha |
 | service.controller.sonoff | A controller for sonoff tasmota lights and plugs  | Alpha |
 | service.controller.sonos  | A controller for all types of sonos speakers      | WIP   |
-| service.controller.hue    | tbd | Planned |
+| service.controller.hue    | tbd                                               | Planned |
+
+## All services
+
+| Service | Description | Status |
+| --- | --- | --- |
+| service.api-gateway           | The API Gateway                                   | Alpha |
+| service.device-registry       | The Device Registry Service                       | Alpha |
+| service.automation.scene      | The scene controller                              | WIP   |
+| service.automation.schedule   | The schedule controller                           | WIP   |
+| service.controller.aurora     | A controller for Nanoleaf Aurora lightpanels      | Alpha |
+| service.controller.sonoff     | A controller for sonoff tasmota lights and plugs  | Alpha |
+| service.controller.sonos      | A controller for all types of sonos speakers      | WIP   |
 
 ## Usage
 
