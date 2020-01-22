@@ -18,21 +18,21 @@ services:
     ports:
       - 4001:4001
     depends_on:
-      - service.device-registry.database
+      - service.persistence.database
 
-  service.device-registry.database:
+  service.persistence.database:
     image: postgres:latest
-    container_name: "service.device-registry.database"
+    container_name: "service.persistence.database"
     restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
-      - POSTGRES_DB=service.device-registry.database
+      - POSTGRES_DB=service.persistence.database
     ports:
       - 5432:5432
     volumes:
-      - ./service.device-registry/database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - service.device-registry.database.data:/var/lib/postgresql/data
+      - ./service.persistence/database/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - service.persistence.database.data:/var/lib/postgresql/data
 
   service.controller.sonoff:
     container_name: "service.controller.sonoff"
@@ -66,4 +66,4 @@ services:
 
 
 volumes:
-  service.device-registry.database.data:
+  service.persistence.database.data:

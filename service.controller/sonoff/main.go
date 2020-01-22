@@ -2,7 +2,7 @@ package main
 
 import (
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
-	"github.com/cedricgrothues/home-automation/service.controller.sonoff/routes"
+	"github.com/cedricgrothues/home-automation/service.controller/sonoff/routes"
 )
 
 func main() {

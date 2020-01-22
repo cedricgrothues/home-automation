@@ -3,7 +3,7 @@ package main
 import (
 	"net/http"
 
-	"github.com/cedricgrothues/home-automation/service.controller.sonos/routes"
+	"github.com/cedricgrothues/home-automation/service.controller/sonos/routes"
 	"github.com/cedricgrothues/httprouter"
 )
 

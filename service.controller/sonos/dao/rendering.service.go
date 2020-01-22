@@ -1,6 +1,6 @@
 package dao
 
-import "github.com/cedricgrothues/home-automation/service.controller.sonos/helper"
+import "github.com/cedricgrothues/home-automation/service.controller/sonos/helper"
 
 // GetVolume gets the current volume
 func (s *Sonos) GetVolume() error {

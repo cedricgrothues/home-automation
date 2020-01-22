@@ -11,11 +11,11 @@ import (
 )
 
 const (
-	host     = "service.device-registry.database"
+	host     = "service.persistence.database"
 	port     = 5432
 	user     = "postgres"
 	password = "zuhkiz-2honwu-semhoV"
-	dbname   = "service.device-registry.database"
+	dbname   = "service.persistence.database"
 )
 
 func main() {
