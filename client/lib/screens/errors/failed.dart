@@ -31,8 +31,7 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                 child: Image.asset(
                   "assets/images/logo.png",
                   fit: BoxFit.contain,
-                  height: 90,
-                  color: Theme.of(context).primaryColor,
+                  height: 120,
                 ),
               ),
               Column(
