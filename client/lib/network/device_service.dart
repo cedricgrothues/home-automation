@@ -19,7 +19,7 @@ class DeviceService {
 
       if (response.statusCode < 200 || response.statusCode > 299) throw ResponseException();
 
-      devices = json.decode(response.body);
+      devices = json.decode(response.body) ?? [];
     } on SocketException {
       // SocketExceptions are thrown if there appears to be a problem with the users internet connection
       // or if a DNS lookup failed (latter should not be a problem at this point sice we're working with ip addresses instead of urls)
