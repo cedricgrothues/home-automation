@@ -23,8 +23,8 @@ It's mostly meant as a learning opportunity rather than a production-ready syste
 | --- | --- | --- |
 | core.api-gateway           | The API Gateway                                   | Alpha |
 | core.device-registry       | The Device Registry Service                       | Alpha |
-| service.automation.scene      | The scene controller                              | WIP   |
-| service.automation.schedule   | The schedule controller                           | WIP   |
+| modules.scene      | The scene controller                              | WIP   |
+| modules.schedule   | The schedule controller                           | WIP   |
 | modules.aurora     | A controller for Nanoleaf Aurora lightpanels      | Alpha |
 | modules.sonoff     | A controller for sonoff tasmota lights and plugs  | Alpha |
 | modules.sonos      | A controller for all types of sonos speakers      | WIP   |
