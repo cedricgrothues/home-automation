@@ -1,109 +1,54 @@
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:hive/hive.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:home/components/button.dart';
 import 'package:home/components/routes.dart';
 import 'package:home/screens/home/home.dart';
 
 class AccountSetup extends StatefulWidget {
-  const AccountSetup({Key key, this.initial = 0}) : super(key: key);
-
-  /// Set the PageViews initial page if the user
-  /// hasn't finished the setup process yet.
-  final int initial;
-
   @override
   _AccountSetupState createState() => _AccountSetupState();
 }
 
 class _AccountSetupState extends State<AccountSetup> {
-  PageController _controller;
-  File _image;
-  int _current;
-
-  @override
-  void initState() {
-    // Initialize the PageController and _current in [initState]
-    // to access the non-final widget.initial parameter
-    _controller = PageController(initialPage: widget.initial, keepPage: true);
-    _current = widget.initial ?? 0;
-
-    super.initState();
-  }
+  static final AssetImage image = AssetImage("assets/images/setup.png");
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          // PageView with Content
-          Positioned.fill(
-            child: PageView(
-              controller: _controller,
-              scrollDirection: Axis.vertical,
-              physics: NeverScrollableScrollPhysics(),
-              children: <Widget>[
-                SetName(onSubmitted: (username) {
-                  if (username == "") return;
-
-                  Box<String> box = Hive.box<String>('preferences');
-                  box.put("username", username);
-
-                  _current++;
-
-                  _controller.nextPage(
-                    curve: Curves.ease,
-                    duration: Duration(milliseconds: 600),
-                  );
-                }),
-                SetImage(
-                  onTap: () async {
-                    _image = await ImagePicker.pickImage(source: ImageSource.gallery);
-                    if (_image == null) return;
-                    setState(() {});
-
-                    Box<String> box = Hive.box<String>('preferences');
-                    box.put("picture", base64.encode(_image.readAsBytesSync()));
-                  },
-                  image: _image,
-                ),
-              ],
+      appBar: CupertinoNavigationBar(
+        automaticallyImplyLeading: false,
+        automaticallyImplyMiddle: false,
+        leading: CupertinoButton(
+          child: Text(
+            "Cancel",
+            style: TextStyle(
+              color: Theme.of(context).buttonColor,
+              fontWeight: FontWeight.w600,
+              fontSize: 18,
             ),
           ),
-
-          Positioned(
-            top: MediaQuery.of(context).viewPadding.top + 70,
-            right: 20,
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: <Widget>[
-                Indicator(
-                  active: _current < 1,
-                ),
-                Indicator(
-                  active: _current >= 1,
-                ),
-              ],
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+          onPressed: () => Navigator.of(context).pop(),
+        ),
+        trailing: CupertinoButton(
+          padding: EdgeInsets.zero,
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(40),
+              color: Theme.of(context).buttonColor,
             ),
+            padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 6),
+            child: Text("Save", style: Theme.of(context).textTheme.button.copyWith(fontSize: 16)),
           ),
-
-          Positioned(
-            bottom: MediaQuery.of(context).viewPadding.bottom,
-            child: Continue(controller: _controller, current: _current),
-          ),
-        ],
+          onPressed: () {},
+        ),
+        border: null,
       ),
-
-      // Disable resizing since we'll handle it ourselfs
-      resizeToAvoidBottomInset: false,
     );
   }
 }

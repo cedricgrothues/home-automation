@@ -54,6 +54,7 @@ class App extends StatelessWidget {
           color: Colors.black,
           size: 26,
         ),
+        dividerTheme: DividerThemeData(color: Colors.black, thickness: 2),
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         toggleButtonsTheme: ToggleButtonsThemeData(
@@ -121,6 +122,10 @@ class App extends StatelessWidget {
             color: Colors.white,
             size: 26,
           ),
+        ),
+        dividerTheme: DividerThemeData(
+          color: Color(0xFF191d23),
+          thickness: 1.5,
         ),
         cupertinoOverrideTheme: CupertinoThemeData(
           primaryColor: Colors.white,

@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' show Material, MaterialType, Theme;
 import 'package:home/components/icons.dart' show RegularIcons;
 import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
-import 'package:home/services/ssdp.dart' show SSDP;
+import 'package:home/services/ssdp.dart' show SSDP, discover;
 
 /// [SelectBrand] screen is the first screen the user sees,
 /// when the add device button is pressed. It's use is, as
@@ -78,8 +78,7 @@ class SelectBrand extends StatelessWidget {
                       ],
                     ),
                     onPressed: () async {
-                      String addr = await SSDP().discover(query: "nanoleaf_aurora:light").first;
-                      print(addr);
+                      discover(target: "nanoleaf_aurora:light");
                     },
                     height: 85,
                   ),
