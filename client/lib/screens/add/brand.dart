@@ -35,7 +35,7 @@ class SelectBrand extends StatelessWidget {
                 discard: "Cancel",
                 header: <Widget>[
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                    padding: const EdgeInsets.only(left: 35, top: 20, bottom: 20, right: 20),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.center,

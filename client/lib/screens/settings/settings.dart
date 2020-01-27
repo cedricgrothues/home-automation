@@ -1,12 +1,13 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Theme;
+import 'package:flutter/material.dart' show Theme, showModalBottomSheet;
 
 import 'package:hive/hive.dart' show Hive;
 import 'package:url_launcher/url_launcher.dart' show launch;
 
 import 'package:home/components/icons.dart' show RegularIcons;
-import 'package:home/screens/settings/components/button.dart';
+import 'package:home/screens/settings/sections/appicon.dart';
 import 'package:home/screens/settings/components/list.dart';
+import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/section.dart';
 
 /// Defines the main [Settings] page. This is show
@@ -34,7 +35,7 @@ class _SettingsState extends State<Settings> {
           child: PopupList(
             header: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+                padding: const EdgeInsets.only(left: 35, top: 10, bottom: 10, right: 20),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
@@ -71,7 +72,14 @@ class _SettingsState extends State<Settings> {
                     child: Text(
                       "Change app icon",
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).pop();
+                      showModalBottomSheet(
+                        builder: (BuildContext context) => ChangeAppIcon(),
+                        context: context,
+                        isScrollControlled: true,
+                      );
+                    },
                   ),
                   PopupButton(
                     child: Text(

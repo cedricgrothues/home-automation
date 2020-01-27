@@ -22,7 +22,7 @@ class PopupList extends StatelessWidget {
       if (header != null) ...header,
       ...sections,
       CupertinoButton(
-        padding: const EdgeInsets.only(top: 20),
+        padding: const EdgeInsets.symmetric(vertical: 20),
         onPressed: () => Navigator.of(context).pop(),
         child: Container(
           height: 35,

@@ -19,7 +19,7 @@ class Section extends StatelessWidget {
       children: <Widget>[
         if (title != null)
           Padding(
-            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 30),
+            padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 35),
             child: Material(
               type: MaterialType.transparency,
               child: Text(

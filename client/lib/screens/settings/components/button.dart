@@ -36,7 +36,7 @@ class PopupButton extends StatelessWidget {
         width: double.infinity,
         height: height,
         margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 25),
         alignment: Alignment.centerLeft,
         child: child,
       ),
