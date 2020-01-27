@@ -193,18 +193,8 @@ class SetImage extends StatelessWidget {
                 child: CircleAvatar(
                   maxRadius: 100,
                   minRadius: 80,
-                  backgroundImage: image != null ? FileImage(image) : null,
+                  backgroundImage: image != null ? FileImage(image) : AssetImage('assets/images/setup.png'),
                   backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                  child: image != null
-                      ? null
-                      : Text(
-                          Hive.box<String>('preferences').get("username").substring(0, 1),
-                          style: TextStyle(
-                            color: Theme.of(context).buttonColor,
-                            fontWeight: FontWeight.w600,
-                            fontSize: 70,
-                          ),
-                        ),
                 ),
               ),
             ),

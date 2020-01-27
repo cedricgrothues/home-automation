@@ -9,6 +9,9 @@ import 'package:http/http.dart';
 import 'package:home/models/errors.dart';
 import 'package:home/components/button.dart';
 
+/// [ConnectionFailed] is supposed to be shown if the spash screen can't
+/// establish a connection to the home hub (Either due to a timeout, socket
+/// or response exception).
 class ConnectionFailed extends StatefulWidget {
   @override
   _ConnectionFailedState createState() => _ConnectionFailedState();
@@ -76,9 +79,16 @@ class TryAgain extends StatelessWidget {
       onPressed: () async {
         Box<String> box = Hive.box('preferences');
 
+        if (!box.containsKey("username")) {
+          // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
+          // so we'll redirect them to the account setup page
+          Navigator.of(context).pushReplacementNamed("/setup");
+          return;
+        }
+
         try {
           Response response = await get("http://hub.local:4000/").timeout(
-            const Duration(milliseconds: 200),
+            const Duration(seconds: 2),
           );
 
           // Here we won't accept any status code that is not `200` / http.StatusOK since we know
@@ -88,15 +98,9 @@ class TryAgain extends StatelessWidget {
           // There is no need to decode the json response. Simply check if the response contains the service name.
           if (!response.body.contains("core.api-gateway")) throw ResponseException();
 
-          if (box.containsKey("username")) {
-            // The api gateway is available and the user finished the setup process
-            // so we'll redirect the user to their home page
-            Navigator.of(context).pushReplacementNamed("/home");
-          } else {
-            // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
-            // so we'll redirect them to the account setup page
-            Navigator.of(context).pushReplacementNamed("/setup");
-          }
+          // The api gateway is available and the user finished the setup process
+          // so we'll redirect the user to their home page
+          Navigator.of(context).pushReplacementNamed("/home");
         } on SocketException {
           // SocketExceptions are thrown if there appears to be a problem with the users internet connection
           // or if a DNS lookup failed (latter should not be a problem at this point sice we're working with ip addresses instead of urls)

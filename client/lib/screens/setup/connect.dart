@@ -3,8 +3,6 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
 
-import 'package:home/models/errors.dart';
-
 class Connect extends StatefulWidget {
   @override
   _ConnectState createState() => _ConnectState();

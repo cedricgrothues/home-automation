@@ -3,8 +3,9 @@ import 'dart:io' show Socket, SocketException;
 import 'package:http/http.dart' show get, Response;
 import 'package:connectivity/connectivity.dart' show Connectivity;
 
-import 'package:home/models/errors.dart';
+import 'package:home/models/errors.dart' show NotFoundException, PortException;
 
+@deprecated
 class NetworkAddress {
   final String address;
   final bool exists;
@@ -12,6 +13,7 @@ class NetworkAddress {
   NetworkAddress(this.address, {this.exists = true});
 }
 
+@deprecated
 class NetworkAnalyzer {
   static Stream<NetworkAddress> discover(
     String subnet,
@@ -40,6 +42,8 @@ class NetworkAnalyzer {
   }
 }
 
+/// Used to disover the home hub within the device's subnet
+@Deprecated("use the hub's local address (https://hub.local) instead")
 Future<String> discover() async {
   final String ip = await Connectivity().getWifiIP();
   final String subnet = ip.substring(0, ip.lastIndexOf('.'));

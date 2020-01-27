@@ -6,17 +6,18 @@ import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
-import 'package:home/components/icons.dart';
-import 'package:home/components/sheets.dart';
+import 'package:home/components/icons.dart' show LightIcons;
 import 'package:home/network/device_service.dart';
 import 'package:home/network/models/device.dart';
+import 'package:home/screens/add/brand.dart';
 import 'package:home/screens/home/sections/control.dart';
+import 'package:home/screens/settings/settings.dart';
 
 class Home extends StatelessWidget {
   final Uint8List _image = base64.decode(Hive.box<String>("preferences").get("picture"));
 
-  // Futures for the underlying widgets are defines here,
-  // so the FutureBuilder doesn't fire unintentionally
+  // Futures and images for the underlying widgets are defines here,
+  // so neither the FutureBuilder nor Image fires twice.
   final Future<List<Device>> _devices = DeviceService.fetch();
 
   @override
@@ -36,9 +37,10 @@ class Home extends StatelessWidget {
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
-                showCupertinoModalPopup(
+                showModalBottomSheet(
                   context: context,
-                  builder: (context) => AddSheet(),
+                  builder: (context) => SelectBrand(),
+                  isScrollControlled: true,
                 );
               },
             ),
@@ -60,9 +62,10 @@ class Home extends StatelessWidget {
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
-                showCupertinoModalPopup(
+                showModalBottomSheet(
                   context: context,
-                  builder: (context) => ProfileSheet(_image),
+                  builder: (context) => Settings(),
+                  isScrollControlled: true,
                 );
               },
             ),

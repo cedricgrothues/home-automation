@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'package:provider/provider.dart' show Provider;
-import 'package:connectivity/connectivity.dart' show ConnectivityResult;
+import 'package:connectivity/connectivity.dart' show Connectivity, ConnectivityResult;
 
 import 'package:home/components/icons.dart';
 
@@ -13,13 +12,24 @@ class NetworkAware extends StatelessWidget {
 
   final Widget child;
 
+  static final Stream<ConnectivityResult> stream = Connectivity().onConnectivityChanged;
+
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: <Widget>[
-        child,
-        if (Provider.of<ConnectivityResult>(context) != ConnectivityResult.wifi) NoWifi(),
-      ],
+    /// Register a StreamBuilder that listens to the connectivity result
+    /// changes. This is used to show a `NoWifi` page, if wifi is
+    /// not availiable. Register all other global providers here.
+    return StreamBuilder<ConnectivityResult>(
+      stream: stream,
+      initialData: ConnectivityResult.wifi,
+      builder: (context, snapshot) {
+        return Stack(
+          children: <Widget>[
+            child,
+            if (snapshot.data != ConnectivityResult.wifi) NoWifi(),
+          ],
+        );
+      },
     );
   }
 }

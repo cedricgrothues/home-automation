@@ -37,9 +37,16 @@ class _SplashState extends State<Splash> {
 
     Box<String> box = await Hive.openBox('preferences');
 
+    if (!box.containsKey("username")) {
+      // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
+      // so we'll redirect them to the account setup page
+      Navigator.of(context).pushReplacementNamed("/setup");
+      return;
+    }
+
     try {
       Response response = await get("http://hub.local:4000/").timeout(
-        const Duration(seconds: 1),
+        const Duration(seconds: 2),
       );
 
       // Here we won't accept any status code that is not `200` / http.StatusOK since we know
@@ -49,15 +56,9 @@ class _SplashState extends State<Splash> {
       // There is no need to decode the json response. Simply check if the response contains the service name.
       if (!response.body.contains("core.api-gateway")) throw ResponseException();
 
-      if (box.containsKey("username")) {
-        // The api gateway is available and the user finished the setup process
-        // so we'll redirect the user to their home page
-        Navigator.of(context).pushReplacementNamed("/home");
-      } else {
-        // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
-        // so we'll redirect them to the account setup page
-        Navigator.of(context).pushReplacementNamed("/setup");
-      }
+      // The api gateway is available and the user finished the setup process
+      // so we'll redirect the user to their home page
+      Navigator.of(context).pushReplacementNamed("/home");
     } on SocketException catch (error) {
       // SocketExceptions are thrown if there appears to be a problem with the users internet connection
       // or if a DNS lookup failed (latter should not be a problem at this point sice we're working with ip addresses instead of urls)
@@ -81,7 +82,7 @@ class _SplashState extends State<Splash> {
 
       print("Unhandled Exception $error of type: ${error.runtimeType}");
 
-      Navigator.of(context).pushReplacementNamed("/connection_failed");
+      Navigator.of(context).pushReplacementNamed("/connection_failed", arguments: error);
     }
   }
 }

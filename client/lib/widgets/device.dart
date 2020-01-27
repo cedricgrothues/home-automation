@@ -2,7 +2,6 @@ import 'dart:async' show Timer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
-import 'package:flutter/cupertino.dart' show showCupertinoModalPopup;
 
 import 'package:home/components/labels.dart';
 import 'package:home/network/models/state.dart';
@@ -74,9 +73,10 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         // the user haptic feedback
         HapticFeedback.heavyImpact();
 
-        showCupertinoModalPopup(
+        showModalBottomSheet(
           context: context,
           builder: (context) => DeviceDetails(widget.device),
+          isScrollControlled: true,
         );
       },
       child: AnimatedOpacity(

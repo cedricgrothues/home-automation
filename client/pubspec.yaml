@@ -1,9 +1,13 @@
 name: home
-description: The mobile, web and desktop application communicating with cedricgrothues/home-automation's api
+description: >-
+  Home Assistant Companion for iOS, Android, Web and MacOS.
+  Interacts with cedricgrothues/home-automation's API.
 
 version: 0.1.0-alpha
 author: Cedric Grothues <cedricgrothues@gmail.com>
+
 repository: https://www.github.com/cedricgrothues/home-automation
+issue_tracker: https://www.github.com/cedricgrothues/home-automation/issues
 
 environment:
   sdk: ">=2.3.0 <3.0.0"
@@ -11,7 +15,6 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  provider: ^3.2.0
 
   # get the database path
   path_provider: ^1.5.1
@@ -41,7 +44,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  
+  # JSON Parsing
   json_serializable: ^3.2.3
+
+  # Used to autogenerate JSON files
   build_runner: ^1.7.2
     
       
@@ -53,7 +60,7 @@ flutter:
     - assets/images/
 
   fonts:
-    - family:  Regular
+    - family: Regular
       fonts:
         - asset: assets/fonts/Regular.ttf
     - family: Light
