@@ -1,3 +1,5 @@
 .dockerignore
 .github
 client.app.home
+LICENSE
+README.md
