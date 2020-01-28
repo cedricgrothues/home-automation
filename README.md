@@ -1,6 +1,6 @@
 # Home Automation
 
-Home Automation is a distributed smart home system largely written in Go[<sup>1</sup>](#1).
+Home Automation is a distributed smart home system largely written in Go[<sup>1</sup>](#1) and Dart.
 It's mostly meant as a learning opportunity rather than a production-ready system.
 
 <kbd><img src=".github/screenshots/setup_light.png" width=200/></kbd>
