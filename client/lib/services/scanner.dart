@@ -43,7 +43,7 @@ class NetworkAnalyzer {
 }
 
 /// Used to disover the home hub within the device's subnet
-@Deprecated("use the hub's local address (https://hub.local) instead")
+@Deprecated("use the hub's local address (http://hub.local) instead")
 Future<String> discover() async {
   final String ip = await Connectivity().getWifiIP();
   final String subnet = ip.substring(0, ip.lastIndexOf('.'));

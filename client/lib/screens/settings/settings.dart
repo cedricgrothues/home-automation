@@ -58,9 +58,7 @@ class _SettingsState extends State<Settings> {
               Section(
                 items: <Widget>[
                   PopupButton(
-                    child: Text(
-                      "Star the GitHub Repo",
-                    ),
+                    child: Text("Star the GitHub Repo"),
                     onPressed: () => launch("https://github.com/cedricgrothues/home-automation"),
                   ),
                 ],
@@ -69,9 +67,7 @@ class _SettingsState extends State<Settings> {
                 title: "App Settings",
                 items: <Widget>[
                   PopupButton(
-                    child: Text(
-                      "Change app icon",
-                    ),
+                    child: Text("Change app icon"),
                     onPressed: () {
                       Navigator.of(context).pop();
                       showModalBottomSheet(
@@ -82,9 +78,7 @@ class _SettingsState extends State<Settings> {
                     },
                   ),
                   PopupButton(
-                    child: Text(
-                      "Change polling timeout",
-                    ),
+                    child: Text("Change polling timeout"),
                     onPressed: () {},
                   ),
                 ],
@@ -93,21 +87,15 @@ class _SettingsState extends State<Settings> {
                 title: "Troubleshooting",
                 items: <Widget>[
                   PopupButton(
-                    child: Text(
-                      "View open issues",
-                    ),
+                    child: Text("View open issues"),
                     onPressed: () {},
                   ),
                   PopupButton(
-                    child: Text(
-                      "Forum & Support",
-                    ),
+                    child: Text("Forum & Support"),
                     onPressed: () => launch("https://github.com/cedricgrothues/home-automation/issues"),
                   ),
                   PopupButton(
-                    child: Text(
-                      "Show active projects",
-                    ),
+                    child: Text("Show active projects"),
                     onPressed: () => launch("https://github.com/cedricgrothues/home-automation/projects"),
                   ),
                 ],
@@ -116,10 +104,8 @@ class _SettingsState extends State<Settings> {
                 title: "Account",
                 items: <Widget>[
                   PopupButton(
-                    child: Text(
-                      "Change username or profile picture",
-                    ),
-                    onPressed: () => null,
+                    child: Text("Change username or profile picture"),
+                    onPressed: () => Navigator.of(context).pushReplacementNamed("/account_setup"),
                   ),
                   PopupButton(
                     child: Text(

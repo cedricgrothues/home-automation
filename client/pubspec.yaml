@@ -3,7 +3,7 @@ description: >-
   Home Assistant Companion for iOS, Android, Web and MacOS.
   Interacts with cedricgrothues/home-automation's API.
 
-version: 0.1.0-alpha.1
+version: 0.1.0+1
 author: Cedric Grothues <cedricgrothues@gmail.com>
 
 repository: https://www.github.com/cedricgrothues/home-automation
