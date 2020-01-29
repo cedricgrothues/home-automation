@@ -4,7 +4,7 @@ import 'package:flutter/material.dart' show Material, MaterialType, Theme;
 import 'package:home/components/icons.dart' show RegularIcons;
 import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
-import 'package:home/services/ssdp.dart' show SSDP, discover;
+import 'package:home/services/ssdp.dart' show discover;
 
 /// [SelectBrand] screen is the first screen the user sees,
 /// when the add device button is pressed. It's use is, as
