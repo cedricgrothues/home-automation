@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Icons, Theme, showLicensePage, showModalBottomSheet;
 
 import 'package:hive/hive.dart' show Hive;
+import 'package:pedantic/pedantic.dart' show unawaited;
 import 'package:url_launcher/url_launcher.dart' show launch;
 
 import 'package:home/screens/settings/sections/appicon.dart';
@@ -40,7 +41,7 @@ class _SettingsState extends State<Settings> {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Settings",
+                      'Settings',
                       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
                     ),
                     CupertinoButton(
@@ -57,16 +58,16 @@ class _SettingsState extends State<Settings> {
               Section(
                 items: <Widget>[
                   PopupButton(
-                    child: Text("Star the GitHub Repo"),
-                    onPressed: () => launch("https://github.com/cedricgrothues/home-automation"),
+                    child: Text('Star the GitHub Repo'),
+                    onPressed: () => launch('https://github.com/cedricgrothues/home-automation'),
                   ),
                 ],
               ),
               Section(
-                title: "App Settings",
+                title: 'App Settings',
                 items: <Widget>[
                   PopupButton(
-                    child: Text("Change app icon"),
+                    child: Text('Change app icon'),
                     onPressed: () {
                       Navigator.of(context).pop();
                       showModalBottomSheet(
@@ -77,63 +78,63 @@ class _SettingsState extends State<Settings> {
                     },
                   ),
                   PopupButton(
-                    child: Text("Change polling timeout"),
+                    child: Text('Change polling timeout'),
                     onPressed: () {},
                   ),
                 ],
               ),
               Section(
-                title: "Troubleshooting",
+                title: 'Troubleshooting',
                 items: <Widget>[
                   PopupButton(
-                    child: Text("View open issues"),
+                    child: Text('View open issues'),
                     onPressed: () {},
                   ),
                   PopupButton(
-                    child: Text("Forum & Support"),
-                    onPressed: () => launch("https://github.com/cedricgrothues/home-automation/issues"),
+                    child: Text('Forum & Support'),
+                    onPressed: () => launch('https://github.com/cedricgrothues/home-automation/issues'),
                   ),
                   PopupButton(
-                    child: Text("Show active projects"),
-                    onPressed: () => launch("https://github.com/cedricgrothues/home-automation/projects"),
+                    child: Text('Show active projects'),
+                    onPressed: () => launch('https://github.com/cedricgrothues/home-automation/projects'),
                   ),
                 ],
               ),
               Section(
-                title: "Credits",
+                title: 'Credits',
                 items: <Widget>[
                   PopupButton(
-                    child: Text("Open Source"),
+                    child: Text('Open Source'),
                     onPressed: () {
                       showLicensePage(
                         context: context,
-                        applicationLegalese: "Copyright © 2020 Cedric Grothues",
-                        applicationVersion: "0.1.0-dev.1",
-                        applicationName: "Home Assistent",
+                        applicationLegalese: 'Copyright © 2020 Cedric Grothues',
+                        applicationVersion: '0.1.0-dev.1',
+                        applicationName: 'Home Assistent',
                       );
                     },
                   ),
                   PopupButton(
-                    child: Text("Visit the Repository"),
+                    child: Text('Visit the Repository'),
                     onPressed: () {},
                   ),
                 ],
               ),
               Section(
-                title: "Account",
+                title: 'Account',
                 items: <Widget>[
                   PopupButton(
-                    child: Text("Change username or profile picture"),
-                    onPressed: () => Navigator.of(context).pushReplacementNamed("/account_setup"),
+                    child: Text('Change username or profile picture'),
+                    onPressed: () => Navigator.of(context).pushReplacementNamed('/account_setup'),
                   ),
                   PopupButton(
                     child: Text(
-                      "Log out",
+                      'Log out',
                       style: TextStyle(color: Color(0xfffa5b70)),
                     ),
                     onPressed: () async {
                       await Hive.deleteFromDisk();
-                      Navigator.of(context).pushReplacementNamed("/");
+                      unawaited(Navigator.of(context).pushReplacementNamed('/'));
                     },
                     type: ButtonType.destructive,
                   ),

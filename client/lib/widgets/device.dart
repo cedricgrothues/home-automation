@@ -3,8 +3,9 @@ import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 
+import 'package:pedantic/pedantic.dart';
+
 import 'package:home/components/labels.dart';
-import 'package:home/network/models/state.dart';
 import 'package:home/network/models/device.dart';
 import 'package:home/network/device_service.dart';
 import 'package:home/screens/controls/details.dart';
@@ -34,7 +35,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
     if (_timer != null) return;
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      DeviceState state = await DeviceService.refresh(device: widget.device);
+      var state = await DeviceService.refresh(device: widget.device);
 
       // Only rebuild if the device state differs
       // from the refreshed state
@@ -58,9 +59,9 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
 
         // Simulate a short tap to give
         // the user haptic feedback
-        HapticFeedback.heavyImpact();
+        unawaited(HapticFeedback.heavyImpact());
 
-        DeviceState state = await DeviceService.update(device: widget.device);
+        var state = await DeviceService.update(device: widget.device);
 
         // Only rebuild if the device state differs
         // from the refreshed state

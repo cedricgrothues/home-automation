@@ -35,7 +35,7 @@ class _SetupState extends State<Setup> {
                   decoration: BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage(
-                        "assets/images/setup.png",
+                        'assets/images/setup.png',
                       ),
                       fit: BoxFit.cover,
                     ),
@@ -55,7 +55,7 @@ class _SetupState extends State<Setup> {
                       padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height / 12),
                       constraints: BoxConstraints(maxWidth: 320),
                       child: Text(
-                        "All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.",
+                        'All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.',
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
@@ -66,7 +66,7 @@ class _SetupState extends State<Setup> {
                       ),
                     ),
                     Button(
-                      title: "Connect to an existing system",
+                      title: 'Connect to an existing system',
                       onPressed: () => Navigator.of(context).pushReplacementNamed('/connect'),
                       width: MediaQuery.of(context).size.width - 150,
                     ),
@@ -93,5 +93,5 @@ class _SetupState extends State<Setup> {
     );
   }
 
-  void help() => launch("https://github.com/cedricgrothues/home-automation/blob/master/README.md");
+  void help() => launch('https://github.com/cedricgrothues/home-automation/blob/master/README.md');
 }

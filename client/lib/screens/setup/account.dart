@@ -13,7 +13,7 @@ class _AccountSetupState extends State<AccountSetup> {
 
   @override
   Widget build(BuildContext context) {
-    bool valid = _first != null && _last != null;
+    var valid = _first != null && _last != null;
 
     return Scaffold(
       appBar: CupertinoNavigationBar(
@@ -22,7 +22,7 @@ class _AccountSetupState extends State<AccountSetup> {
         automaticallyImplyMiddle: false,
         leading: CupertinoButton(
           child: Text(
-            "Cancel",
+            'Cancel',
             style: TextStyle(
               color: Theme.of(context).buttonColor,
               fontWeight: FontWeight.w600,
@@ -43,13 +43,13 @@ class _AccountSetupState extends State<AccountSetup> {
                 borderRadius: BorderRadius.circular(40),
               ),
               padding: const EdgeInsets.symmetric(horizontal: 22, vertical: 6),
-              child: Text("Save", style: Theme.of(context).textTheme.button.copyWith(fontSize: 16)),
+              child: Text('Save', style: Theme.of(context).textTheme.button.copyWith(fontSize: 16)),
             ),
             onPressed: valid
-                ? () async {
-                    Hive.box<String>("preferences").put("username", "$_first $_last");
+                ? () {
+                    Hive.box<String>('preferences').put('username', '$_first $_last');
 
-                    Navigator.of(context).pushReplacementNamed("/home");
+                    Navigator.of(context).pushReplacementNamed('/home');
                   }
                 : null,
           ),
@@ -72,12 +72,12 @@ class _AccountSetupState extends State<AccountSetup> {
                   keyboardType: TextInputType.text,
                   keyboardAppearance: Theme.of(context).brightness,
                   decoration: InputDecoration(
-                    helperText: "first name".toUpperCase(),
+                    helperText: 'first name'.toUpperCase(),
                     helperStyle: TextStyle(fontSize: 12, color: Theme.of(context).buttonColor.withOpacity(0.2)),
                     border: InputBorder.none,
                   ),
                   onSubmitted: (value) {
-                    if (value.trim() == "") return;
+                    if (value.trim() == '') return;
 
                     setState(() => _first = value.trim());
                   },
@@ -91,19 +91,19 @@ class _AccountSetupState extends State<AccountSetup> {
                   keyboardType: TextInputType.text,
                   keyboardAppearance: Theme.of(context).brightness,
                   decoration: InputDecoration(
-                    helperText: "last name".toUpperCase(),
+                    helperText: 'last name'.toUpperCase(),
                     helperStyle: TextStyle(fontSize: 12, color: Theme.of(context).buttonColor.withOpacity(0.2)),
                     border: InputBorder.none,
                   ),
                   onSubmitted: (value) {
-                    if (value.trim() == "") return;
+                    if (value.trim() == '') return;
 
                     setState(() => _last = value.trim());
                   },
                 ),
                 SizedBox(height: 20),
                 Text(
-                  "By tapping \"Save\", you acknowledge that you have read the Privacy Policy and agree to the Terms of Service.",
+                  'By tapping \"Save\", you acknowledge that you have read the Privacy Policy and agree to the Terms of Service.',
                   style: TextStyle(
                     fontSize: 13,
                     color: Theme.of(context).buttonColor,

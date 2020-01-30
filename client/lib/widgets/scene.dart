@@ -53,7 +53,7 @@ class _SceneCardState extends State<SceneCard> {
               alignment: Alignment.bottomLeft,
               child: Padding(
                 child: Text(
-                  "Leave Home",
+                  'Leave Home',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 16,

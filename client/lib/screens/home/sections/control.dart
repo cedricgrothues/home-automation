@@ -21,8 +21,7 @@ class _DeviceControlState extends State<DeviceControl> {
         FutureBuilder<List<Device>>(
           future: widget.devices,
           builder: (context, snapshot) {
-            final List<DeviceCard> cards =
-                snapshot.data.map((device) => DeviceCard(device, key: Key(device.id))).toList();
+            final cards = snapshot.data.map((device) => DeviceCard(device, key: Key(device.id))).toList();
 
             return SliverPadding(
               padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),

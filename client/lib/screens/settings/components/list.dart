@@ -11,14 +11,14 @@ class PopupList extends StatelessWidget {
   final List<Widget> sections;
   final String discard;
 
-  const PopupList({Key key, @required this.controller, @required this.sections, this.header, this.discard = "Done"})
+  const PopupList({Key key, @required this.controller, @required this.sections, this.header, this.discard = 'Done'})
       : assert(controller != null),
         assert(sections != null),
         super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    List<Widget> items = <Widget>[
+    final items = <Widget>[
       if (header != null) ...header,
       ...sections,
       Row(

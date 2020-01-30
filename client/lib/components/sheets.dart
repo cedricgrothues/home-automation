@@ -13,15 +13,15 @@ class AddSheet extends StatelessWidget {
       actions: <Widget>[
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text("Add Accessory"),
+          child: Text('Add Accessory'),
         ),
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text("Add Scene"),
+          child: Text('Add Scene'),
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Cancel"),
+        child: Text('Cancel'),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
@@ -63,22 +63,22 @@ class _ProfileSheetState extends State<ProfileSheet> {
               ),
             ),
           ),
-          Text(Hive.box<String>("preferences").get("username"), style: TextStyle(color: Colors.white, fontSize: 18))
+          Text(Hive.box<String>('preferences').get('username'), style: TextStyle(color: Colors.white, fontSize: 18))
         ],
       ),
-      message: Text("Copyright © 2020 Cedric Grothues. All rights reserved."),
+      message: Text('Copyright © 2020 Cedric Grothues. All rights reserved.'),
       actions: <Widget>[
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text("About this app"),
+          child: Text('About this app'),
         ),
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text("Open Preferences"),
+          child: Text('Open Preferences'),
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text("Cancel"),
+        child: Text('Cancel'),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );

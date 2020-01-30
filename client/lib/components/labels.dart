@@ -19,7 +19,7 @@ class StateLabel extends StatelessWidget {
   Widget build(BuildContext context) {
     if (device.state.error) {
       return Text(
-        "No Response",
+        'No Response',
         style: style.copyWith(color: CupertinoColors.destructiveRed),
         maxLines: 1,
         textAlign: TextAlign.start,
@@ -27,7 +27,7 @@ class StateLabel extends StatelessWidget {
       );
     } else if (!device.state.power) {
       return Text(
-        "Off",
+        'Off',
         style: style,
         maxLines: 1,
         textAlign: TextAlign.start,
@@ -35,7 +35,7 @@ class StateLabel extends StatelessWidget {
       );
     } else if (device.state.power) {
       return Text(
-        device.state.brightness != null ? "${device.state.brightness.value} %${long ? " Brightness" : ""}" : "On",
+        device.state.brightness != null ? "${device.state.brightness.value} %${long ? " Brightness" : ""}" : 'On',
         style: style,
         maxLines: 1,
         textAlign: TextAlign.start,
@@ -44,7 +44,7 @@ class StateLabel extends StatelessWidget {
     }
 
     return Text(
-      "...",
+      '...',
       style: style,
       maxLines: 1,
       textAlign: TextAlign.start,

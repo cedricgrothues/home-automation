@@ -88,11 +88,11 @@ class SlideTransitionRoute<T> extends PageRouteBuilder {
             Animation<double> secondaryAnimation,
             Widget child,
           ) {
-            Offset begin = Offset(0.0, 1.0);
-            Offset end = Offset.zero;
+            const begin = Offset(0.0, 1.0);
+            const end = Offset.zero;
             Curve curve = Curves.fastLinearToSlowEaseIn;
 
-            Animatable<Offset> tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
             return SlideTransition(
               position: animation.drive(tween),

@@ -4,13 +4,13 @@ part 'ranged.g.dart';
 
 @JsonSerializable()
 class RangedValue {
-  @JsonKey(name: "min")
+  @JsonKey(name: 'min')
   int min;
 
-  @JsonKey(name: "max")
+  @JsonKey(name: 'max')
   int max;
 
-  @JsonKey(name: "value")
+  @JsonKey(name: 'value')
   int value;
 
   RangedValue({this.min, this.max, this.value});

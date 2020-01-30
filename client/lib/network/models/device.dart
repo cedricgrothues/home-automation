@@ -7,25 +7,25 @@ part 'device.g.dart';
 
 @JsonSerializable()
 class Device {
-  @JsonKey(name: "id")
+  @JsonKey(name: 'id')
   String id;
 
-  @JsonKey(name: "name", defaultValue: "")
+  @JsonKey(name: 'name', defaultValue: '')
   String name;
 
-  @JsonKey(name: "type")
+  @JsonKey(name: 'type')
   String type;
 
-  @JsonKey(name: "controller")
+  @JsonKey(name: 'controller')
   String controller;
 
-  @JsonKey(name: "address")
+  @JsonKey(name: 'address')
   String address;
 
-  @JsonKey(name: "room")
+  @JsonKey(name: 'room')
   Room room;
 
-  @JsonKey(name: "state")
+  @JsonKey(name: 'state')
   DeviceState state;
 
   Device({this.id, this.name, this.type, this.controller, this.address, this.room});

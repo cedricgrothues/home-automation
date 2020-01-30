@@ -5,7 +5,7 @@ import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
 
 class ChangeAppIcon extends StatelessWidget {
-  static final List<String> icons = ["Default", "Classic", "Orange", "Coloring Book", "Vine", "Byte", "Pearl", "RGB"];
+  static final List<String> icons = ['Default', 'Classic', 'Orange', 'Coloring Book', 'Vine', 'Byte', 'Pearl', 'RGB'];
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class ChangeAppIcon extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Text(
-                      "Change App Icon",
+                      'Change App Icon',
                       style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
                     ),
                     CupertinoButton(
@@ -50,7 +50,7 @@ class ChangeAppIcon extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: Image.asset("assets/icons/${icons[i].split(" ").join("-").toLowerCase()}.png", height: 42),
+                      child: Image.asset('assets/icons/${icons[i].split(' ').join('-').toLowerCase()}.png', height: 42),
                     ),
                     Text(
                       icons[i],

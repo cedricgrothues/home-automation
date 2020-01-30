@@ -12,7 +12,7 @@ class DeviceState {
   @JsonKey(includeIfNull: false)
   RangedValue brightness;
 
-  @JsonKey(name: "color_mode", includeIfNull: false)
+  @JsonKey(name: 'color_mode', includeIfNull: false)
   String colorMode;
 
   @JsonKey(includeIfNull: false)

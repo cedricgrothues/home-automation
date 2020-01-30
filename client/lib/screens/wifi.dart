@@ -60,7 +60,7 @@ class NoWifi extends StatelessWidget {
                   maxWidth: 300,
                 ),
                 child: Text(
-                  "You need to be connected to a wireless network to use the Home App. Go to Settings > Wi-Fi on your device.",
+                  'You need to be connected to a wireless network to use the Home App. Go to Settings > Wi-Fi on your device.',
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme

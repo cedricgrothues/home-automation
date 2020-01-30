@@ -31,7 +31,7 @@ class SelectBrand extends StatelessWidget {
               ),
               child: PopupList(
                 controller: controller,
-                discard: "Cancel",
+                discard: 'Cancel',
                 header: <Widget>[
                   Padding(
                     padding: const EdgeInsets.only(left: 35, top: 20, bottom: 20, right: 20),
@@ -40,7 +40,7 @@ class SelectBrand extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
                         Text(
-                          "Add a new device",
+                          'Add a new device',
                           style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
                         ),
                         CupertinoButton(
@@ -73,11 +73,11 @@ class SelectBrand extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        Text("Nanoleaf Aurora"),
+                        Text('Nanoleaf Aurora'),
                       ],
                     ),
-                    onPressed: () async {
-                      Navigator.of(context).pushNamed("/discover", arguments: "nanoleaf_aurora:light");
+                    onPressed: () {
+                      Navigator.of(context).pushNamed('/discover', arguments: 'nanoleaf_aurora:light');
                     },
                     height: 85,
                   ),
@@ -91,7 +91,7 @@ class SelectBrand extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        Text("Sonos Speaker"),
+                        Text('Sonos Speaker'),
                       ],
                     ),
                     onPressed: () {},
@@ -107,7 +107,7 @@ class SelectBrand extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        Text("Sonoff Device"),
+                        Text('Sonoff Device'),
                       ],
                     ),
                     onPressed: () {},
@@ -123,7 +123,7 @@ class SelectBrand extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        Text("Hue Lamp"),
+                        Text('Hue Lamp'),
                       ],
                     ),
                     height: 85,

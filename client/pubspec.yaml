@@ -15,6 +15,9 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Effective Dart
+  pedantic: ^1.9.0
+
   # get the database path
   path_provider: ^1.5.1
 
@@ -41,9 +44,6 @@ dependencies:
   image_picker: ^0.6.2+3
   
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
-  
   # JSON Parsing
   json_serializable: ^3.2.3
 

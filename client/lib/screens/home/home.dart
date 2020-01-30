@@ -13,7 +13,7 @@ import 'package:home/screens/home/sections/control.dart';
 import 'package:home/screens/settings/settings.dart';
 
 class Home extends StatelessWidget {
-  final Uint8List _image = base64.decode(Hive.box<String>("preferences").get("picture") ?? "");
+  final Uint8List _image = base64.decode(Hive.box<String>('preferences').get('picture') ?? '');
 
   // Futures and images for the underlying widgets are defines here,
   // so neither the FutureBuilder nor Image fires twice.
