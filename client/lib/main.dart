@@ -6,6 +6,7 @@ import 'package:home/screens/wifi.dart';
 import 'package:home/screens/splash.dart';
 import 'package:home/screens/home/home.dart';
 import 'package:home/screens/setup/setup.dart';
+import 'package:home/screens/add/discover.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/setup/account.dart';
@@ -233,6 +234,11 @@ class App extends StatelessWidget {
           case '/connection_failed':
             return NoTransitionRoute(
               builder: (_) => ConnectionFailed(),
+            );
+          case '/discover':
+            return NoTransitionRoute(
+              builder: (_) => Discover(),
+              settings: settings,
             );
           default:
             return null;
