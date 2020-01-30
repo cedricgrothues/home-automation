@@ -1,8 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:home/components/icons.dart';
-import 'package:home/screens/settings/components/button.dart';
 
+import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
 
 class ChangeAppIcon extends StatelessWidget {
@@ -36,7 +35,7 @@ class ChangeAppIcon extends StatelessWidget {
                     ),
                     CupertinoButton(
                       padding: EdgeInsets.zero,
-                      child: Icon(RegularIcons.times, size: 24),
+                      child: Icon(Icons.close, size: 26),
                       onPressed: () => Navigator.of(context).pop(),
                     )
                   ],

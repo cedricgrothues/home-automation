@@ -49,7 +49,7 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                       textAlign: TextAlign.center,
                       style: Theme.of(context)
                           .textTheme
-                          .subtitle
+                          .subtitle2
                           .copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                     ),
                   ),

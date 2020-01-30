@@ -59,7 +59,7 @@ class _SetupState extends State<Setup> {
                         textAlign: TextAlign.center,
                         style: Theme.of(context)
                             .textTheme
-                            .subtitle
+                            .subtitle2
                             .copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 5,
@@ -73,7 +73,7 @@ class _SetupState extends State<Setup> {
                     RichText(
                       text: TextSpan(
                         text: 'Need help? ',
-                        style: Theme.of(context).textTheme.subtitle.copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context).textTheme.subtitle2.copyWith(fontWeight: FontWeight.w500),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Visit the FAQ',

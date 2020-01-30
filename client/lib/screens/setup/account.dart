@@ -1,10 +1,7 @@
-import 'dart:convert' show base64;
-
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:hive/hive.dart' show Hive;
-import 'package:image_picker/image_picker.dart';
 
 class AccountSetup extends StatefulWidget {
   @override
@@ -12,15 +9,11 @@ class AccountSetup extends StatefulWidget {
 }
 
 class _AccountSetupState extends State<AccountSetup> {
-  static final AssetImage _image = AssetImage("assets/images/setup.png");
-
-  // user-defined variables
-  static FileImage _selected;
   static String _first, _last;
 
   @override
   Widget build(BuildContext context) {
-    bool valid = _first != null && _last != null && _selected != null;
+    bool valid = _first != null && _last != null;
 
     return Scaffold(
       appBar: CupertinoNavigationBar(
@@ -55,7 +48,6 @@ class _AccountSetupState extends State<AccountSetup> {
             onPressed: valid
                 ? () async {
                     Hive.box<String>("preferences").put("username", "$_first $_last");
-                    Hive.box<String>("preferences").put("picture", base64.encode(await _selected.file.readAsBytes()));
 
                     Navigator.of(context).pushReplacementNamed("/home");
                   }
@@ -70,31 +62,6 @@ class _AccountSetupState extends State<AccountSetup> {
             padding: const EdgeInsets.symmetric(horizontal: 50),
             child: ListView(
               children: <Widget>[
-                Center(
-                  child: GestureDetector(
-                    child: Container(
-                      margin: const EdgeInsets.symmetric(vertical: 30),
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        border: Border.all(color: Theme.of(context).buttonColor, width: 3),
-                        image: DecorationImage(
-                          image: _selected ?? _image,
-                          fit: BoxFit.cover,
-                        ),
-                      ),
-                      height: 160,
-                      width: 160,
-                    ),
-                    onTap: () async {
-                      _selected = FileImage(await ImagePicker.pickImage(source: ImageSource.gallery));
-
-                      setState(() {
-                        // Empty setState call since
-                        // it can't contain a Future
-                      });
-                    },
-                  ),
-                ),
                 TextField(
                   maxLength: 20,
                   maxLengthEnforced: true,

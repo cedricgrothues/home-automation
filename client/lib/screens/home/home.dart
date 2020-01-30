@@ -1,12 +1,11 @@
 import 'dart:convert' show base64;
 import 'dart:typed_data' show Uint8List;
 
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart' show CupertinoNavigationBar, CupertinoButton;
 import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
-import 'package:home/components/icons.dart' show LightIcons;
 import 'package:home/network/device_service.dart';
 import 'package:home/network/models/device.dart';
 import 'package:home/screens/add/brand.dart';
@@ -33,7 +32,8 @@ class Home extends StatelessWidget {
             border: null,
             leading: CupertinoButton(
               child: Icon(
-                LightIcons.plus,
+                Icons.add,
+                size: 30,
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
@@ -49,10 +49,12 @@ class Home extends StatelessWidget {
                 width: 30,
                 height: 30,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: MemoryImage(_image),
-                    fit: BoxFit.cover,
-                  ),
+                  image: _image.isNotEmpty
+                      ? DecorationImage(
+                          image: MemoryImage(_image),
+                          fit: BoxFit.cover,
+                        )
+                      : null,
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context).buttonColor,

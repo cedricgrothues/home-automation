@@ -21,22 +21,28 @@ class PopupList extends StatelessWidget {
     List<Widget> items = <Widget>[
       if (header != null) ...header,
       ...sections,
-      CupertinoButton(
-        padding: const EdgeInsets.symmetric(vertical: 20),
-        onPressed: () => Navigator.of(context).pop(),
-        child: Container(
-          height: 35,
-          width: 90,
-          decoration: BoxDecoration(
-            color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.circular(20),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: <Widget>[
+          CupertinoButton(
+            padding: const EdgeInsets.symmetric(vertical: 20),
+            onPressed: () => Navigator.of(context).pop(),
+            child: Container(
+              height: 35,
+              padding: const EdgeInsets.symmetric(horizontal: 20),
+              decoration: BoxDecoration(
+                color: Theme.of(context).cardColor,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              alignment: Alignment.center,
+              child: Text(
+                discard,
+                style: Theme.of(context).textTheme.subtitle1,
+              ),
+            ),
           ),
-          alignment: Alignment.center,
-          child: Text(
-            discard,
-            style: Theme.of(context).textTheme.subhead,
-          ),
-        ),
+        ],
       )
     ];
 

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoButton;
 
-import 'package:home/components/icons.dart';
 import 'package:home/components/labels.dart';
 import 'package:home/network/models/device.dart';
 
@@ -51,7 +50,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                       ),
                       alignment: Alignment.center,
                       child: Icon(
-                        LightIcons.times,
+                        Icons.close,
                         color: Theme.of(context).toggleButtonsTheme.color,
                         size: 20,
                       ),
@@ -70,7 +69,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                           padding: const EdgeInsets.only(bottom: 4.0),
                           child: Text(
                             widget.device.name,
-                            style: Theme.of(context).textTheme.headline,
+                            style: Theme.of(context).textTheme.headline5,
                             textAlign: TextAlign.start,
                           ),
                         ),

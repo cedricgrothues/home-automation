@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:connectivity/connectivity.dart' show Connectivity, ConnectivityResult;
 
-import 'package:home/components/icons.dart';
+import 'package:home/components/icons.dart' show RegularIcons;
 
 /// NetworkAware: This widget renders a `NoWifi()` screen above the current `child`
 /// if it detects a state change from the `ConnectivityResult Provider` defined in main.dart's
@@ -48,7 +48,7 @@ class NoWifi extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               Icon(
-                LightIcons.wifi_slash,
+                RegularIcons.wifi_slash,
                 size: 40,
                 color: Theme.of(context).buttonColor.withOpacity(0.2),
               ),
@@ -64,7 +64,7 @@ class NoWifi extends StatelessWidget {
                   textAlign: TextAlign.center,
                   style: Theme.of(context)
                       .textTheme
-                      .subtitle
+                      .subtitle2
                       .copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
                 ),
               ),

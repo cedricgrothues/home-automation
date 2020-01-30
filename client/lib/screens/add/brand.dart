@@ -1,5 +1,5 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart' show Material, MaterialType, Theme;
+import 'package:flutter/material.dart' show Material, MaterialType, Theme, Icons;
 
 import 'package:home/components/icons.dart' show RegularIcons;
 import 'package:home/screens/settings/components/button.dart';
@@ -45,7 +45,7 @@ class SelectBrand extends StatelessWidget {
                         ),
                         CupertinoButton(
                           padding: EdgeInsets.zero,
-                          child: Icon(RegularIcons.times, size: 24),
+                          child: Icon(Icons.close, size: 26),
                           onPressed: () => Navigator.of(context).pop(),
                         )
                       ],

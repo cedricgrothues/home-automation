@@ -28,7 +28,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.black,
-        scaffoldBackgroundColor: Color(0xFFFEFEFE),
+        scaffoldBackgroundColor: Color(0xFFFFFFFF),
         fontFamily: 'Open Sans',
         buttonColor: Colors.black,
         canvasColor: Colors.transparent,
@@ -63,9 +63,9 @@ class App extends StatelessWidget {
           color: Color(0xFF828287),
         ),
         splashFactory: NoSplashFactory(),
-        cardColor: Color(0xFFFEFEFE),
+        cardColor: Color(0xFFFFFFFF),
         textTheme: TextTheme(
-          headline: TextStyle(
+          headline5: TextStyle(
             fontSize: 24,
             color: Color(0xFF121112),
             fontWeight: FontWeight.w600,
@@ -75,22 +75,22 @@ class App extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
-          subtitle: TextStyle(
+          subtitle2: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w700,
             fontSize: 14,
           ),
-          title: TextStyle(
+          headline6: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w700,
             fontSize: 17,
           ),
-          body1: TextStyle(
+          bodyText2: TextStyle(
             color: Colors.black,
             fontWeight: FontWeight.w500,
             fontSize: 19,
           ),
-          body2: TextStyle(
+          bodyText1: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
             height: 1.2,
@@ -101,7 +101,7 @@ class App extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: Color(0xFF9A9A9E),
           ),
-          subhead: TextStyle(
+          subtitle1: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.black,
@@ -151,7 +151,7 @@ class App extends StatelessWidget {
         splashFactory: NoSplashFactory(),
         cardColor: Color(0xFF191d23),
         textTheme: TextTheme(
-          headline: TextStyle(
+          headline5: TextStyle(
             fontSize: 23,
             color: Colors.white,
             fontWeight: FontWeight.w700,
@@ -161,22 +161,22 @@ class App extends StatelessWidget {
             fontSize: 14,
             fontWeight: FontWeight.w700,
           ),
-          subtitle: TextStyle(
+          subtitle2: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 14,
           ),
-          title: TextStyle(
+          headline6: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w700,
             fontSize: 17,
           ),
-          body1: TextStyle(
+          bodyText2: TextStyle(
             color: Colors.white,
             fontWeight: FontWeight.w500,
             fontSize: 19,
           ),
-          body2: TextStyle(
+          bodyText1: TextStyle(
             fontSize: 13,
             fontWeight: FontWeight.w700,
             height: 1.2,
@@ -187,7 +187,7 @@ class App extends StatelessWidget {
             fontWeight: FontWeight.w600,
             color: Color(0xFF8C8C91),
           ),
-          subhead: TextStyle(
+          subtitle1: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
             color: Colors.white,

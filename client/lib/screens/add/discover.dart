@@ -19,12 +19,11 @@ class _DiscoverState extends State<Discover> {
         /// if the search was successfull, Discover
         /// automatically redirects the user to `redirect`,
         discover(context, target: ModalRoute.of(context).settings.arguments, success: (String address) {
-          print("Address" + address);
+          print("Address: " + address);
         });
       } on SocketException {
-        // SocketException are thrown if there was a problem with the socket.
+        // SocketException are thrown if there was a problem with binding to the socket.
 
-        // TODO: Add a custom error handler
         Navigator.of(context).pushReplacementNamed("/connection_failed");
       }
     });

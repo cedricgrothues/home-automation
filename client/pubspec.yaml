@@ -63,9 +63,6 @@ flutter:
     - family: Regular
       fonts:
         - asset: assets/fonts/Regular.ttf
-    - family: Light
-      fonts:
-        - asset: assets/fonts/Light.ttf
 
     - family: Open Sans
       fonts:

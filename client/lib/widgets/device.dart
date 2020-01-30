@@ -97,7 +97,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
               children: <Widget>[
                 Text(
                   widget.device.room.name,
-                  style: Theme.of(context).textTheme.body2,
+                  style: Theme.of(context).textTheme.bodyText1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
@@ -105,14 +105,14 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                   child: Text(
                     widget.device.name,
-                    style: Theme.of(context).textTheme.body2,
+                    style: Theme.of(context).textTheme.bodyText1,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 StateLabel(
                   device: widget.device,
-                  style: Theme.of(context).textTheme.body2.copyWith(color: Color(0xFF99999E)),
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(color: Color(0xFF99999E)),
                 ),
               ],
             ),
