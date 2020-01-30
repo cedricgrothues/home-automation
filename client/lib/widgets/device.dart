@@ -17,9 +17,9 @@ import 'package:home/screens/controls/details.dart';
 /// (If `power` is false, the brightness will be 0%). A speakers' status will either be
 /// `playing` or `paused`
 class DeviceCard extends StatefulWidget {
-  final Device device;
-
   const DeviceCard(this.device, {Key key}) : super(key: key);
+
+  final Device device;
 
   @override
   _DeviceCardState createState() => _DeviceCardState();
@@ -34,7 +34,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
 
     if (_timer != null) return;
 
-    _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
+    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
       final state = await DeviceService.refresh(device: widget.device);
 
       // Only rebuild if the device state differs
@@ -81,7 +81,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         );
       },
       child: AnimatedOpacity(
-        duration: Duration(milliseconds: 100),
+        duration: const Duration(milliseconds: 100),
         opacity: widget.device.state.power ?? false ? 1 : 0.5,
         child: Container(
           decoration: BoxDecoration(
@@ -113,7 +113,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
                 ),
                 StateLabel(
                   device: widget.device,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(color: Color(0xFF99999E)),
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(color: const Color(0xFF99999E)),
                 ),
               ],
             ),

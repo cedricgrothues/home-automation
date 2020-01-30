@@ -28,7 +28,7 @@ class _SceneCardState extends State<SceneCard> {
             Align(
               alignment: Alignment.topRight,
               child: CupertinoButton(
-                padding: EdgeInsets.all(10),
+                padding: const EdgeInsets.all(10),
                 child: Container(
                   width: 30,
                   height: 30,
@@ -60,7 +60,7 @@ class _SceneCardState extends State<SceneCard> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                padding: EdgeInsets.all(12),
+                padding: const EdgeInsets.all(12),
               ),
             ),
           ],

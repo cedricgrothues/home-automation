@@ -24,7 +24,7 @@ class SelectBrand extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(
                 color: Theme.of(context).scaffoldBackgroundColor,
-                borderRadius: BorderRadius.only(
+                borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10),
                   topRight: Radius.circular(10),
                 ),
@@ -51,8 +51,8 @@ class SelectBrand extends StatelessWidget {
                       ],
                     ),
                   ),
-                  Padding(
-                    padding: const EdgeInsets.only(left: 30, right: 30, bottom: 20),
+                  const Padding(
+                    padding: EdgeInsets.only(left: 30, right: 30, bottom: 20),
                     child: Text(
                       "Choose the type of device you want to add. Make sure to choose the right brand, otherwise you might no be able to utelize all of the app's features",
                       style: TextStyle(
@@ -65,9 +65,9 @@ class SelectBrand extends StatelessWidget {
                 sections: <Widget>[
                   PopupButton(
                     child: Row(
-                      children: <Widget>[
+                      children: const <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
+                          padding: EdgeInsets.only(right: 10.0),
                           child: Icon(
                             RegularIcons.lightbulb_dollar,
                             size: 30,
@@ -83,9 +83,9 @@ class SelectBrand extends StatelessWidget {
                   ),
                   PopupButton(
                     child: Row(
-                      children: <Widget>[
+                      children: const <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
+                          padding: EdgeInsets.only(right: 10.0),
                           child: Icon(
                             RegularIcons.speaker,
                             size: 30,
@@ -107,7 +107,7 @@ class SelectBrand extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        Text('Sonoff Device'),
+                        const Text('Sonoff Device'),
                       ],
                     ),
                     onPressed: () {},
@@ -123,7 +123,7 @@ class SelectBrand extends StatelessWidget {
                             size: 30,
                           ),
                         ),
-                        Text('Hue Lamp'),
+                        const Text('Hue Lamp'),
                       ],
                     ),
                     height: 85,

@@ -34,39 +34,11 @@ class _ConnectState extends State<Connect> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        alignment: Alignment.center,
-        children: <Widget>[
-          Center(
-            child: CupertinoActivityIndicator(
-              radius: 12,
-            ),
-          ),
-          Positioned(
-            child: Row(
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.only(right: 10.0),
-                  child: Image.asset(
-                    'assets/images/logo.png',
-                    height: 15,
-                    fit: BoxFit.cover,
-                    color: Theme.of(context).canvasColor,
-                  ),
-                ),
-                Text(
-                  'HOME',
-                  style: TextStyle(
-                    color: Theme.of(context).canvasColor,
-                    fontWeight: FontWeight.w800,
-                  ),
-                ),
-              ],
-            ),
-            bottom: MediaQuery.of(context).viewInsets.bottom + 50,
-          )
-        ],
+    return const Scaffold(
+      body: Center(
+        child: CupertinoActivityIndicator(
+          radius: 12,
+        ),
       ),
     );
   }

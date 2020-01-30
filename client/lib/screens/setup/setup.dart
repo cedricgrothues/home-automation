@@ -24,7 +24,7 @@ class _SetupState extends State<Setup> {
               Padding(
                 padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 6.5),
                 child: Container(
-                  constraints: BoxConstraints(
+                  constraints: const BoxConstraints(
                     maxHeight: 250,
                     maxWidth: 250,
                     minHeight: 100,
@@ -33,7 +33,7 @@ class _SetupState extends State<Setup> {
                   width: MediaQuery.of(context).size.height / 4,
                   height: MediaQuery.of(context).size.height / 4,
                   decoration: BoxDecoration(
-                    image: DecorationImage(
+                    image: const DecorationImage(
                       image: AssetImage(
                         'assets/images/setup.png',
                       ),
@@ -53,7 +53,7 @@ class _SetupState extends State<Setup> {
                   children: <Widget>[
                     Container(
                       padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height / 12),
-                      constraints: BoxConstraints(maxWidth: 320),
+                      constraints: const BoxConstraints(maxWidth: 320),
                       child: Text(
                         'All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.',
                         textAlign: TextAlign.center,

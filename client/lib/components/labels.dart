@@ -6,14 +6,14 @@ import 'package:home/network/models/device.dart';
 /// The [StateLabel] class defines a `Text` that holds device information,
 /// like the `power` and `brightness`state.
 class StateLabel extends StatelessWidget {
-  final Device device;
-  final TextStyle style;
-  final bool long;
-
   const StateLabel({Key key, @required this.device, @required this.style, this.long = false})
       : assert(device != null),
         assert(style != null),
         super(key: key);
+
+  final Device device;
+  final TextStyle style;
+  final bool long;
 
   @override
   Widget build(BuildContext context) {

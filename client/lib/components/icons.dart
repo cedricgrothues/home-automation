@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart' show IconData;
 class RegularIcons {
   RegularIcons._();
 
-  static const _kFontFam = 'Regular';
+  static const String _kFontFam = 'Regular';
 
   static const IconData abacus = IconData(0xe800, fontFamily: _kFontFam);
   static const IconData acorn = IconData(0xe801, fontFamily: _kFontFam);

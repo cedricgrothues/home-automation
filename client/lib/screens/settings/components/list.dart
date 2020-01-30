@@ -6,15 +6,15 @@ import 'package:flutter/material.dart' show Material, MaterialType, Theme;
 /// for list views that should comply with home's design guidelines.
 /// This list is supposed to be used within a [DraggableScrollableSheet].
 class PopupList extends StatelessWidget {
-  final ScrollController controller;
-  final List<Widget> header;
-  final List<Widget> sections;
-  final String discard;
-
   const PopupList({Key key, @required this.controller, @required this.sections, this.header, this.discard = 'Done'})
       : assert(controller != null),
         assert(sections != null),
         super(key: key);
+
+  final ScrollController controller;
+  final List<Widget> header;
+  final List<Widget> sections;
+  final String discard;
 
   @override
   Widget build(BuildContext context) {

@@ -1,5 +1,5 @@
-import 'dart:io' show SocketException;
 import 'dart:async' show TimeoutException;
+import 'dart:io' show SocketException;
 
 import 'package:flutter/material.dart';
 
@@ -42,8 +42,8 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: <Widget>[
                   Container(
-                    padding: EdgeInsets.symmetric(vertical: 70),
-                    constraints: BoxConstraints(maxWidth: 300),
+                    padding: const EdgeInsets.symmetric(vertical: 70),
+                    constraints: const BoxConstraints(maxWidth: 300),
                     width: MediaQuery.of(context).size.width / 1.5,
                     child: Text(
                       'We could not connect to your Home Hub. Please ensure it is plugged in, online and operational, then try again.',
@@ -66,7 +66,7 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
 }
 
 class TryAgain extends StatelessWidget {
-  final SnackBar snackbar = SnackBar(
+  final SnackBar snackbar = const SnackBar(
     content: Text(
       'Failed to connect to the API Gateway service.',
       textAlign: TextAlign.center,

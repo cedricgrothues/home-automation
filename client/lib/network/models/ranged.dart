@@ -4,6 +4,11 @@ part 'ranged.g.dart';
 
 @JsonSerializable()
 class RangedValue {
+  RangedValue({this.min, this.max, this.value});
+
+  factory RangedValue.fromJson(Map<String, dynamic> json) => _$RangedValueFromJson(json);
+  Map<String, dynamic> toJson() => _$RangedValueToJson(this);
+
   @JsonKey(name: 'min')
   int min;
 
@@ -12,11 +17,6 @@ class RangedValue {
 
   @JsonKey(name: 'value')
   int value;
-
-  RangedValue({this.min, this.max, this.value});
-
-  factory RangedValue.fromJson(Map<String, dynamic> json) => _$RangedValueFromJson(json);
-  Map<String, dynamic> toJson() => _$RangedValueToJson(this);
 
   @override
   bool operator ==(Object other) =>

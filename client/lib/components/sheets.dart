@@ -13,15 +13,15 @@ class AddSheet extends StatelessWidget {
       actions: <Widget>[
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text('Add Accessory'),
+          child: const Text('Add Accessory'),
         ),
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text('Add Scene'),
+          child: const Text('Add Scene'),
         )
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );
@@ -31,9 +31,9 @@ class AddSheet extends StatelessWidget {
 /// [ProfileSheet] defines the `CupertinoActionSheet` the user sees,
 /// when the profile image is tapped
 class ProfileSheet extends StatefulWidget {
-  final Uint8List bytes;
-
   const ProfileSheet(this.bytes, {Key key}) : super(key: key);
+
+  final Uint8List bytes;
 
   @override
   _ProfileSheetState createState() => _ProfileSheetState();
@@ -66,19 +66,19 @@ class _ProfileSheetState extends State<ProfileSheet> {
           Text(Hive.box<String>('preferences').get('username'), style: TextStyle(color: Colors.white, fontSize: 18))
         ],
       ),
-      message: Text('Copyright © 2020 Cedric Grothues. All rights reserved.'),
+      message: const Text('Copyright © 2020 Cedric Grothues. All rights reserved.'),
       actions: <Widget>[
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text('About this app'),
+          child: const Text('About this app'),
         ),
         CupertinoActionSheetAction(
           onPressed: () => null,
-          child: Text('Open Preferences'),
+          child: const Text('Open Preferences'),
         ),
       ],
       cancelButton: CupertinoActionSheetAction(
-        child: Text('Cancel'),
+        child: const Text('Cancel'),
         onPressed: () => Navigator.of(context).pop(),
       ),
     );

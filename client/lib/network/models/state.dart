@@ -6,6 +6,12 @@ part 'state.g.dart';
 
 @JsonSerializable()
 class DeviceState {
+  DeviceState(
+      {this.power, this.brightness, this.colorMode, this.hue, this.saturation, this.temperature, this.error = false});
+
+  factory DeviceState.fromJson(Map<String, dynamic> json) => _$DeviceStateFromJson(json);
+  Map<String, dynamic> toJson() => _$DeviceStateToJson(this);
+
   @JsonKey(includeIfNull: false, defaultValue: false)
   bool power;
 
@@ -26,12 +32,6 @@ class DeviceState {
 
   @JsonKey(defaultValue: false)
   bool error = false;
-
-  DeviceState(
-      {this.power, this.brightness, this.colorMode, this.hue, this.saturation, this.temperature, this.error = false});
-
-  factory DeviceState.fromJson(Map<String, dynamic> json) => _$DeviceStateFromJson(json);
-  Map<String, dynamic> toJson() => _$DeviceStateToJson(this);
 
   @override
   bool operator ==(Object other) =>

@@ -8,7 +8,4 @@ analyzer:
   errors:
     missing_required_param: warning
     missing_return: warning
-
-linter:
-  rules:
-    - prefer_final_locals
+    

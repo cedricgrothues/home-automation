@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 ///
 /// While the [title] may be null, items may not.
 class Section extends StatelessWidget {
-  final String title;
-  final List<Widget> items;
-
   const Section({Key key, this.title, @required this.items})
       : assert(items != null),
         super(key: key);
+
+  final String title;
+  final List<Widget> items;
 
   @override
   Widget build(BuildContext context) {
@@ -24,7 +24,7 @@ class Section extends StatelessWidget {
               type: MaterialType.transparency,
               child: Text(
                 title,
-                style: TextStyle(fontSize: 16, color: Color(0xFFa2acbe)),
+                style: const TextStyle(fontSize: 16, color: Color(0xFFa2acbe)),
               ),
             ),
           ),

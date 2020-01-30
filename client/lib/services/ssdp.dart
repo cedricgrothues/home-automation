@@ -1,5 +1,5 @@
-import 'dart:io';
 import 'dart:convert' show utf8;
+import 'dart:io';
 
 import 'package:flutter/material.dart' show BuildContext, required;
 
@@ -8,7 +8,7 @@ final InternetAddress multicast = InternetAddress('239.255.255.250');
 /// Quick discover all devices ssdp devices that comply with the specified `target`.
 ///
 /// [target] may not be null. May throw
-void discover(BuildContext context,
+Future<void> discover(BuildContext context,
     {String target = 'ssdp:all', @required void Function(String address) success}) async {
   RawDatagramSocket socket;
 

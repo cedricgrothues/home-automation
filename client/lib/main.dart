@@ -28,7 +28,7 @@ class App extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.black,
-        scaffoldBackgroundColor: Color(0xFFFFFFFF),
+        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
         fontFamily: 'Open Sans',
         buttonColor: Colors.black,
         canvasColor: Colors.transparent,
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
           ),
         ),
         snackBarTheme: SnackBarThemeData(
-          backgroundColor: Color(0xFFFEFEFE),
+          backgroundColor: const Color(0xFFFEFEFE),
           elevation: 0,
           actionTextColor: Colors.black,
         ),
@@ -58,16 +58,16 @@ class App extends StatelessWidget {
         dividerTheme: DividerThemeData(color: Colors.black, thickness: 2),
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
-        toggleButtonsTheme: ToggleButtonsThemeData(
+        toggleButtonsTheme: const ToggleButtonsThemeData(
           fillColor: Color(0xFFEEEEEF),
           color: Color(0xFF828287),
         ),
-        splashFactory: NoSplashFactory(),
-        cardColor: Color(0xFFFFFFFF),
+        splashFactory: const NoSplashFactory(),
+        cardColor: const Color(0xFFFFFFFF),
         textTheme: TextTheme(
           headline5: TextStyle(
             fontSize: 24,
-            color: Color(0xFF121112),
+            color: const Color(0xFF121112),
             fontWeight: FontWeight.w600,
           ),
           button: TextStyle(
@@ -99,7 +99,7 @@ class App extends StatelessWidget {
           caption: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF9A9A9E),
+            color: const Color(0xFF9A9A9E),
           ),
           subtitle1: TextStyle(
             fontSize: 16,
@@ -111,7 +111,7 @@ class App extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.white,
-        scaffoldBackgroundColor: Color(0xFF000001),
+        scaffoldBackgroundColor: const Color(0xFF000001),
         fontFamily: 'Open Sans',
         buttonColor: Colors.white,
         canvasColor: Colors.transparent,
@@ -124,7 +124,7 @@ class App extends StatelessWidget {
             size: 26,
           ),
         ),
-        dividerTheme: DividerThemeData(
+        dividerTheme: const DividerThemeData(
           color: Color(0xFF191d23),
           thickness: 1.5,
         ),
@@ -142,14 +142,14 @@ class App extends StatelessWidget {
           color: Colors.white,
           size: 26,
         ),
-        toggleButtonsTheme: ToggleButtonsThemeData(
+        toggleButtonsTheme: const ToggleButtonsThemeData(
           fillColor: Color(0xFF313135),
           color: Color(0xFFA1A1A8),
         ),
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
-        splashFactory: NoSplashFactory(),
-        cardColor: Color(0xFF191d23),
+        splashFactory: const NoSplashFactory(),
+        cardColor: const Color(0xFF191d23),
         textTheme: TextTheme(
           headline5: TextStyle(
             fontSize: 23,
@@ -185,7 +185,7 @@ class App extends StatelessWidget {
           caption: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
-            color: Color(0xFF8C8C91),
+            color: const Color(0xFF8C8C91),
           ),
           subtitle1: TextStyle(
             fontSize: 16,
@@ -246,7 +246,7 @@ class App extends StatelessWidget {
       },
 
       // Add all supported locales here:
-      supportedLocales: [const Locale('en', 'UK')],
+      supportedLocales: const [Locale('en', 'UK')],
 
       // Remove the bright red debug banner if we're in debug mode
       debugShowCheckedModeBanner: false,

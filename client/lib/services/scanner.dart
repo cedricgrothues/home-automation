@@ -7,10 +7,10 @@ import 'package:home/models/errors.dart' show NotFoundException, PortException;
 
 @deprecated
 class NetworkAddress {
+  const NetworkAddress(this.address, {this.exists = true});
+
   final String address;
   final bool exists;
-
-  NetworkAddress(this.address, {this.exists = true});
 }
 
 @deprecated
@@ -32,7 +32,7 @@ class NetworkAnalyzer {
         s.destroy();
         yield NetworkAddress(host);
       } catch (e) {
-        if (!(e is SocketException)) {
+        if (e is! SocketException) {
           rethrow;
         }
 
@@ -49,11 +49,11 @@ Future<String> discover() async {
   final subnet = ip.substring(0, ip.lastIndexOf('.'));
 
   /// Default api gateway port (update if necessary)
-  final port = 4000;
+  const port = 4000;
 
   // A lower timeout of 300ms is used, since approx. 255 of 256 port are expected time out, causing huge delays
-  final stream = NetworkAnalyzer.discover(subnet, port, timeout: Duration(milliseconds: 300));
-  await for (NetworkAddress addr in stream) {
+  final stream = NetworkAnalyzer.discover(subnet, port, timeout: const Duration(milliseconds: 300));
+  await for (final NetworkAddress addr in stream) {
     if (addr == null || !addr.exists) continue;
 
     final response = await get('http://${addr.address}:$port/');

@@ -18,13 +18,13 @@ class Button extends StatelessWidget {
     return CupertinoButton(
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        margin: EdgeInsets.only(bottom: 10),
+        margin: const EdgeInsets.only(bottom: 10),
         decoration: BoxDecoration(
           color: Theme.of(context).buttonColor,
           borderRadius: BorderRadius.circular(10),
         ),
         alignment: Alignment.center,
-        constraints: BoxConstraints(maxWidth: 300),
+        constraints: const BoxConstraints(maxWidth: 300),
         width: width ?? 100,
         child: FittedBox(
           fit: BoxFit.fitWidth,

@@ -7,6 +7,11 @@ part 'device.g.dart';
 
 @JsonSerializable()
 class Device {
+  Device({this.id, this.name, this.type, this.controller, this.address, this.room});
+
+  factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
+  Map<String, dynamic> toJson() => _$DeviceToJson(this);
+
   @JsonKey(name: 'id')
   String id;
 
@@ -27,9 +32,4 @@ class Device {
 
   @JsonKey(name: 'state')
   DeviceState state;
-
-  Device({this.id, this.name, this.type, this.controller, this.address, this.room});
-
-  factory Device.fromJson(Map<String, dynamic> json) => _$DeviceFromJson(json);
-  Map<String, dynamic> toJson() => _$DeviceToJson(this);
 }

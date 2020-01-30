@@ -21,7 +21,8 @@ class _DiscoverState extends State<Discover> {
       try {
         /// if the search was successfull, Discover
         /// automatically redirects the user to `redirect`,
-        discover(context, target: ModalRoute.of(context).settings.arguments as String, success: (String address) {});
+        unawaited(discover(context,
+            target: ModalRoute.of(context).settings.arguments as String, success: (String address) {}));
       } on SocketException {
         // SocketException are thrown if there was a problem with binding to the socket.
 
@@ -32,7 +33,7 @@ class _DiscoverState extends State<Discover> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return const Scaffold(
       body: Center(
         child: CupertinoActivityIndicator(
           radius: 12,

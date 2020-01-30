@@ -52,10 +52,10 @@ class NoWifi extends StatelessWidget {
                 size: 40,
                 color: Theme.of(context).buttonColor.withOpacity(0.2),
               ),
-              SizedBox(height: 60),
+              const SizedBox(height: 60),
               Container(
                 margin: const EdgeInsets.symmetric(horizontal: 80),
-                constraints: BoxConstraints(
+                constraints: const BoxConstraints(
                   minWidth: 200,
                   maxWidth: 300,
                 ),

@@ -15,13 +15,13 @@ enum ButtonType {
 /// Creates a button that is supposed to be
 /// used within a [PopupList]
 class PopupButton extends StatelessWidget {
+  const PopupButton({Key key, this.onPressed, @required this.child, this.type = ButtonType.normal, this.height = 66})
+      : super(key: key);
+
   final Function() onPressed;
   final Widget child;
   final ButtonType type;
   final double height;
-
-  const PopupButton({Key key, this.onPressed, @required this.child, this.type = ButtonType.normal, this.height = 66})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +30,7 @@ class PopupButton extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: type == ButtonType.normal ? Theme.of(context).cardColor : Color(0xFF320111),
+          color: type == ButtonType.normal ? Theme.of(context).cardColor : const Color(0xFF320111),
           borderRadius: BorderRadius.circular(15),
         ),
         width: double.infinity,

@@ -1,5 +1,5 @@
 class Scene {
-  final String name;
+  const Scene({this.name});
 
-  Scene({this.name});
+  final String name;
 }

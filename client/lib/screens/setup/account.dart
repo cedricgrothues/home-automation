@@ -68,7 +68,7 @@ class _AccountSetupState extends State<AccountSetup> {
                   enableSuggestions: false,
                   autofocus: true,
                   autocorrect: false,
-                  style: TextStyle(fontSize: 22),
+                  style: const TextStyle(fontSize: 22),
                   keyboardType: TextInputType.text,
                   keyboardAppearance: Theme.of(context).brightness,
                   decoration: InputDecoration(
@@ -87,7 +87,7 @@ class _AccountSetupState extends State<AccountSetup> {
                   maxLengthEnforced: true,
                   enableSuggestions: false,
                   autocorrect: false,
-                  style: TextStyle(fontSize: 22),
+                  style: const TextStyle(fontSize: 22),
                   keyboardType: TextInputType.text,
                   keyboardAppearance: Theme.of(context).brightness,
                   decoration: InputDecoration(
@@ -101,7 +101,7 @@ class _AccountSetupState extends State<AccountSetup> {
                     setState(() => _last = value.trim());
                   },
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'By tapping \"Save\", you acknowledge that you have read the Privacy Policy and agree to the Terms of Service.',
                   style: TextStyle(

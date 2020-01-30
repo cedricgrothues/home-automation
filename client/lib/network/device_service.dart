@@ -1,6 +1,6 @@
-import 'dart:io' show SocketException;
 import 'dart:async' show TimeoutException;
 import 'dart:convert' show json;
+import 'dart:io' show SocketException;
 
 import 'package:http/http.dart';
 
@@ -45,7 +45,7 @@ class DeviceService {
       return [];
     }
 
-    for (var device in devices) {
+    for (final device in devices) {
       if (!device.containsKey('controller') || !device.containsKey('id')) continue;
 
       try {

@@ -5,9 +5,9 @@ import 'package:home/network/models/device.dart';
 import 'package:home/widgets/device.dart';
 
 class DeviceControl extends StatefulWidget {
-  final Future<List<Device>> devices;
-
   const DeviceControl({Key key, @required this.devices}) : super(key: key);
+
+  final Future<List<Device>> devices;
 
   @override
   _DeviceControlState createState() => _DeviceControlState();
@@ -24,9 +24,9 @@ class _DeviceControlState extends State<DeviceControl> {
             final cards = snapshot.data.map((device) => DeviceCard(device, key: Key(device.id))).toList();
 
             return SliverPadding(
-              padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+              padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
               sliver: SliverGrid(
-                gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
                   maxCrossAxisExtent: 140.0,
                   mainAxisSpacing: 10.0,
                   crossAxisSpacing: 10.0,
@@ -41,7 +41,7 @@ class _DeviceControlState extends State<DeviceControl> {
               ),
             );
           },
-          initialData: [],
+          initialData: const [],
         ),
       ],
     );

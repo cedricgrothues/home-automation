@@ -1,5 +1,5 @@
-import 'dart:io' show SocketException, Platform, Directory;
 import 'dart:async' show TimeoutException;
+import 'dart:io' show SocketException, Platform, Directory;
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -33,7 +33,7 @@ class _SplashState extends State<Splash> {
 
   /// The status function checks the connection to the API Gateway service and redirects
   /// the user to the appropriate screen. This function may not be called during build.
-  void status() async {
+  Future<void> status() async {
     if (!kIsWeb) Hive.init(Platform.isMacOS ? Directory.current.path : (await getApplicationDocumentsDirectory()).path);
 
     final box = await Hive.openBox<String>('preferences');

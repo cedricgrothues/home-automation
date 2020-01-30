@@ -13,9 +13,9 @@ class _ScenesState extends State<Scenes> {
     return CustomScrollView(
       slivers: <Widget>[
         SliverPadding(
-          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 20),
+          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
           sliver: SliverGrid(
-            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+            gridDelegate: const SliverGridDelegateWithMaxCrossAxisExtent(
               maxCrossAxisExtent: 240.0,
               mainAxisSpacing: 10.0,
               crossAxisSpacing: 10.0,

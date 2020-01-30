@@ -8,9 +8,9 @@ import 'package:home/network/models/device.dart';
 /// It shows detailed information on the device and
 /// provides more in-depth control over the device.
 class DeviceDetails extends StatefulWidget {
-  final Device device;
-
   const DeviceDetails(this.device, {Key key}) : super(key: key);
+
+  final Device device;
 
   @override
   _DeviceDetailsState createState() => _DeviceDetailsState();
@@ -25,10 +25,10 @@ class _DeviceDetailsState extends State<DeviceDetails> {
         alignment: Alignment.bottomLeft,
         child: Container(
           height: MediaQuery.of(context).size.height * 0.85,
-          constraints: BoxConstraints(maxWidth: 420),
+          constraints: const BoxConstraints(maxWidth: 420),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
-            borderRadius: BorderRadius.only(
+            borderRadius: const BorderRadius.only(
               topLeft: Radius.circular(10),
               topRight: Radius.circular(10),
             ),
@@ -40,7 +40,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
                 Align(
                   alignment: Alignment.topRight,
                   child: CupertinoButton(
-                    padding: EdgeInsets.all(18),
+                    padding: const EdgeInsets.all(18),
                     child: Container(
                       width: 30,
                       height: 30,
