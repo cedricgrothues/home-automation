@@ -37,7 +37,7 @@ class Home extends StatelessWidget {
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
-                showModalBottomSheet(
+                showModalBottomSheet<void>(
                   context: context,
                   builder: (context) => SelectBrand(),
                   isScrollControlled: true,
@@ -64,7 +64,7 @@ class Home extends StatelessWidget {
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
-                showModalBottomSheet(
+                showModalBottomSheet<void>(
                   context: context,
                   builder: (context) => Settings(),
                   isScrollControlled: true,

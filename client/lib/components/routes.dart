@@ -46,7 +46,7 @@ class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
 
 /// FadeTransitionRoute
 /// Custom route with a fade transition
-class FadeTransitionRoute<T> extends PageRouteBuilder {
+class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 
   FadeTransitionRoute({this.child})
@@ -72,7 +72,7 @@ class FadeTransitionRoute<T> extends PageRouteBuilder {
 
 /// SlideTransitionRoute
 /// Custom route with a fade transition
-class SlideTransitionRoute<T> extends PageRouteBuilder {
+class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget page;
   SlideTransitionRoute({this.page})
       : super(

@@ -74,7 +74,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         // the user haptic feedback
         HapticFeedback.heavyImpact();
 
-        showModalBottomSheet(
+        showModalBottomSheet<void>(
           context: context,
           builder: (context) => DeviceDetails(widget.device),
           isScrollControlled: true,

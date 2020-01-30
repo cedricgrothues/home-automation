@@ -70,7 +70,7 @@ class _SettingsState extends State<Settings> {
                     child: Text('Change app icon'),
                     onPressed: () {
                       Navigator.of(context).pop();
-                      showModalBottomSheet(
+                      showModalBottomSheet<void>(
                         builder: (BuildContext context) => ChangeAppIcon(),
                         context: context,
                         isScrollControlled: true,

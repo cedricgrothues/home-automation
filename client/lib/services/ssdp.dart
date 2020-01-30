@@ -70,7 +70,7 @@ void discover(BuildContext context,
 
         if ((fl.toLowerCase().trim() == 'HTTP/1.1 200 OK'.toLowerCase()) ||
             (fl.toLowerCase().trim() == 'NOTIFY * HTTP/1.1'.toLowerCase())) {
-          final headers = {};
+          final headers = {dynamic} as Map<String, dynamic>;
 
           for (final part in parts) {
             final hp = part.split(':');

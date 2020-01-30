@@ -10,7 +10,7 @@ import 'package:home/network/models/device.dart';
 
 class DeviceService {
   static Future<List<Device>> fetch() async {
-    var devices = [];
+    var devices = <Map<String, dynamic>>[];
 
     try {
       final response = await get('http://hub.local:4000/core.device-registry/devices').timeout(
@@ -45,7 +45,7 @@ class DeviceService {
       return [];
     }
 
-    for (var device in devices as List<Map<String, dynamic>>) {
+    for (var device in devices) {
       if (!device.containsKey('controller') || !device.containsKey('id')) continue;
 
       try {
@@ -82,7 +82,7 @@ class DeviceService {
       }
     }
 
-    return devices != null ? devices.map((device) => Device.fromJson(device as Map<String, dynamic>)).toList() : [];
+    return devices != null ? devices.map((device) => Device.fromJson(device)).toList() : [];
   }
 
   static Future<DeviceState> update({Device device}) async {

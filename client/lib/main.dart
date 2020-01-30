@@ -206,37 +206,37 @@ class App extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case '/':
-            return FadeTransitionRoute(
+            return FadeTransitionRoute<Splash>(
               child: Splash(),
             );
           case '/home':
-            return FadeTransitionRoute(
+            return FadeTransitionRoute<Home>(
               child: Home(),
             );
           case '/setup':
-            return NoTransitionRoute(
+            return NoTransitionRoute<Setup>(
               builder: (_) => Setup(),
               settings: settings,
             );
           case '/account_setup':
-            return FadeTransitionRoute(
+            return FadeTransitionRoute<AccountSetup>(
               child: AccountSetup(),
             );
           case '/wifi_required':
-            return NoTransitionRoute(
+            return NoTransitionRoute<NoWifi>(
               builder: (_) => NoWifi(),
               settings: settings,
             );
           case '/connect':
-            return NoTransitionRoute(
+            return NoTransitionRoute<Connect>(
               builder: (_) => Connect(),
             );
           case '/connection_failed':
-            return NoTransitionRoute(
+            return NoTransitionRoute<ConnectionFailed>(
               builder: (_) => ConnectionFailed(),
             );
           case '/discover':
-            return NoTransitionRoute(
+            return NoTransitionRoute<Discover>(
               builder: (_) => Discover(),
               settings: settings,
             );
