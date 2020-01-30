@@ -36,7 +36,7 @@ class _SplashState extends State<Splash> {
   void status() async {
     if (!kIsWeb) Hive.init(Platform.isMacOS ? Directory.current.path : (await getApplicationDocumentsDirectory()).path);
 
-    var box = await Hive.openBox<String>('preferences');
+    final box = await Hive.openBox<String>('preferences');
 
     if (!box.containsKey('username')) {
       // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
@@ -46,7 +46,7 @@ class _SplashState extends State<Splash> {
     }
 
     try {
-      var response = await get('http://hub.local:4000/').timeout(
+      final response = await get('http://hub.local:4000/').timeout(
         const Duration(seconds: 2),
       );
 

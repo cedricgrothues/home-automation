@@ -35,7 +35,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
     if (_timer != null) return;
 
     _timer = Timer.periodic(Duration(seconds: 1), (timer) async {
-      var state = await DeviceService.refresh(device: widget.device);
+      final state = await DeviceService.refresh(device: widget.device);
 
       // Only rebuild if the device state differs
       // from the refreshed state
@@ -61,7 +61,7 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         // the user haptic feedback
         unawaited(HapticFeedback.heavyImpact());
 
-        var state = await DeviceService.update(device: widget.device);
+        final state = await DeviceService.update(device: widget.device);
 
         // Only rebuild if the device state differs
         // from the refreshed state

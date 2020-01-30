@@ -78,7 +78,7 @@ class TryAgain extends StatelessWidget {
     return Button(
       title: 'Tap to try again',
       onPressed: () async {
-        var box = Hive.box<String>('preferences');
+        final box = Hive.box<String>('preferences');
 
         if (!box.containsKey('username')) {
           // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
@@ -88,7 +88,7 @@ class TryAgain extends StatelessWidget {
         }
 
         try {
-          var response = await get('http://hub.local:4000/').timeout(
+          final response = await get('http://hub.local:4000/').timeout(
             const Duration(seconds: 2),
           );
 

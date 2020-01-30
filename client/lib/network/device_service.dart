@@ -13,7 +13,7 @@ class DeviceService {
     var devices = [];
 
     try {
-      var response = await get('http://hub.local:4000/core.device-registry/devices').timeout(
+      final response = await get('http://hub.local:4000/core.device-registry/devices').timeout(
         const Duration(seconds: 1),
       );
 
@@ -49,7 +49,7 @@ class DeviceService {
       if (!device.containsKey('controller') || !device.containsKey('id')) continue;
 
       try {
-        var response = await get("http://hub.local:4000/${device['controller']}/devices/${device['id']}").timeout(
+        final response = await get("http://hub.local:4000/${device['controller']}/devices/${device['id']}").timeout(
           const Duration(seconds: 1),
         );
 
@@ -87,7 +87,7 @@ class DeviceService {
 
   static Future<DeviceState> update({Device device}) async {
     try {
-      var result = await put(
+      final result = await put(
         'http://hub.local:4000/${device.controller}/devices/${device.id}',
         body: json.encode({'power': !device.state.power}),
       ).timeout(
@@ -96,11 +96,11 @@ class DeviceService {
 
       if (result.statusCode < 200 || result.statusCode > 299) throw ResponseException();
 
-      var response = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(
+      final response = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(
         const Duration(seconds: 1),
       );
 
-      var decoded = json.decode(response.body) as Map<String, dynamic>;
+      final decoded = json.decode(response.body) as Map<String, dynamic>;
 
       if (result.statusCode < 200 || result.statusCode > 299 || !decoded.containsKey('state')) {
         throw ResponseException();
@@ -135,13 +135,13 @@ class DeviceService {
 
   static Future<DeviceState> refresh({Device device}) async {
     try {
-      var result = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(
+      final result = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(
         const Duration(seconds: 2),
       );
 
       if (result.statusCode < 200 || result.statusCode > 299) throw ResponseException();
 
-      var decoded = json.decode(result.body) as Map<String, dynamic>;
+      final decoded = json.decode(result.body) as Map<String, dynamic>;
 
       if (!decoded.containsKey('state')) throw ResponseException();
 

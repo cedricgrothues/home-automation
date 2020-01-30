@@ -90,9 +90,9 @@ class SlideTransitionRoute<T> extends PageRouteBuilder {
           ) {
             const begin = Offset(0.0, 1.0);
             const end = Offset.zero;
-            Curve curve = Curves.fastLinearToSlowEaseIn;
+            final curve = Curves.fastLinearToSlowEaseIn;
 
-            var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+            final tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
 
             return SlideTransition(
               position: animation.drive(tween),

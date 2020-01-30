@@ -13,7 +13,7 @@ class _AccountSetupState extends State<AccountSetup> {
 
   @override
   Widget build(BuildContext context) {
-    var valid = _first != null && _last != null;
+    final valid = _first != null && _last != null;
 
     return Scaffold(
       appBar: CupertinoNavigationBar(

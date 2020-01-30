@@ -2,9 +2,7 @@ include: package:pedantic/analysis_options.yaml
 
 analyzer:
   exclude: [build/**, ios/**, android/**, web/**, mac/**]
-  strong-mode:
-    implicit-casts: false
 
 linter:
   rules:
-    - camel_case_types
+    - prefer_final_locals
