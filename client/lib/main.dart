@@ -8,7 +8,6 @@ import 'package:home/screens/home/home.dart';
 import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/add/discover.dart';
 import 'package:home/screens/errors/failed.dart';
-import 'package:home/screens/setup/connect.dart';
 import 'package:home/screens/setup/account.dart';
 
 import 'package:home/components/routes.dart';
@@ -28,7 +27,8 @@ class App extends StatelessWidget {
       theme: ThemeData(
         brightness: Brightness.light,
         primaryColor: Colors.black,
-        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
+        dialogBackgroundColor: const Color(0xFFf1f2f6),
+        scaffoldBackgroundColor: const Color(0xFFf1f2f6),
         fontFamily: 'Open Sans',
         buttonColor: Colors.black,
         canvasColor: Colors.transparent,
@@ -42,7 +42,7 @@ class App extends StatelessWidget {
           ),
         ),
         snackBarTheme: SnackBarThemeData(
-          backgroundColor: const Color(0xFFFEFEFE),
+          backgroundColor: const Color(0xFFf1f2f6),
           elevation: 0,
           actionTextColor: Colors.black,
         ),
@@ -111,7 +111,8 @@ class App extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
         primaryColor: Colors.white,
-        scaffoldBackgroundColor: const Color(0xFF000001),
+        dialogBackgroundColor: const Color(0xFF0c1016),
+        scaffoldBackgroundColor: const Color(0xFF000000),
         fontFamily: 'Open Sans',
         buttonColor: Colors.white,
         canvasColor: Colors.transparent,
@@ -218,7 +219,7 @@ class App extends StatelessWidget {
               builder: (_) => Setup(),
               settings: settings,
             );
-          case '/account_setup':
+          case '/account':
             return FadeTransitionRoute<AccountSetup>(
               child: AccountSetup(),
             );
@@ -226,10 +227,6 @@ class App extends StatelessWidget {
             return NoTransitionRoute<NoWifi>(
               builder: (_) => NoWifi(),
               settings: settings,
-            );
-          case '/connect':
-            return NoTransitionRoute<Connect>(
-              builder: (_) => Connect(),
             );
           case '/connection_failed':
             return NoTransitionRoute<ConnectionFailed>(

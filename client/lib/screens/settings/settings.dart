@@ -124,8 +124,8 @@ class _SettingsState extends State<Settings> {
                 title: 'Account',
                 items: <Widget>[
                   PopupButton(
-                    child: const Text('Change username or profile picture'),
-                    onPressed: () => Navigator.of(context).pushReplacementNamed('/account_setup'),
+                    child: const Text('Update account'),
+                    onPressed: () => Navigator.of(context).pushReplacementNamed('/account'),
                   ),
                   PopupButton(
                     child: const Text(

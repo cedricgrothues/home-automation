@@ -19,22 +19,24 @@ class DeviceService {
 
       if (response.statusCode < 200 || response.statusCode > 299) throw ResponseException();
 
-      devices = json.decode(response.body) as List<Map<String, dynamic>> ?? [];
+      devices = List.castFrom<dynamic, Map<String, dynamic>>(
+        json.decode(response.body) as List ?? <dynamic>[],
+      );
     } on SocketException {
       // SocketExceptions are thrown if there appears to be a problem with the users internet connection
       // or if a DNS lookup failed (latter should not be a problem at this point sice we're working with ip addresses instead of urls)
 
-      return [];
+      return <Device>[];
     } on ResponseException {
       // A ResponseException is thrown if either the status code is not between 200 and 299 or
       // if the response we got from the server did not contain the right keys / values
 
-      return [];
+      return <Device>[];
     } on TimeoutException {
       // The timeout exception is thrown, if there was no server response after 1 second to minimize initial loading time.
       // Since the server is most definitely running on a local network, we'll just assume that it is unreachable.
 
-      return [];
+      return <Device>[];
     } catch (error) {
       // We could neither catch a SocketException nor the TimeoutException that is thrown after 1 second.
       // I am not particularly sure if there is any other error that could be thrown here,
@@ -42,7 +44,7 @@ class DeviceService {
 
       print('Unhandled Exception $error of type: ${error.runtimeType}');
 
-      return [];
+      return <Device>[];
     }
 
     for (final device in devices) {
@@ -82,7 +84,7 @@ class DeviceService {
       }
     }
 
-    return devices != null ? devices.map((device) => Device.fromJson(device)).toList() : [];
+    return devices != null ? devices.map((device) => Device.fromJson(device)).toList() : <Device>[];
   }
 
   static Future<DeviceState> update({Device device}) async {
@@ -135,13 +137,13 @@ class DeviceService {
 
   static Future<DeviceState> refresh({Device device}) async {
     try {
-      final result = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(
+      final response = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(
         const Duration(seconds: 2),
       );
 
-      if (result.statusCode < 200 || result.statusCode > 299) throw ResponseException();
+      if (response.statusCode < 200 || response.statusCode > 299) throw ResponseException();
 
-      final decoded = json.decode(result.body) as Map<String, dynamic>;
+      final decoded = json.decode(response.body) as Map<String, dynamic>;
 
       if (!decoded.containsKey('state')) throw ResponseException();
 

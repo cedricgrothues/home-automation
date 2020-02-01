@@ -1,7 +1,10 @@
+import 'dart:io' show Socket, SocketException;
+
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:pedantic/pedantic.dart' show unawaited;
 import 'package:url_launcher/url_launcher.dart';
 
 import 'package:home/components/button.dart';
@@ -26,8 +29,8 @@ class _SetupState extends State<Setup> {
                 child: Container(
                   constraints: const BoxConstraints(
                     maxHeight: 250,
-                    maxWidth: 250,
                     minHeight: 100,
+                    maxWidth: 250,
                     minWidth: 100,
                   ),
                   width: MediaQuery.of(context).size.height / 4,
@@ -67,7 +70,22 @@ class _SetupState extends State<Setup> {
                     ),
                     Button(
                       title: 'Connect to an existing system',
-                      onPressed: () => Navigator.of(context).pushReplacementNamed('/connect'),
+                      onPressed: () async {
+                        try {
+                          await Socket.connect('hub.local', 4000)
+                            ..destroy();
+
+                          // Socket.connect did not throw an Exception, so we can assume that
+                          // the hub is online and available
+
+                          unawaited(Navigator.of(context).pushReplacementNamed('/account'));
+                        } on SocketException {
+                          // SocketException are thrown if `hub.local` was not found
+                          // with in the device's network.
+
+                          unawaited(Navigator.of(context).pushReplacementNamed('/connection_failed'));
+                        }
+                      },
                       width: MediaQuery.of(context).size.width - 150,
                     ),
                     RichText(
