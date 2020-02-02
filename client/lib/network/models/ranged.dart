@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart' show JsonSerializable, JsonKey;
 
 part 'ranged.g.dart';
 

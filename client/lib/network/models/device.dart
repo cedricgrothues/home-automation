@@ -1,4 +1,4 @@
-import 'package:json_annotation/json_annotation.dart';
+import 'package:json_annotation/json_annotation.dart' show JsonSerializable, JsonKey;
 
 import 'package:home/network/models/state.dart';
 import 'package:home/network/models/room.dart';
