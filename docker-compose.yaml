@@ -1,7 +1,7 @@
 version: '3.7'
 
 services:
-  # core
+  # core - Required for the hub to work properly
   core.api-gateway:
     container_name: "core.api-gateway"
     restart: always
@@ -36,7 +36,18 @@ services:
       - ./core/persistence/database/init.sql:/docker-entrypoint-initdb.d/init.sql
       - core.persistence.database.data:/var/lib/postgresql/data
 
-  # modules
+  # modules - Not required
+  modules.scene:
+    container_name: "modules.scene"
+    restart: always
+    build:
+      dockerfile: ./modules/scene/Dockerfile
+      context: .
+    ports:
+      - 4006:4006
+    depends_on:
+      - core.persistence.database
+
   modules.sonoff:
     container_name: "modules.sonoff"
     restart: always
@@ -47,7 +58,7 @@ services:
       - 4002:4002
     depends_on:
       - core.device-registry
-      
+
 #  modules.sonos:
 #    container_name: "modules.sonos"
 #    restart: always
