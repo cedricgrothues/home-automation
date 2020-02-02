@@ -3,6 +3,7 @@ package bootstrap
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
 
 	"github.com/cedricgrothues/httprouter"
@@ -35,5 +36,7 @@ func New(name string) (*httprouter.Router, error) {
 
 // Start a new service
 func Start(router *httprouter.Router, port int) error {
+	log.Println("Starting service on port ", port)
+
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), router)
 }
