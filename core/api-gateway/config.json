@@ -7,19 +7,29 @@
             "upstream": "http://core.device-registry:4001"
         },
         {
+            "identifier": "core.user-registry",
+            "name": "Device Registry",
+            "upstream": "http://core.user-registry:4002"
+        },
+        {
             "identifier": "modules.sonoff",
             "name": "Sonoff Controller",
-            "upstream": "http://modules.sonoff:4002"
+            "upstream": "http://modules.sonoff:4003"
         },
         {
             "identifier": "modules.sonos",
             "name": "Sonos Controller",
-            "upstream": "http://modules.sonos:4003"
+            "upstream": "http://modules.sonos:4004"
         },
         {
             "identifier": "modules.aurora",
             "name": "Nanoleaf Aurora Controller",
-            "upstream": "http://modules.aurora:4004"
+            "upstream": "http://modules.aurora:4005"
+        },
+        {
+            "identifier": "modules.scene",
+            "name": "Scene Controller",
+            "upstream": "http://modules.scene:4006"
         }
     ]
 }

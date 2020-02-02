@@ -20,21 +20,32 @@ services:
     ports:
       - 4001:4001
     depends_on:
-      - core.persistence.database
+      - core.persistence
 
-  core.persistence.database:
-    container_name: "core.persistence.database"
+  core.user-registry:
+    container_name: "core.user-registry"
+    restart: always
+    build:
+      dockerfile: ./core/user-registry/Dockerfile
+      context: .
+    ports:
+      - 4002:4002
+    depends_on:
+      - core.persistence
+
+  core.persistence:
+    container_name: "core.persistence"
     image: postgres:latest
     restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=zuhkiz-2honwu-semhoV
-      - POSTGRES_DB=core.persistence.database
+      - POSTGRES_DB=core.persistence
     ports:
       - 5432:5432
     volumes:
-      - ./core/persistence/database/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - core.persistence.database.data:/var/lib/postgresql/data
+      - ./core/persistence/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - core.persistence.data:/var/lib/postgresql/data
 
   # modules - Not required
   modules.scene:
@@ -46,7 +57,7 @@ services:
     ports:
       - 4006:4006
     depends_on:
-      - core.persistence.database
+      - core.persistence
 
   modules.sonoff:
     container_name: "modules.sonoff"
@@ -55,7 +66,7 @@ services:
       dockerfile: ./modules/sonoff/Dockerfile
       context: .
     ports:
-      - 4002:4002
+      - 4003:4003
     depends_on:
       - core.device-registry
 
@@ -66,7 +77,7 @@ services:
 #      dockerfile: modules.sonos/Dockerfile
 #      context: .
 #    ports:
-#      - 4003:4003
+#      - 4004:4004
 #    depends_on:
 #      - core.device-registry
 
@@ -77,10 +88,10 @@ services:
       dockerfile: ./modules/aurora/Dockerfile
       context: .
     ports:
-      - 4004:4004
+      - 4005:4005
     depends_on:
       - core.device-registry
 
 
 volumes:
-  core.persistence.database.data:
+  core.persistence.data:

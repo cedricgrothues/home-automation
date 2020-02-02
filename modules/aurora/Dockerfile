@@ -19,4 +19,4 @@ RUN go install github.com/cedricgrothues/home-automation/modules/aurora
 ENTRYPOINT /go/bin/aurora
 
 # Document that the service listens on port 4004.
-EXPOSE 4004
+EXPOSE 4005

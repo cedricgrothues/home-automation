@@ -19,7 +19,7 @@ func main() {
 	router.GET("/devices/:id", routes.GetState)
 	router.PUT("/devices/:id", routes.PatchState)
 
-	panic(http.ListenAndServe(":4003", router))
+	panic(http.ListenAndServe(":4004", router))
 
 	// sonos := dao.Sonos{Address: net.ParseIP("192.168.2.158")}
 

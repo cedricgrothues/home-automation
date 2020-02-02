@@ -18,5 +18,5 @@ RUN go install github.com/cedricgrothues/home-automation/modules/sonoff
 # Run the modules.sonoff command by default when the container starts.
 ENTRYPOINT /go/bin/sonoff
 
-# Document that the service listens on port 4002.
-EXPOSE 4002
+# Document that the service listens on port 4003.
+EXPOSE 4003

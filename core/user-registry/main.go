@@ -5,13 +5,12 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/cedricgrothues/home-automation/core/user-registry/handler"
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
-	"github.com/cedricgrothues/home-automation/modules/scene/handler"
-	_ "github.com/lib/pq"
 )
 
 const (
-	host     = "core.persistence"
+	host     = "localhost"
 	port     = 5432
 	user     = "postgres"
 	password = "zuhkiz-2honwu-semhoV"
@@ -19,7 +18,6 @@ const (
 )
 
 func main() {
-	var database *sql.DB
 
 	database, err := sql.Open("postgres", fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname))
 
@@ -31,19 +29,16 @@ func main() {
 
 	handler.Database = database
 
-	router, err := bootstrap.New("modules.scene")
+	router, err := bootstrap.New("core.user")
 
 	if err != nil {
 		panic(err)
 	}
 
-	router.GET("/scenes", handler.ListScenes)
-	router.POST("/scenes", handler.CreateScene)
+	router.GET("/users", handler.ListUsers)
+	router.POST("/users", handler.AddUser)
 
-	router.GET("/scenes/:id", handler.ReadScene)
-	router.DELETE("/scenes/:id", handler.DeleteScene)
+	router.DELETE("/users/:id", handler.RemoveUser)
 
-	router.GET("/scenes/:id/run", handler.ExecScene)
-
-	panic(bootstrap.Start(router, 4006))
+	panic(bootstrap.Start(router, 4002))
 }

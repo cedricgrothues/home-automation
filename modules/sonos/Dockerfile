@@ -18,5 +18,5 @@ RUN go install github.com/cedricgrothues/home-automation/modules/sonos
 # Run the modules.sonos command by default when the container starts.
 ENTRYPOINT /go/bin/sonos
 
-# Document that the service listens on port 4003.
-EXPOSE 4003
+# Document that the service listens on port 4004.
+EXPOSE 4004
