@@ -4,7 +4,7 @@ CREATE TABLE IF NOT EXISTS rooms (
 );
 
 CREATE TABLE IF NOT EXISTS devices (
-    deid varchar(20) PRIMARY KEY,
+    id varchar(20) PRIMARY KEY,
     name text NOT NULL,
     type text NOT NULL,
     controller text NOT NULL,
