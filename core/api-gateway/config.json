@@ -7,9 +7,9 @@
             "upstream": "http://core.device-registry:4001"
         },
         {
-            "identifier": "core.user-registry",
+            "identifier": "core.user",
             "name": "Device Registry",
-            "upstream": "http://core.user-registry:4002"
+            "upstream": "http://core.user:4002"
         },
         {
             "identifier": "modules.sonoff",

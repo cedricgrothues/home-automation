@@ -22,11 +22,11 @@ services:
     depends_on:
       - core.persistence
 
-  core.user-registry:
-    container_name: "core.user-registry"
+  core.user:
+    container_name: "core.user"
     restart: always
     build:
-      dockerfile: ./core/user-registry/Dockerfile
+      dockerfile: ./core/user/Dockerfile
       context: .
     ports:
       - 4002:4002

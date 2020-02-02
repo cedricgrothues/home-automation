@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/cedricgrothues/home-automation/core/user-registry/handler"
+	"github.com/cedricgrothues/home-automation/core/user/handler"
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
 	_ "github.com/lib/pq"
 )
