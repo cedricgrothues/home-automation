@@ -50,7 +50,8 @@ class ChangeAppIcon extends StatelessWidget {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.only(right: 15.0),
-                      child: Image.asset('assets/icons/${icons[i].split(' ').join('-').toLowerCase()}.png', height: 42),
+                      child:
+                          Image.asset('assets/themes/${icons[i].split(' ').join('-').toLowerCase()}.png', height: 42),
                     ),
                     Text(
                       icons[i],

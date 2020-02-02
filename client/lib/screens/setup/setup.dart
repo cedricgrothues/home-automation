@@ -5,7 +5,7 @@ import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
 
 import 'package:pedantic/pedantic.dart' show unawaited;
-import 'package:url_launcher/url_launcher.dart';
+import 'package:url_launcher/url_launcher.dart' show launch;
 
 import 'package:home/components/button.dart';
 
@@ -18,44 +18,37 @@ class _SetupState extends State<Setup> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewPadding.bottom + 30),
+      body: SafeArea(
         child: Center(
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Padding(
-                padding: EdgeInsets.only(top: MediaQuery.of(context).size.height / 6.5),
-                child: Container(
-                  constraints: const BoxConstraints(
-                    maxHeight: 250,
-                    minHeight: 100,
-                    maxWidth: 250,
-                    minWidth: 100,
-                  ),
-                  width: MediaQuery.of(context).size.height / 4,
-                  height: MediaQuery.of(context).size.height / 4,
-                  decoration: BoxDecoration(
-                    image: const DecorationImage(
-                      image: AssetImage(
-                        'assets/images/setup.png',
-                      ),
-                      fit: BoxFit.cover,
-                    ),
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Theme.of(context).buttonColor,
-                      width: 3,
-                    ),
-                  ),
-                ),
-              ),
               Flexible(
+                flex: 5,
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
                     Container(
-                      padding: EdgeInsets.symmetric(vertical: MediaQuery.of(context).size.height / 12),
+                      constraints: const BoxConstraints(
+                        maxHeight: 250,
+                        maxWidth: 250,
+                      ),
+                      width: MediaQuery.of(context).size.height * 0.35,
+                      height: MediaQuery.of(context).size.height * 0.35,
+                      decoration: BoxDecoration(
+                        image: const DecorationImage(
+                          image: AssetImage(
+                            'assets/images/setup.png',
+                          ),
+                          fit: BoxFit.cover,
+                        ),
+                        shape: BoxShape.circle,
+                        border: Border.all(
+                          color: Theme.of(context).buttonColor,
+                          width: 3,
+                        ),
+                      ),
+                    ),
+                    Container(
                       constraints: const BoxConstraints(maxWidth: 320),
                       child: Text(
                         'All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.',
@@ -68,9 +61,22 @@ class _SetupState extends State<Setup> {
                         maxLines: 5,
                       ),
                     ),
+                  ],
+                ),
+              ),
+              Flexible(
+                flex: 1,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: <Widget>[
                     Button(
                       title: 'Connect to an existing system',
                       onPressed: () async {
+                        unawaited(showDialog<void>(
+                          context: context,
+                          builder: (context) => CupertinoActivityIndicator(radius: 14),
+                        ));
+
                         try {
                           await Socket.connect('hub.local', 4000)
                             ..destroy();
@@ -100,10 +106,10 @@ class _SetupState extends State<Setup> {
                           )
                         ],
                       ),
-                    ),
+                    )
                   ],
                 ),
-              ),
+              )
             ],
           ),
         ),

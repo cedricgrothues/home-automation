@@ -229,8 +229,8 @@ class App extends StatelessWidget {
               settings: settings,
             );
           case '/connection_failed':
-            return NoTransitionRoute<ConnectionFailed>(
-              builder: (_) => ConnectionFailed(),
+            return FadeTransitionRoute<ConnectionFailed>(
+              child: ConnectionFailed(),
             );
           case '/discover':
             return NoTransitionRoute<Discover>(

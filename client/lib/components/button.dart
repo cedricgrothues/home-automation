@@ -16,6 +16,7 @@ class Button extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CupertinoButton(
+      padding: EdgeInsets.zero,
       child: Container(
         padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
         margin: const EdgeInsets.only(bottom: 10),
