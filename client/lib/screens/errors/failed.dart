@@ -38,24 +38,27 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Container(
-                      constraints: const BoxConstraints(
-                        maxHeight: 250,
-                        maxWidth: 250,
-                      ),
-                      width: MediaQuery.of(context).size.height * 0.35,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                            'assets/images/failed.png',
-                          ),
-                          fit: BoxFit.cover,
+                    Hero(
+                      tag: 'image',
+                      child: Container(
+                        constraints: const BoxConstraints(
+                          maxHeight: 250,
+                          maxWidth: 250,
                         ),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).buttonColor,
-                          width: 3,
+                        width: MediaQuery.of(context).size.height * 0.35,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/failed.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Theme.of(context).buttonColor,
+                            width: 3,
+                          ),
                         ),
                       ),
                     ),
@@ -96,7 +99,7 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
   }
 
   void retry(BuildContext context) async {
-    Navigator.of(context).pushNamed('/setup');
+    unawaited(Navigator.of(context).pushNamed('/setup'));
 
     final box = Hive.box<String>('preferences');
 

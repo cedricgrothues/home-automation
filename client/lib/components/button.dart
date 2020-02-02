@@ -15,30 +15,33 @@ class Button extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CupertinoButton(
-      padding: EdgeInsets.zero,
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
-        margin: const EdgeInsets.only(bottom: 10),
-        decoration: BoxDecoration(
-          color: Theme.of(context).buttonColor,
-          borderRadius: BorderRadius.circular(10),
-        ),
-        alignment: Alignment.center,
-        constraints: const BoxConstraints(maxWidth: 300),
-        width: width ?? 100,
-        child: FittedBox(
-          fit: BoxFit.fitWidth,
-          child: Text(
-            title,
-            maxLines: 1,
-            style: Theme.of(context).textTheme.button,
-            textAlign: TextAlign.center,
-            overflow: TextOverflow.ellipsis,
+    return Hero(
+      tag: 'button',
+      child: CupertinoButton(
+        padding: EdgeInsets.zero,
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 18, horizontal: 20),
+          margin: const EdgeInsets.only(bottom: 10),
+          decoration: BoxDecoration(
+            color: Theme.of(context).buttonColor,
+            borderRadius: BorderRadius.circular(10),
+          ),
+          alignment: Alignment.center,
+          constraints: const BoxConstraints(maxWidth: 300),
+          width: width ?? 100,
+          child: FittedBox(
+            fit: BoxFit.fitWidth,
+            child: Text(
+              title,
+              maxLines: 1,
+              style: Theme.of(context).textTheme.button,
+              textAlign: TextAlign.center,
+              overflow: TextOverflow.ellipsis,
+            ),
           ),
         ),
+        onPressed: onPressed,
       ),
-      onPressed: onPressed,
     );
   }
 }

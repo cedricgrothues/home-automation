@@ -1,9 +1,14 @@
+import 'dart:io';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Material, MaterialType, Theme, Icons;
 
 import 'package:home/components/icons.dart' show RegularIcons;
+import 'package:home/models/device.dart';
 import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
+
+enum DiscoveryType { SSDP, IP }
 
 /// [SelectBrand] screen is the first screen the user sees,
 /// when the add device button is pressed. It's use is, as
@@ -77,7 +82,7 @@ class SelectBrand extends StatelessWidget {
                       ],
                     ),
                     onPressed: () {
-                      Navigator.of(context).pushNamed('/discover', arguments: 'nanoleaf_aurora:light');
+                      discover(context, type: DiscoveryType.SSDP, query: 'nanoleaf_aurora:light');
                     },
                     height: 85,
                   ),
@@ -135,5 +140,11 @@ class SelectBrand extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Future<Device> discover(BuildContext context, {@required DiscoveryType type, String query}) async {
+    assert((type == DiscoveryType.SSDP && query != null) || type == DiscoveryType.IP);
+
+    return Device(InternetAddress.anyIPv4);
   }
 }

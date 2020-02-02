@@ -27,24 +27,27 @@ class _SetupState extends State<Setup> {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: <Widget>[
-                    Container(
-                      constraints: const BoxConstraints(
-                        maxHeight: 250,
-                        maxWidth: 250,
-                      ),
-                      width: MediaQuery.of(context).size.height * 0.35,
-                      height: MediaQuery.of(context).size.height * 0.35,
-                      decoration: BoxDecoration(
-                        image: const DecorationImage(
-                          image: AssetImage(
-                            'assets/images/setup.png',
-                          ),
-                          fit: BoxFit.cover,
+                    Hero(
+                      tag: 'image',
+                      child: Container(
+                        constraints: const BoxConstraints(
+                          maxHeight: 250,
+                          maxWidth: 250,
                         ),
-                        shape: BoxShape.circle,
-                        border: Border.all(
-                          color: Theme.of(context).buttonColor,
-                          width: 3,
+                        width: MediaQuery.of(context).size.height * 0.35,
+                        height: MediaQuery.of(context).size.height * 0.35,
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage(
+                              'assets/images/setup.png',
+                            ),
+                            fit: BoxFit.cover,
+                          ),
+                          shape: BoxShape.circle,
+                          border: Border.all(
+                            color: Theme.of(context).buttonColor,
+                            width: 3,
+                          ),
                         ),
                       ),
                     ),
@@ -72,11 +75,6 @@ class _SetupState extends State<Setup> {
                     Button(
                       title: 'Connect to an existing system',
                       onPressed: () async {
-                        unawaited(showDialog<void>(
-                          context: context,
-                          builder: (context) => CupertinoActivityIndicator(radius: 14),
-                        ));
-
                         try {
                           await Socket.connect('hub.local', 4000)
                             ..destroy();
