@@ -10,7 +10,7 @@ import (
 )
 
 const (
-	host     = "localhost"
+	host     = "core.persistence"
 	port     = 5432
 	user     = "postgres"
 	password = "zuhkiz-2honwu-semhoV"
