@@ -49,12 +49,15 @@ class Home extends StatelessWidget {
                 width: 30,
                 height: 30,
                 decoration: BoxDecoration(
-                  image: _image.isNotEmpty
+                  image: _image.isEmpty
                       ? DecorationImage(
-                          image: MemoryImage(_image),
+                          image: AssetImage('assets/images/failed.png'),
                           fit: BoxFit.cover,
                         )
-                      : null,
+                      : DecorationImage(
+                          image: MemoryImage(_image),
+                          fit: BoxFit.cover,
+                        ),
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Theme.of(context).buttonColor,

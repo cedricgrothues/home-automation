@@ -3,7 +3,6 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Material, MaterialType, Theme, Icons;
 
-import 'package:home/components/icons.dart' show RegularIcons;
 import 'package:home/models/device.dart';
 import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
@@ -70,65 +69,57 @@ class SelectBrand extends StatelessWidget {
                 sections: <Widget>[
                   PopupButton(
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: const <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 10.0),
-                          child: Icon(
-                            RegularIcons.lightbulb_dollar,
-                            size: 30,
-                          ),
+                          padding: EdgeInsets.only(right: 15),
+                          child: Text('💡', style: TextStyle(fontSize: 22)),
                         ),
                         Text('Nanoleaf Aurora'),
                       ],
                     ),
-                    onPressed: () {
-                      discover(context, type: DiscoveryType.SSDP, query: 'nanoleaf_aurora:light');
-                    },
+                    onPressed: () => discover(context, type: DiscoveryType.SSDP, query: 'nanoleaf_aurora:light'),
                     height: 85,
                   ),
                   PopupButton(
                     child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: const <Widget>[
                         Padding(
-                          padding: EdgeInsets.only(right: 10.0),
-                          child: Icon(
-                            RegularIcons.speaker,
-                            size: 30,
-                          ),
+                          padding: EdgeInsets.only(right: 15),
+                          child: Text('🔊', style: TextStyle(fontSize: 22)),
                         ),
                         Text('Sonos Speaker'),
                       ],
                     ),
-                    onPressed: () {},
                     height: 85,
                   ),
                   PopupButton(
                     child: Row(
-                      children: <Widget>[
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: const <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Icon(
-                            RegularIcons.lightbulb,
-                            size: 30,
-                          ),
+                          padding: EdgeInsets.only(right: 15),
+                          child: Text('🔌', style: TextStyle(fontSize: 22)),
                         ),
-                        const Text('Sonoff Device'),
+                        Text('Sonoff Device'),
                       ],
                     ),
-                    onPressed: () {},
                     height: 85,
                   ),
                   PopupButton(
                     child: Row(
-                      children: <Widget>[
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: const <Widget>[
                         Padding(
-                          padding: const EdgeInsets.only(right: 10.0),
-                          child: Icon(
-                            RegularIcons.lamp,
-                            size: 30,
-                          ),
+                          padding: EdgeInsets.only(right: 15),
+                          child: Text('🛋', style: TextStyle(fontSize: 22)),
                         ),
-                        const Text('Hue Lamp'),
+                        Text('Hue Lamp'),
                       ],
                     ),
                     height: 85,

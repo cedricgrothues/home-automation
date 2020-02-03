@@ -28,6 +28,8 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
         child: Center(
@@ -42,11 +44,11 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                       tag: 'image',
                       child: Container(
                         constraints: const BoxConstraints(
-                          maxHeight: 250,
-                          maxWidth: 250,
+                          maxHeight: 240,
+                          maxWidth: 240,
                         ),
-                        width: MediaQuery.of(context).size.height * 0.35,
-                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: size.height * 0.25,
+                        height: size.height * 0.25,
                         decoration: BoxDecoration(
                           image: const DecorationImage(
                             image: AssetImage(
@@ -63,7 +65,8 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
                       ),
                     ),
                     Container(
-                      constraints: const BoxConstraints(maxWidth: 320),
+                      constraints: const BoxConstraints(maxWidth: 330),
+                      width: size.width * 0.75,
                       child: Text(
                         'We could not connect to your Home Hub. Please ensure it is plugged in, online and running on the latest home-automation version, then try again.',
                         textAlign: TextAlign.center,
@@ -99,8 +102,6 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
   }
 
   void retry(BuildContext context) async {
-    unawaited(Navigator.of(context).pushNamed('/setup'));
-
     final box = Hive.box<String>('preferences');
 
     if (!box.containsKey('username')) {

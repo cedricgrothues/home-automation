@@ -17,8 +17,11 @@ class Setup extends StatefulWidget {
 class _SetupState extends State<Setup> {
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SafeArea(
+        minimum: const EdgeInsets.only(bottom: 20),
         child: Center(
           child: Column(
             children: <Widget>[
@@ -31,11 +34,11 @@ class _SetupState extends State<Setup> {
                       tag: 'image',
                       child: Container(
                         constraints: const BoxConstraints(
-                          maxHeight: 250,
-                          maxWidth: 250,
+                          maxHeight: 240,
+                          maxWidth: 240,
                         ),
-                        width: MediaQuery.of(context).size.height * 0.35,
-                        height: MediaQuery.of(context).size.height * 0.35,
+                        width: size.height * 0.25,
+                        height: size.height * 0.25,
                         decoration: BoxDecoration(
                           image: const DecorationImage(
                             image: AssetImage(
@@ -52,7 +55,8 @@ class _SetupState extends State<Setup> {
                       ),
                     ),
                     Container(
-                      constraints: const BoxConstraints(maxWidth: 320),
+                      constraints: const BoxConstraints(maxWidth: 330),
+                      width: size.width * 0.75,
                       child: Text(
                         'All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.',
                         textAlign: TextAlign.center,

@@ -15,7 +15,7 @@ dependencies:
   flutter:
     sdk: flutter
 
-  # Effective Dart
+  # Effective Dart (Static analysis)
   pedantic: ^1.9.0
 
   # get the database path
@@ -61,10 +61,6 @@ flutter:
     - assets/icons/
 
   fonts:
-    - family: Regular
-      fonts:
-        - asset: assets/fonts/Regular.ttf
-
     - family: Open Sans
       fonts:
         - asset: assets/fonts/OpenSans-Light.ttf

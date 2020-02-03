@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoButton;
 
-import 'package:home/components/icons.dart';
-
 /// SceneCard shows basic information about it's [scene].
 /// For all types of scenes the name together with the
 /// appropriate icon will be shown.
@@ -46,7 +44,7 @@ class _SceneCardState extends State<SceneCard> {
               alignment: Alignment.topLeft,
               child: Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Icon(RegularIcons.person_sign, color: Colors.white),
+                child: Icon(Icons.blur_on, color: Colors.white),
               ),
             ),
             Align(
