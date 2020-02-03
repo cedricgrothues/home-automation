@@ -1,13 +1,22 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart' show CupertinoActivityIndicator;
+
+import 'package:pedantic/pedantic.dart';
 
 import 'package:home/services/ssdp.dart';
-
-import 'package:pedantic/pedantic.dart' show unawaited;
+import 'package:home/components/routes.dart';
+import 'package:home/network/registry_service.dart';
+import 'package:home/screens/add/complete/select.dart';
+import 'package:home/screens/add/complete/complete.dart';
+import 'package:home/screens/add/complete/none_found.dart';
 
 class Discover extends StatefulWidget {
+  const Discover({Key key, @required this.target, @required this.controller})
+      : assert(target != null),
+        super(key: key);
+
+  final String target;
+  final String controller;
+
   @override
   _DiscoverState createState() => _DiscoverState();
 }
@@ -18,25 +27,68 @@ class _DiscoverState extends State<Discover> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((Duration duration) async {
-      try {
-        /// if the search was successfull, Discover
-        /// automatically redirects the user to `redirect`,
-        unawaited(discover(context,
-            target: ModalRoute.of(context).settings.arguments as String, success: (String address) {}));
-      } on SocketException {
-        // SocketException are thrown if there was a problem with binding to the socket.
+      final devices = <String>{};
+      await for (final device in discover(target: widget.target)) {
+        final address = (device.replaceFirst('http://', '').split(':') ?? []).first;
 
-        unawaited(Navigator.of(context).pushReplacementNamed('/connection_failed'));
+        if (await RegistryService.exists(address, controller: widget.controller)) continue;
+
+        devices.add(address);
+      }
+
+      if (devices.isEmpty) {
+        unawaited(Navigator.of(context).push(
+          FadeTransitionRoute(child: NoneFound()),
+        ));
+      } else if (devices.length == 1) {
+        unawaited(Navigator.of(context).push(
+          FadeTransitionRoute(child: FinishDiscovery(address: devices.first)),
+        ));
+      } else {
+        unawaited(Navigator.of(context).push(
+          FadeTransitionRoute(child: SelectDevice(devices: devices)),
+        ));
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
+    return Scaffold(
       body: Center(
-        child: CupertinoActivityIndicator(
-          radius: 12,
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 30),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Spacer(flex: 4),
+              Text(
+                'Your app is looking for devices to connect...',
+                style: TextStyle(fontWeight: FontWeight.w700, fontSize: 22),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 15.0),
+                child: Text(
+                  'This may take up to 10 seconds.',
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: Color(0xFFa2acbe),
+                  ),
+                ),
+              ),
+              Spacer(flex: 1),
+              SizedBox(
+                height: 2,
+                child: LinearProgressIndicator(
+                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
+                  backgroundColor: Colors.white24,
+                ),
+              ),
+              Spacer(flex: 8),
+            ],
+          ),
         ),
       ),
     );

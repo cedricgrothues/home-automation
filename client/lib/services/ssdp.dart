@@ -1,21 +1,28 @@
+import 'dart:async';
 import 'dart:convert' show utf8;
 import 'dart:io';
 
-import 'package:flutter/material.dart' show BuildContext, required;
+import 'package:pedantic/pedantic.dart' show unawaited;
 
 final InternetAddress multicast = InternetAddress('239.255.255.250');
 
 /// Quick discover all devices ssdp devices that comply with the specified `target`.
 ///
-/// [target] may not be null. May throw
-Future<void> discover(BuildContext context,
-    {String target = 'ssdp:all', @required void Function(String address) success}) async {
-  RawDatagramSocket socket;
+/// [target] may not be null
+Stream<String> discover({String target = 'ssdp:all'}) async* {
+  final _controller = StreamController<String>();
+
+  RawDatagramSocket _socket;
+
+  unawaited(Future<void>.delayed(const Duration(seconds: 5), () async {
+    if (_controller != null) await _controller.close();
+    if (_socket != null) _socket.close();
+  }));
 
   try {
-    socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
+    _socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
   } on SocketException catch (error) {
-    // An error occured while trying to bind the socket.
+    // An error occured while trying to bind the _socket.
     // Forwarding the error.
 
     print('Failed to join ipv4 multicast group: $error');
@@ -23,12 +30,12 @@ Future<void> discover(BuildContext context,
     rethrow;
   }
 
-  socket.broadcastEnabled = true;
-  socket.readEventsEnabled = true;
-  socket.multicastHops = 50;
+  _socket.broadcastEnabled = true;
+  _socket.readEventsEnabled = true;
+  _socket.multicastHops = 50;
 
   try {
-    socket.joinMulticast(multicast);
+    _socket.joinMulticast(multicast);
   } on OSError catch (error) {
     // An error occured while trying to join the
     // multicast group
@@ -48,49 +55,47 @@ Future<void> discover(BuildContext context,
   final data = utf8.encode(buffer.toString());
 
   try {
-    socket.send(data, multicast, 1900);
+    _socket.send(data, multicast, 1900);
   } on SocketException catch (error) {
     print('Failed to send data to multicast group: $error');
   }
 
-  socket.listen((event) {
+  final _seen = <String>{};
+
+  _socket.listen((event) {
     switch (event) {
       case RawSocketEvent.read:
-        final packet = socket.receive();
-        socket.writeEventsEnabled = true;
-        socket.readEventsEnabled = true;
+        final packet = _socket.receive();
+        _socket.writeEventsEnabled = true;
+        _socket.readEventsEnabled = true;
 
         if (packet == null) return;
 
         final data = utf8.decode(packet.data);
         final parts = data.split('\r\n');
+
         parts.removeWhere((x) => x.trim().isEmpty);
 
-        final fl = parts.removeAt(0);
-
-        if ((fl.toLowerCase().trim() == 'HTTP/1.1 200 OK'.toLowerCase()) ||
-            (fl.toLowerCase().trim() == 'NOTIFY * HTTP/1.1'.toLowerCase())) {
-          final headers = {dynamic} as Map<String, dynamic>;
-
+        if (parts.removeAt(0).toLowerCase().trim() == 'HTTP/1.1 200 OK'.toLowerCase()) {
           for (final part in parts) {
-            final hp = part.split(':');
+            if (part.toLowerCase().contains('location')) {
+              final address = part.split(' ').last;
 
-            final name = hp[0].trim();
-            final value = (hp..removeAt(0)).join(':').trim();
+              if (_seen.contains(address)) continue;
 
-            headers[name.toUpperCase()] = value;
+              _controller.add(address);
+              _seen.add(address);
+            }
           }
-
-          if (!headers.containsKey('LOCATION')) return;
-
-          success(headers['LOCATION'] as String);
-          socket.close();
-          return;
         }
 
         break;
-      case RawSocketEvent.write:
+      default:
         break;
     }
   });
+
+  await for (final client in _controller.stream) {
+    yield client;
+  }
 }

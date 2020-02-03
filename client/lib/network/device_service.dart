@@ -8,7 +8,13 @@ import 'package:home/models/errors.dart';
 import 'package:home/network/models/state.dart';
 import 'package:home/network/models/device.dart';
 
+/// The [DeviceService] handles all requests regarding a
+/// [Device]'s state, such as refreshing, fetching and updating
 class DeviceService {
+  /// fetch is called when first loading the [Home] screen
+  /// This method will return the inital list of devices and
+  /// should not be called afterwards, except if the screen
+  /// needs to be refreshed.
   static Future<List<Device>> fetch() async {
     var devices = <Map<String, dynamic>>[];
 
@@ -87,6 +93,9 @@ class DeviceService {
     return devices != null ? devices.map((device) => Device.fromJson(device)).toList() : <Device>[];
   }
 
+  /// update alters the device state, based on the passed instance
+  /// of [Device]. It's called when pressing a device card and returns
+  /// the updated device instance.
   static Future<DeviceState> update({Device device}) async {
     try {
       final result = await put(
@@ -135,6 +144,10 @@ class DeviceService {
     }
   }
 
+  /// Refresh does virtually the same as update, with the diffrence
+  /// that it won't alter the device state, but instead just return
+  /// an updated instance. This is used to rebuild the screen if the
+  /// [DeviceState] changes.
   static Future<DeviceState> refresh({Device device}) async {
     try {
       final response = await get('http://hub.local:4000/${device.controller}/devices/${device.id}').timeout(

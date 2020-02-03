@@ -6,7 +6,6 @@ import 'package:home/screens/wifi.dart';
 import 'package:home/screens/splash.dart';
 import 'package:home/screens/home/home.dart';
 import 'package:home/screens/setup/setup.dart';
-import 'package:home/screens/add/discover.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/account.dart';
 
@@ -28,7 +27,7 @@ class App extends StatelessWidget {
         brightness: Brightness.light,
         primaryColor: Colors.black,
         dialogBackgroundColor: const Color(0xFFf1f2f6),
-        scaffoldBackgroundColor: const Color(0xFFf1f2f6),
+        scaffoldBackgroundColor: const Color(0xFFFFFFFF),
         fontFamily: 'Open Sans',
         buttonColor: Colors.black,
         canvasColor: Colors.transparent,
@@ -42,7 +41,7 @@ class App extends StatelessWidget {
           ),
         ),
         snackBarTheme: SnackBarThemeData(
-          backgroundColor: const Color(0xFFf1f2f6),
+          backgroundColor: const Color(0xFFFFFFFF),
           elevation: 0,
           actionTextColor: Colors.black,
         ),
@@ -64,6 +63,7 @@ class App extends StatelessWidget {
         ),
         splashFactory: const NoSplashFactory(),
         cardColor: const Color(0xFFFFFFFF),
+        errorColor: const Color(0xFFbd0026),
         textTheme: TextTheme(
           headline5: TextStyle(
             fontSize: 24,
@@ -151,6 +151,7 @@ class App extends StatelessWidget {
         splashColor: Colors.transparent,
         splashFactory: const NoSplashFactory(),
         cardColor: const Color(0xFF191d23),
+        errorColor: const Color(0xFF320111),
         textTheme: TextTheme(
           headline5: TextStyle(
             fontSize: 23,
@@ -231,11 +232,6 @@ class App extends StatelessWidget {
           case '/connection_failed':
             return FadeTransitionRoute<ConnectionFailed>(
               child: ConnectionFailed(),
-            );
-          case '/discover':
-            return NoTransitionRoute<Discover>(
-              builder: (_) => Discover(),
-              settings: settings,
             );
           default:
             return null;

@@ -1,13 +1,13 @@
-import 'dart:io';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Material, MaterialType, Theme, Icons;
 
+import 'package:pedantic/pedantic.dart' show unawaited;
+
 import 'package:home/models/device.dart';
+import 'package:home/components/routes.dart';
+import 'package:home/screens/add/discover.dart';
 import 'package:home/screens/settings/components/button.dart';
 import 'package:home/screens/settings/components/list.dart';
-
-enum DiscoveryType { SSDP, IP }
 
 /// [SelectBrand] screen is the first screen the user sees,
 /// when the add device button is pressed. It's use is, as
@@ -74,12 +74,25 @@ class SelectBrand extends StatelessWidget {
                       children: const <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 15),
-                          child: Text('💡', style: TextStyle(fontSize: 22)),
+                          child: Text('🛋', style: TextStyle(fontSize: 22)),
                         ),
                         Text('Nanoleaf Aurora'),
                       ],
                     ),
-                    onPressed: () => discover(context, type: DiscoveryType.SSDP, query: 'nanoleaf_aurora:light'),
+                    onPressed: () async {
+                      // If we assume the discover function does not throw an exception, there is three
+                      // possible outcomes to the function.
+                      //
+                      // 1. No devices found
+                      // 2. One device found
+                      // 3. N devices found (with N > 1)
+
+                      unawaited(Navigator.of(context).push(
+                        NoTransitionRoute(
+                          builder: (_) => Discover(target: 'nanoleaf_aurora:light', controller: 'modules.aurora'),
+                        ),
+                      ));
+                    },
                     height: 85,
                   ),
                   PopupButton(
@@ -117,7 +130,7 @@ class SelectBrand extends StatelessWidget {
                       children: const <Widget>[
                         Padding(
                           padding: EdgeInsets.only(right: 15),
-                          child: Text('🛋', style: TextStyle(fontSize: 22)),
+                          child: Text('💡', style: TextStyle(fontSize: 22)),
                         ),
                         Text('Hue Lamp'),
                       ],
@@ -131,11 +144,5 @@ class SelectBrand extends StatelessWidget {
         },
       ),
     );
-  }
-
-  Future<Device> discover(BuildContext context, {@required DiscoveryType type, String query}) async {
-    assert((type == DiscoveryType.SSDP && query != null) || type == DiscoveryType.IP);
-
-    return Device(InternetAddress.anyIPv4);
   }
 }

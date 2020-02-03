@@ -109,7 +109,7 @@ class _SettingsState extends State<Settings> {
                       showLicensePage(
                         context: context,
                         applicationLegalese: 'Copyright © 2020 Cedric Grothues',
-                        applicationVersion: '0.1.0-dev.1',
+                        applicationVersion: '0.1.0',
                         applicationName: 'Home Assistent',
                       );
                     },

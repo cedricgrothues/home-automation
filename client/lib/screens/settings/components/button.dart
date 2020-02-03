@@ -30,7 +30,7 @@ class PopupButton extends StatelessWidget {
       onPressed: onPressed,
       child: Container(
         decoration: BoxDecoration(
-          color: type == ButtonType.normal ? Theme.of(context).cardColor : const Color(0xFF320111),
+          color: type == ButtonType.normal ? Theme.of(context).cardColor : Theme.of(context).errorColor,
           borderRadius: BorderRadius.circular(15),
         ),
         width: double.infinity,

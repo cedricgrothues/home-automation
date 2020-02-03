@@ -3,7 +3,7 @@ import 'dart:async' show Timer;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart' show HapticFeedback;
 
-import 'package:pedantic/pedantic.dart';
+import 'package:pedantic/pedantic.dart' show unawaited;
 
 import 'package:home/components/labels.dart';
 import 'package:home/network/models/device.dart';
@@ -25,29 +25,49 @@ class DeviceCard extends StatefulWidget {
   _DeviceCardState createState() => _DeviceCardState();
 }
 
-class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateMixin {
+class _DeviceCardState extends State<DeviceCard> with WidgetsBindingObserver {
   Timer _timer;
 
   @override
   void initState() {
     super.initState();
 
-    if (_timer != null) return;
+    // Add a WidgetsBindingObserver to be notified of certain
+    // events occuring in the application
+    WidgetsBinding.instance.addObserver(this);
 
-    _timer = Timer.periodic(const Duration(seconds: 1), (timer) async {
-      final state = await DeviceService.refresh(device: widget.device);
+    // Create a new timer if it's null
+    _timer ??= create();
+  }
 
-      // Only rebuild if the device state differs
-      // from the refreshed state
-      if (widget.device.state == state) return;
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    // Pause the timer when the user leaves the app
 
-      setState(() => widget.device.state = state);
-    });
+    if (state == AppLifecycleState.paused) {
+      // The application is not currently visible to the user,
+      // not responding to user input, and running in the background.
+      // So we'll just cancel the timer to save resources
+
+      _timer.cancel();
+    } else if (state == AppLifecycleState.resumed) {
+      // The application is visible and responding to user input,
+      // so the timer has to be reenabled
+      _timer = create();
+    }
+
+    super.didChangeAppLifecycleState(state);
   }
 
   @override
   void dispose() {
+    /// The view is disposed so we'll cancel
+    /// the timer to protect the device's resources
     _timer.cancel();
+
+    /// Remove the unused WidgetsBindingObserver
+    WidgetsBinding.instance.removeObserver(this);
+
     super.dispose();
   }
 
@@ -57,21 +77,21 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
       onTap: () async {
         if (widget.device.state.error) return;
 
-        // Simulate a short tap to give
-        // the user haptic feedback
+        /// Simulate a short tap to give
+        /// the user haptic feedback
         unawaited(HapticFeedback.heavyImpact());
 
         final state = await DeviceService.update(device: widget.device);
 
-        // Only rebuild if the device state differs
-        // from the refreshed state
+        /// Only rebuild if the device state differs
+        /// from the refreshed state
         if (widget.device.state == state) return;
 
         setState(() => widget.device.state = state);
       },
       onLongPress: () {
-        // Simulate a short tap to give
-        // the user haptic feedback
+        /// Simulate a short tap to give
+        /// the user haptic feedback
         HapticFeedback.heavyImpact();
 
         showModalBottomSheet<void>(
@@ -121,5 +141,19 @@ class _DeviceCardState extends State<DeviceCard> with SingleTickerProviderStateM
         ),
       ),
     );
+  }
+
+  /// This function creates a new [Timer] that refreshes
+  /// the device state indefinetly with the given timeout
+  Timer create({int timeout = 1}) {
+    return Timer.periodic(Duration(seconds: timeout), (timer) async {
+      final state = await DeviceService.refresh(device: widget.device);
+
+      /// Only rebuild if the device state differs
+      /// from the refreshed state
+      if (widget.device.state == state) return;
+
+      setState(() => widget.device.state = state);
+    });
   }
 }
