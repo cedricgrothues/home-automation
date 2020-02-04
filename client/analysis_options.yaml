@@ -1,19 +1,11 @@
 include: package:pedantic/analysis_options.yaml
 
 analyzer:
-  exclude: 
-    - build/**
-    - ios/**
-    - android/**
-    - web/**
-    - mac/**
-
-    # Ignore generated files
-    - '**/*.g.dart'
-
+  exclude: [build/**, ios/**, android/**, web/**, mac/**, '**/*.g.dart']
   strong-mode:
-    implicit-casts: false
-    implicit-dynamic: false
+    # TODO: Set to false as soon as 
+    implicit-casts: true
+    implicit-dynamic: true
   errors:
     missing_required_param: warning
     missing_return: warning

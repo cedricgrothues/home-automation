@@ -32,4 +32,9 @@ class Device {
 
   @JsonKey(name: 'state')
   DeviceState state;
+
+  @override
+  String toString() {
+    return 'Device(id: $id, name: $name)';
+  }
 }

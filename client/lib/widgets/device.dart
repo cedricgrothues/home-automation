@@ -145,7 +145,7 @@ class _DeviceCardState extends State<DeviceCard> with WidgetsBindingObserver {
 
   /// This function creates a new [Timer] that refreshes
   /// the device state indefinetly with the given timeout
-  Timer create({int timeout = 1}) {
+  Timer create({int timeout = 2}) {
     return Timer.periodic(Duration(seconds: timeout), (timer) async {
       final state = await DeviceService.refresh(device: widget.device);
 

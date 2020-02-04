@@ -2,15 +2,15 @@ import 'package:json_annotation/json_annotation.dart' show JsonSerializable, Jso
 
 import 'package:home/network/models/action.dart';
 
-// part 'scene.g.dart';
+part 'scene.g.dart';
 
 /// A [Scene] defines a set of executable [Actions]
 @JsonSerializable()
 class Scene {
   Scene({this.id, this.name, this.owner, this.actions});
 
-  // factory Scene.fromJson(Map<String, dynamic> json) => _$SceneFromJson(json);
-  // Map<String, dynamic> toJson() => _$SceneToJson(this);
+  factory Scene.fromJson(Map<String, dynamic> json) => _$SceneFromJson(json);
+  Map<String, dynamic> toJson() => _$SceneToJson(this);
 
   /// This defines the scenes identifier
   /// and is required to be unique.
@@ -30,4 +30,9 @@ class Scene {
   /// actions defines a [List] of executable [Actions]
   @JsonKey(name: 'actions')
   List<Action> actions;
+
+  @override
+  String toString() {
+    return 'Scene(name: $name, actions: $actions, id: $id, owner: $owner)';
+  }
 }

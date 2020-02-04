@@ -33,9 +33,7 @@ class _DeviceControlState extends State<DeviceControl> {
                   childAspectRatio: 1.0,
                 ),
                 delegate: SliverChildBuilderDelegate(
-                  (BuildContext context, int index) {
-                    return cards[index];
-                  },
+                  (BuildContext context, int index) => cards[index],
                   childCount: cards.length,
                 ),
               ),

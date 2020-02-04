@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoButton;
 
+import 'package:home/network/models/scene.dart';
+import 'package:home/network/scene_service.dart';
+
 /// SceneCard shows basic information about it's [scene].
 /// For all types of scenes the name together with the
 /// appropriate icon will be shown.
-class SceneCard extends StatefulWidget {
-  @override
-  _SceneCardState createState() => _SceneCardState();
-}
+class SceneCard extends StatelessWidget {
+  const SceneCard(this.scene, {Key key}) : super(key: key);
 
-class _SceneCardState extends State<SceneCard> {
+  final Scene scene;
+
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {},
+    return CupertinoButton(
+      padding: EdgeInsets.zero,
+      onPressed: () => SceneService.update(scene),
       child: Container(
-        height: 100,
-        width: 160,
         decoration: BoxDecoration(
-          color: Colors.teal[300],
+          color: Colors.blue[400],
           borderRadius: BorderRadius.circular(15),
         ),
         child: Stack(
@@ -41,22 +42,32 @@ class _SceneCardState extends State<SceneCard> {
               ),
             ),
             Align(
-              alignment: Alignment.topLeft,
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Icon(Icons.blur_on, color: Colors.white),
-              ),
-            ),
-            Align(
               alignment: Alignment.bottomLeft,
               child: Padding(
-                child: Text(
-                  'Leave Home',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 16,
-                    fontWeight: FontWeight.w600,
-                  ),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Text(
+                      scene.name,
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontSize: 17,
+                            color: Colors.white,
+                          ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 3.0),
+                      child: Text(
+                        '${scene.actions.length} action${scene.actions.length <= 1 ? '' : 's'}',
+                        style: TextStyle(
+                          color: Colors.white54,
+                          fontSize: 13,
+                          fontWeight: FontWeight.w700,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
                 padding: const EdgeInsets.all(12),
               ),

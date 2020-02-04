@@ -33,6 +33,7 @@ class _SettingsState extends State<Settings> {
             ),
           ),
           child: PopupList(
+            discard: 'Done',
             header: <Widget>[
               Padding(
                 padding: const EdgeInsets.only(left: 35, top: 20, bottom: 10, right: 20),

@@ -39,9 +39,6 @@ dependencies:
 
   # JSON Parsing
   json_annotation: ^3.0.1
-
-  # Device Detection
-  multicast_dns: ^0.2.2
   
 dev_dependencies:
   # JSON Parsing

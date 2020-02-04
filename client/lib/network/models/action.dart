@@ -1,14 +1,15 @@
+import 'package:home/network/models/property.dart';
 import 'package:json_annotation/json_annotation.dart' show JsonSerializable, JsonKey;
 
-// part 'action.g.dart';
+part 'action.g.dart';
 
 /// An [Action] defines one step in a [Scene]
 @JsonSerializable()
 class Action {
   Action({this.controller, this.device, this.property});
 
-  // factory Action.fromJson(Map<String, dynamic> json) => _$ActionFromJson(json);
-  // Map<String, dynamic> toJson() => _$ActionToJson(this);
+  factory Action.fromJson(Map<String, dynamic> json) => _$ActionFromJson(json);
+  Map<String, dynamic> toJson() => _$ActionToJson(this);
 
   /// The device's resp. controller
   @JsonKey(name: 'controller')
@@ -23,5 +24,10 @@ class Action {
   /// name, e.g. 'power' and a value,
   /// e.g. true
   @JsonKey(name: 'property')
-  Map<String, dynamic> property;
+  Property property;
+
+  @override
+  String toString() {
+    return 'Action(controller: $controller, id: $device, property: $property)';
+  }
 }

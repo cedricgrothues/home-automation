@@ -55,6 +55,7 @@ class PopupList extends StatelessWidget {
       child: Material(
         type: MaterialType.transparency,
         child: ListView.builder(
+          shrinkWrap: true,
           controller: controller,
           itemBuilder: (context, index) => items[index],
           itemCount: items.length,

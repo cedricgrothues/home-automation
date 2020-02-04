@@ -1,15 +1,16 @@
 import 'dart:convert' show base64;
 import 'dart:typed_data' show Uint8List;
 
-import 'package:flutter/cupertino.dart' show CupertinoNavigationBar, CupertinoButton;
+import 'package:flutter/cupertino.dart' show CupertinoButton, CupertinoNavigationBar;
 import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
 import 'package:home/network/device_service.dart';
-import 'package:home/network/models/device.dart';
+import 'package:home/network/scene_service.dart';
 import 'package:home/screens/add/brand.dart';
-import 'package:home/screens/home/sections/control.dart';
+import 'package:home/screens/home/sections/device.dart';
+import 'package:home/screens/home/sections/scenes.dart';
 import 'package:home/screens/settings/settings.dart';
 
 class Home extends StatelessWidget {
@@ -17,7 +18,8 @@ class Home extends StatelessWidget {
 
   // Futures and images for the underlying widgets are defines here,
   // so neither the FutureBuilder nor Image fires twice.
-  final Future<List<Device>> _devices = DeviceService.fetch();
+  final _devices = DeviceService.fetch();
+  final _scenes = SceneService.fetch();
 
   @override
   Widget build(BuildContext context) {
@@ -33,7 +35,7 @@ class Home extends StatelessWidget {
             leading: CupertinoButton(
               child: Icon(
                 Icons.add,
-                size: 30,
+                size: 33,
               ),
               padding: EdgeInsets.zero,
               onPressed: () {
@@ -46,8 +48,8 @@ class Home extends StatelessWidget {
             ),
             trailing: CupertinoButton(
               child: Container(
-                width: 30,
-                height: 30,
+                width: 33,
+                height: 33,
                 decoration: BoxDecoration(
                   image: _image.isEmpty
                       ? DecorationImage(
@@ -75,7 +77,13 @@ class Home extends StatelessWidget {
               },
             ),
           ),
-          body: DeviceControl(devices: _devices),
+          body: PageView(
+            physics: ClampingScrollPhysics(),
+            children: <Widget>[
+              DeviceControl(devices: _devices),
+              SceneControl(scenes: _scenes),
+            ],
+          ),
         ),
       ),
     );
