@@ -36,7 +36,7 @@ class _DeviceCardState extends State<DeviceCard> with WidgetsBindingObserver {
     // events occuring in the application
     WidgetsBinding.instance.addObserver(this);
 
-    // Create a new timer if it's null
+    // Create a new timer
     _timer ??= create();
   }
 

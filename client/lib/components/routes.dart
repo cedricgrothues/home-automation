@@ -73,14 +73,14 @@ class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
 /// SlideTransitionRoute
 /// Custom route with a fade transition
 class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
-  SlideTransitionRoute({this.page})
+  SlideTransitionRoute({this.child})
       : super(
           pageBuilder: (
             BuildContext context,
             Animation<double> animation,
             Animation<double> secondaryAnimation,
           ) =>
-              page,
+              child,
           transitionsBuilder: (
             BuildContext context,
             Animation<double> animation,
@@ -100,5 +100,5 @@ class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
           },
         );
 
-  final Widget page;
+  final Widget child;
 }

@@ -4,10 +4,12 @@ import 'package:flutter/material.dart';
 
 import 'package:home/screens/wifi.dart';
 import 'package:home/screens/splash.dart';
+import 'package:home/screens/add/brand.dart';
 import 'package:home/screens/home/home.dart';
 import 'package:home/screens/setup/setup.dart';
 import 'package:home/screens/errors/failed.dart';
 import 'package:home/screens/setup/account.dart';
+import 'package:home/screens/settings/settings.dart';
 
 import 'package:home/components/routes.dart';
 import 'package:home/components/splash.dart';
@@ -63,7 +65,7 @@ class App extends StatelessWidget {
         ),
         splashFactory: const NoSplashFactory(),
         cardColor: const Color(0xFFF1F2F6),
-        errorColor: const Color(0xFFbd0026),
+        errorColor: const Color(0x33FC5B57),
         textTheme: TextTheme(
           headline5: TextStyle(
             fontSize: 24,
@@ -150,8 +152,8 @@ class App extends StatelessWidget {
         highlightColor: Colors.transparent,
         splashColor: Colors.transparent,
         splashFactory: const NoSplashFactory(),
-        cardColor: const Color(0xFF191d23),
-        errorColor: const Color(0xFF320111),
+        cardColor: const Color(0xFF1b1c1e),
+        errorColor: const Color(0x33FC5B57),
         textTheme: TextTheme(
           headline5: TextStyle(
             fontSize: 23,
@@ -208,30 +210,38 @@ class App extends StatelessWidget {
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
           case '/':
-            return FadeTransitionRoute<Splash>(
+            return FadeTransitionRoute<void>(
               child: Splash(),
             );
           case '/home':
-            return FadeTransitionRoute<Home>(
+            return FadeTransitionRoute<void>(
               child: Home(),
             );
           case '/setup':
-            return NoTransitionRoute<Setup>(
+            return NoTransitionRoute<void>(
               builder: (_) => Setup(),
               settings: settings,
             );
           case '/account':
-            return FadeTransitionRoute<AccountSetup>(
+            return FadeTransitionRoute<void>(
               child: AccountSetup(),
             );
           case '/wifi_required':
-            return NoTransitionRoute<NoWifi>(
+            return NoTransitionRoute<void>(
               builder: (_) => NoWifi(),
               settings: settings,
             );
           case '/connection_failed':
-            return FadeTransitionRoute<ConnectionFailed>(
+            return FadeTransitionRoute<void>(
               child: ConnectionFailed(),
+            );
+          case '/choose_brand':
+            return SlideTransitionRoute<void>(
+              child: SelectBrand(),
+            );
+          case '/settings':
+            return SlideTransitionRoute<void>(
+              child: Settings(),
             );
           default:
             return null;

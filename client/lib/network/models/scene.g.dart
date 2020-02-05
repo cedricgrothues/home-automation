@@ -12,8 +12,7 @@ Scene _$SceneFromJson(Map<String, dynamic> json) {
     name: json['name'] as String ?? '',
     owner: json['owner'] as String ?? '',
     actions: (json['actions'] as List)
-        ?.map((e) =>
-            e == null ? null : Action.fromJson(e as Map<String, dynamic>))
+        ?.map((dynamic e) => e == null ? null : Action.fromJson(e as Map<String, dynamic>))
         ?.toList(),
   );
 }

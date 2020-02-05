@@ -78,14 +78,6 @@ class _DiscoverState extends State<Discover> {
                   ),
                 ),
               ),
-              Spacer(flex: 1),
-              SizedBox(
-                height: 2,
-                child: LinearProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(Colors.white),
-                  backgroundColor: Colors.white24,
-                ),
-              ),
               Spacer(flex: 8),
             ],
           ),

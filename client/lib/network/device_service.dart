@@ -16,6 +16,7 @@ class DeviceService {
   /// should not be called afterwards, except if the screen
   /// needs to be refreshed.
   static Future<List<Device>> fetch() async {
+    print('refreshed');
     var devices = <Map<String, dynamic>>[];
 
     try {

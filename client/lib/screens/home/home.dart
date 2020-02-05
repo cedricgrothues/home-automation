@@ -6,12 +6,10 @@ import 'package:flutter/material.dart';
 
 import 'package:hive/hive.dart';
 
-import 'package:home/network/device_service.dart';
 import 'package:home/network/scene_service.dart';
-import 'package:home/screens/add/brand.dart';
+import 'package:home/network/device_service.dart';
 import 'package:home/screens/home/sections/device.dart';
 import 'package:home/screens/home/sections/scenes.dart';
-import 'package:home/screens/settings/settings.dart';
 
 class Home extends StatelessWidget {
   final Uint8List _image = base64.decode(Hive.box<String>('preferences').get('picture') ?? '');
@@ -32,49 +30,41 @@ class Home extends StatelessWidget {
         child: Scaffold(
           appBar: CupertinoNavigationBar(
             border: null,
-            leading: CupertinoButton(
+            trailing: CupertinoButton(
               child: Icon(
                 Icons.add,
                 size: 33,
+                semanticLabel: 'add device',
               ),
               padding: EdgeInsets.zero,
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (context) => SelectBrand(),
-                  isScrollControlled: true,
-                );
-              },
+              onPressed: () => Navigator.of(context).pushNamed('/choose_brand'),
             ),
-            trailing: CupertinoButton(
-              child: Container(
-                width: 33,
-                height: 33,
-                decoration: BoxDecoration(
-                  image: _image.isEmpty
-                      ? DecorationImage(
-                          image: AssetImage('assets/images/failed.png'),
-                          fit: BoxFit.cover,
-                        )
-                      : DecorationImage(
-                          image: MemoryImage(_image),
-                          fit: BoxFit.cover,
-                        ),
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Theme.of(context).buttonColor,
-                    width: 1.5,
+            leading: CupertinoButton(
+              child: Semantics(
+                hint: 'profile',
+                child: Container(
+                  width: 33,
+                  height: 33,
+                  decoration: BoxDecoration(
+                    image: _image.isEmpty
+                        ? DecorationImage(
+                            image: AssetImage('assets/images/failed.png'),
+                            fit: BoxFit.cover,
+                          )
+                        : DecorationImage(
+                            image: MemoryImage(_image),
+                            fit: BoxFit.cover,
+                          ),
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Theme.of(context).buttonColor,
+                      width: 1.5,
+                    ),
                   ),
                 ),
               ),
               padding: EdgeInsets.zero,
-              onPressed: () {
-                showModalBottomSheet<void>(
-                  context: context,
-                  builder: (context) => Settings(),
-                  isScrollControlled: true,
-                );
-              },
+              onPressed: () => Navigator.of(context).pushNamed('/settings'),
             ),
           ),
           body: PageView(

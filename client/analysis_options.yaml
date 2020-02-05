@@ -3,9 +3,8 @@ include: package:pedantic/analysis_options.yaml
 analyzer:
   exclude: [build/**, ios/**, android/**, web/**, mac/**, '**/*.g.dart']
   strong-mode:
-    # TODO: Set to false as soon as 
-    implicit-casts: true
-    implicit-dynamic: true
+    implicit-casts: false
+    implicit-dynamic: false
   errors:
     missing_required_param: warning
     missing_return: warning
