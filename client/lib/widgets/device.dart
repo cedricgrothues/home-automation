@@ -102,7 +102,7 @@ class _DeviceCardState extends State<DeviceCard> with WidgetsBindingObserver {
       },
       child: AnimatedOpacity(
         duration: const Duration(milliseconds: 100),
-        opacity: widget.device.state.power ?? false ? 1 : 0.5,
+        opacity: widget.device.state?.power ?? false ? 1 : 0.5,
         child: Container(
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(15),
@@ -117,7 +117,7 @@ class _DeviceCardState extends State<DeviceCard> with WidgetsBindingObserver {
               mainAxisSize: MainAxisSize.max,
               children: <Widget>[
                 Text(
-                  widget.device.room.name,
+                  widget.device.room?.name ?? 'None',
                   style: Theme.of(context).textTheme.bodyText1,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
@@ -125,7 +125,7 @@ class _DeviceCardState extends State<DeviceCard> with WidgetsBindingObserver {
                 Padding(
                   padding: const EdgeInsets.symmetric(vertical: 2.0),
                   child: Text(
-                    widget.device.name,
+                    widget.device.name ?? 'None',
                     style: Theme.of(context).textTheme.bodyText1,
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,

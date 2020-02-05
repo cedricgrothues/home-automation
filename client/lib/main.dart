@@ -62,7 +62,7 @@ class App extends StatelessWidget {
           color: Color(0xFF828287),
         ),
         splashFactory: const NoSplashFactory(),
-        cardColor: const Color(0xFFFFFFFF),
+        cardColor: const Color(0xFFF1F2F6),
         errorColor: const Color(0xFFbd0026),
         textTheme: TextTheme(
           headline5: TextStyle(

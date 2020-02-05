@@ -17,7 +17,7 @@ class StateLabel extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    if (device.state.error) {
+    if (device.state == null || device.state.error) {
       return Text(
         'No Response',
         style: style.copyWith(color: CupertinoColors.destructiveRed),
