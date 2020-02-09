@@ -9,6 +9,7 @@ import 'package:hive/hive.dart' show Hive;
 import 'package:home/network/scene_service.dart';
 import 'package:home/network/device_service.dart';
 import 'package:home/screens/home/sections/device.dart';
+import 'package:home/screens/home/sections/music.dart';
 import 'package:home/screens/home/sections/scenes.dart';
 
 class Home extends StatelessWidget {
@@ -18,6 +19,8 @@ class Home extends StatelessWidget {
   // so neither the FutureBuilder nor Image fires twice.
   final _devices = DeviceService.fetch();
   final _scenes = SceneService.fetch();
+
+  final _controller = PageController(initialPage: 1);
 
   @override
   Widget build(BuildContext context) {
@@ -68,8 +71,10 @@ class Home extends StatelessWidget {
             ),
           ),
           body: PageView(
+            controller: _controller,
             physics: ClampingScrollPhysics(),
             children: <Widget>[
+              MusicControl(),
               DeviceControl(devices: _devices),
               SceneControl(scenes: _scenes),
             ],

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart' show CupertinoButton;
 
-import 'package:home/components/labels.dart';
 import 'package:home/network/models/device.dart';
+import 'package:home/components/labels.dart';
 
 /// Details is called on a long-press on a `DeviceCard`.
 /// It shows detailed information on the device and
@@ -24,7 +24,7 @@ class _DeviceDetailsState extends State<DeviceDetails> {
       child: Align(
         alignment: Alignment.bottomLeft,
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.85,
+          height: MediaQuery.of(context).size.height * 0.94,
           constraints: const BoxConstraints(maxWidth: 420),
           decoration: BoxDecoration(
             color: Theme.of(context).cardColor,
