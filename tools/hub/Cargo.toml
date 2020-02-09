@@ -1,0 +1,9 @@
+[package]
+name = "hub"
+version = "0.1.0"
+authors = ["Cedric Grothues <cedricgrothues@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+clap = "2.33.0"
+ansi_term = "0.12"

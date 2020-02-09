@@ -1,5 +1,12 @@
+# node
 node_modules/
 *lock.json
+
 *.lock
 .idea/
+
+# macos
 .DS_Store
+
+# rust
+!Cargo.lock
