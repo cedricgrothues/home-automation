@@ -20,104 +20,107 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: CupertinoNavigationBar(
-        automaticallyImplyLeading: false,
-        trailing: CupertinoButton(
-          padding: EdgeInsets.zero,
-          child: Icon(Icons.close, size: 26),
-          onPressed: () => Navigator.of(context).pop(),
+    return SafeArea(
+      minimum: const EdgeInsets.only(top: 20),
+      child: Scaffold(
+        appBar: CupertinoNavigationBar(
+          automaticallyImplyLeading: false,
+          trailing: CupertinoButton(
+            padding: EdgeInsets.zero,
+            child: Icon(Icons.close, size: 26),
+            onPressed: () => Navigator.of(context).pop(),
+          ),
+          border: null,
         ),
-        border: null,
-      ),
-      body: PopupList(
-        discard: 'Done',
-        sections: <Widget>[
-          Section(
-            items: <Widget>[
-              PopupButton(
-                child: const Text('Star the GitHub Repo'),
-                onPressed: () => launch('https://github.com/cedricgrothues/home-automation'),
-              ),
-            ],
-          ),
-          Section(
-            title: 'App Settings',
-            items: <Widget>[
-              PopupButton(
-                child: const Text('Change app icon'),
-                onPressed: () {
-                  showModalBottomSheet<void>(
-                    builder: (BuildContext context) => ChangeAppIcon(),
-                    context: context,
-                    isScrollControlled: true,
-                  );
-                },
-              ),
-              PopupButton(
-                child: const Text('Change polling timeout'),
-                onPressed: () {},
-              ),
-            ],
-          ),
-          Section(
-            title: 'Troubleshooting',
-            items: <Widget>[
-              PopupButton(
-                child: const Text('View open issues'),
-                onPressed: () {},
-              ),
-              PopupButton(
-                child: const Text('Forum & Support'),
-                onPressed: () => launch('https://github.com/cedricgrothues/home-automation/issues'),
-              ),
-              PopupButton(
-                child: const Text('Show active projects'),
-                onPressed: () => launch('https://github.com/cedricgrothues/home-automation/projects'),
-              ),
-            ],
-          ),
-          Section(
-            title: 'Credits',
-            items: <Widget>[
-              PopupButton(
-                child: const Text('Open Source'),
-                onPressed: () {
-                  showLicensePage(
-                    context: context,
-                    applicationLegalese: 'Copyright © 2020 Cedric Grothues',
-                    applicationVersion: '0.1.0',
-                    applicationName: 'Home Assistent',
-                  );
-                },
-              ),
-              PopupButton(
-                child: const Text('Visit the Repository'),
-                onPressed: () {},
-              ),
-            ],
-          ),
-          Section(
-            title: 'Account',
-            items: <Widget>[
-              PopupButton(
-                child: const Text('Update account'),
-                onPressed: () => Navigator.of(context).pushReplacementNamed('/account'),
-              ),
-              PopupButton(
-                child: const Text(
-                  'Log out',
-                  style: TextStyle(color: Color(0xfffa5b70)),
+        body: PopupList(
+          discard: 'Done',
+          sections: <Widget>[
+            Section(
+              items: <Widget>[
+                PopupButton(
+                  child: const Text('Star the GitHub Repo'),
+                  onPressed: () => launch('https://github.com/cedricgrothues/home-automation'),
                 ),
-                onPressed: () async {
-                  await Hive.deleteFromDisk();
-                  unawaited(Navigator.of(context).pushReplacementNamed('/'));
-                },
-                type: ButtonType.destructive,
-              ),
-            ],
-          )
-        ],
+              ],
+            ),
+            Section(
+              title: 'App Settings',
+              items: <Widget>[
+                PopupButton(
+                  child: const Text('Change app icon'),
+                  onPressed: () {
+                    showModalBottomSheet<void>(
+                      builder: (BuildContext context) => ChangeAppIcon(),
+                      context: context,
+                      isScrollControlled: true,
+                    );
+                  },
+                ),
+                PopupButton(
+                  child: const Text('Change polling timeout'),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            Section(
+              title: 'Troubleshooting',
+              items: <Widget>[
+                PopupButton(
+                  child: const Text('View open issues'),
+                  onPressed: () {},
+                ),
+                PopupButton(
+                  child: const Text('Forum & Support'),
+                  onPressed: () => launch('https://github.com/cedricgrothues/home-automation/issues'),
+                ),
+                PopupButton(
+                  child: const Text('Show active projects'),
+                  onPressed: () => launch('https://github.com/cedricgrothues/home-automation/projects'),
+                ),
+              ],
+            ),
+            Section(
+              title: 'Credits',
+              items: <Widget>[
+                PopupButton(
+                  child: const Text('Open Source'),
+                  onPressed: () {
+                    showLicensePage(
+                      context: context,
+                      applicationLegalese: 'Copyright © 2020 Cedric Grothues',
+                      applicationVersion: '0.1.0',
+                      applicationName: 'Home Assistent',
+                    );
+                  },
+                ),
+                PopupButton(
+                  child: const Text('Visit the Repository'),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            Section(
+              title: 'Account',
+              items: <Widget>[
+                PopupButton(
+                  child: const Text('Update account'),
+                  onPressed: () => Navigator.of(context).pushReplacementNamed('/account'),
+                ),
+                PopupButton(
+                  child: const Text(
+                    'Log out',
+                    style: TextStyle(color: Color(0xfffa5b70)),
+                  ),
+                  onPressed: () async {
+                    await Hive.deleteFromDisk();
+                    unawaited(Navigator.of(context).pushReplacementNamed('/'));
+                  },
+                  type: ButtonType.destructive,
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }

@@ -16,10 +16,10 @@ class SceneCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CupertinoButton(
       padding: EdgeInsets.zero,
-      onPressed: () => SceneService.update(scene),
+      onPressed: () => SceneService.run(scene),
       child: Container(
         decoration: BoxDecoration(
-          color: Colors.blue[400],
+          color: Colors.indigo[400],
           borderRadius: BorderRadius.circular(15),
         ),
         child: Stack(
@@ -50,7 +50,7 @@ class SceneCard extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Text(
-                      scene.name,
+                      scene?.name ?? 'None',
                       style: Theme.of(context).textTheme.bodyText1.copyWith(
                             fontSize: 17,
                             color: Colors.white,
@@ -59,7 +59,7 @@ class SceneCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.only(top: 3.0),
                       child: Text(
-                        '${scene.actions.length} action${scene.actions.length <= 1 ? '' : 's'}',
+                        '${scene.actions?.length ?? 0} action${(scene.actions?.length ?? 0) <= 1 ? '' : 's'}',
                         style: TextStyle(
                           color: Colors.white54,
                           fontSize: 13,

@@ -4,7 +4,7 @@ import 'dart:typed_data' show Uint8List;
 import 'package:flutter/cupertino.dart' show CupertinoButton, CupertinoNavigationBar;
 import 'package:flutter/material.dart';
 
-import 'package:hive/hive.dart';
+import 'package:hive/hive.dart' show Hive;
 
 import 'package:home/network/scene_service.dart';
 import 'package:home/network/device_service.dart';

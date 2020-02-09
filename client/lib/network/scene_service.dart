@@ -55,7 +55,7 @@ class SceneService {
     return scenes != null ? scenes.map((scene) => Scene.fromJson(scene)).toList() : <Scene>[];
   }
 
-  static void update(Scene scene) async {
+  static void run(Scene scene) async {
     try {
       final result = await get('http://hub.local:4000/modules.scene/scenes/${scene.id}/run').timeout(
         const Duration(seconds: 1),

@@ -16,7 +16,6 @@ class DeviceService {
   /// should not be called afterwards, except if the screen
   /// needs to be refreshed.
   static Future<List<Device>> fetch() async {
-    print('refreshed');
     var devices = <Map<String, dynamic>>[];
 
     try {
@@ -96,7 +95,7 @@ class DeviceService {
 
   /// update alters the device state, based on the passed instance
   /// of [Device]. It's called when pressing a device card and returns
-  /// the updated device instance.
+  /// the updated [DeviceState] instance.
   static Future<DeviceState> update({Device device}) async {
     try {
       final result = await put(

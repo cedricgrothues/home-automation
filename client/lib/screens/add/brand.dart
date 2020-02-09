@@ -15,8 +15,7 @@ class SelectBrand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-      top: false,
-      bottom: false,
+      minimum: const EdgeInsets.only(top: 20),
       child: Scaffold(
         appBar: CupertinoNavigationBar(
           automaticallyImplyLeading: false,
