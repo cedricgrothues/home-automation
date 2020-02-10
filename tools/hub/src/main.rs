@@ -1,3 +1,4 @@
+mod config;
 mod install;
 
 extern crate clap;
@@ -27,6 +28,11 @@ fn main() {
         .get_matches();
 
     if let ("install", Some(command)) = args.subcommand() {
+        match config::read() {
+            Ok(_) => println!("Read config"),
+            Err(_) => println!("Read config"),
+        }
+
         let path = command.value_of("path").expect("No path specified!");
 
         match install(path) {
