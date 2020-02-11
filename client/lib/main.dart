@@ -183,7 +183,7 @@ class App extends StatelessWidget {
           bodyText1: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w700,
-            height: 1.2,
+            height: 1.1,
             color: Colors.white,
           ),
           caption: TextStyle(

@@ -9,7 +9,6 @@ import 'package:hive/hive.dart' show Hive;
 import 'package:home/network/scene_service.dart';
 import 'package:home/network/device_service.dart';
 import 'package:home/screens/home/sections/device.dart';
-import 'package:home/screens/home/sections/music.dart';
 import 'package:home/screens/home/sections/scenes.dart';
 
 class Home extends StatelessWidget {
@@ -74,7 +73,6 @@ class Home extends StatelessWidget {
             controller: _controller,
             physics: ClampingScrollPhysics(),
             children: <Widget>[
-              MusicControl(),
               DeviceControl(devices: _devices),
               SceneControl(scenes: _scenes),
             ],

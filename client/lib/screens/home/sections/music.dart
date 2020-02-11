@@ -94,8 +94,6 @@ class _MusicControlState extends State<MusicControl> with SingleTickerProviderSt
                 ],
               ),
             ),
-
-            // TODO: Update these items to reseamble the Apple Music app
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: <Widget>[
