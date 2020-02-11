@@ -17,7 +17,5 @@ pub fn install(path: &str) -> Result<(), std::io::Error> {
 
     out.push_str(format!("INSTALL_DIR={}\n", install_dir.to_str().unwrap()).as_str());
 
-    std::fs::write(&config_dir.join("generated.config"), out)?;
-
-    Ok(())
+    std::fs::write(&config_dir.join("generated.config"), out)
 }
