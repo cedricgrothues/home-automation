@@ -30,7 +30,7 @@ class App extends StatelessWidget {
         primaryColor: Colors.black,
         dialogBackgroundColor: const Color(0xFFf1f2f6),
         scaffoldBackgroundColor: const Color(0xFFFFFFFF),
-        fontFamily: 'Open Sans',
+        fontFamily: 'San Francisco',
         buttonColor: Colors.black,
         canvasColor: Colors.transparent,
         appBarTheme: AppBarTheme(
@@ -115,7 +115,7 @@ class App extends StatelessWidget {
         primaryColor: Colors.white,
         dialogBackgroundColor: const Color(0xFF0c1016),
         scaffoldBackgroundColor: const Color(0xFF000000),
-        fontFamily: 'Open Sans',
+        fontFamily: 'San Francisco',
         buttonColor: Colors.white,
         canvasColor: Colors.transparent,
         appBarTheme: AppBarTheme(
@@ -181,7 +181,7 @@ class App extends StatelessWidget {
             fontSize: 19,
           ),
           bodyText1: TextStyle(
-            fontSize: 13,
+            fontSize: 14,
             fontWeight: FontWeight.w700,
             height: 1.2,
             color: Colors.white,
@@ -198,6 +198,7 @@ class App extends StatelessWidget {
           ),
         ),
       ),
+      color: Color(0xFF000000),
 
       // The initial route is required to be the spash screen if
       // Hive is used, since it's initialized in Spash's initState

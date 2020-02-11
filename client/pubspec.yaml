@@ -57,17 +57,25 @@ flutter:
     - assets/images/
 
   fonts:
-    - family: Open Sans
+    - family: San Francisco
       fonts:
-        - asset: assets/fonts/OpenSans-Light.ttf
+        - asset: assets/fonts/SF-Pro-Display-Thin.otf
+          weight: 100
+        - asset: assets/fonts/SF-Pro-Display-Ultralight.otf
+          weight: 200
+        - asset: assets/fonts/SF-Pro-Display-Light.otf
           weight: 300
-        - asset: assets/fonts/OpenSans-Regular.ttf
+        - asset: assets/fonts/SF-Pro-Display-Regular.otf
           weight: 400
-        - asset: assets/fonts/OpenSans-SemiBold.ttf
+        - asset: assets/fonts/SF-Pro-Display-Medium.otf
+          weight: 500
+        - asset: assets/fonts/SF-Pro-Display-Semibold.otf
           weight: 600
-        - asset: assets/fonts/OpenSans-Bold.ttf
+        - asset: assets/fonts/SF-Pro-Display-Bold.otf
           weight: 700
-        - asset: assets/fonts/OpenSans-ExtraBold.ttf
+        - asset: assets/fonts/SF-Pro-Display-Heavy.otf
           weight: 800
+        - asset: assets/fonts/SF-Pro-Display-Black.otf
+          weight: 900
 
 publish_to: none
