@@ -1,12 +1,41 @@
-# Home Automation
+<p align="center">
+  <img src=".github/screenshots/icon.png" width="150">
+</p>
+<h1 align="center">Home Automation</h1>
+<h3 align="center">Open-source, distributed home automation system</h3>
 
-Home Automation is a distributed smart home system largely written in Go[<sup>1</sup>](#1) and Dart.
+<p align="center">
+  <a href="">
+    <img src="https://img.shields.io/badge/TestFlight-Get the beta-informational">
+  </a>
+  <a href="https://github.com/cedricgrothues/home-automation/releases">
+    <img src="https://img.shields.io/badge/Version-0.1.0+alpha.1-informational">
+  </a>
+</p>
+
+### About the project
+
+Home Automation is a distributed smart home system largely written in Go, Rust and Dart[<sup>1</sup>](#1).
 It's mostly meant as a learning opportunity rather than a production-ready system.
 
-<kbd><img src=".github/screenshots/setup_light.png" width=200/></kbd>
-<kbd><img src=".github/screenshots/setup_dark.png" width=200/></kbd>
-<kbd><img src=".github/screenshots/home_dark.png" width=200/></kbd>
-<kbd><img src=".github/screenshots/profile_dark.png" width=200/></kbd>
+The client has been built using the [Flutter](https://flutter.dev/) framework, which allows to build an app for mobile, desktop & web, from a single codebase.
+
+<p align="center">
+  <img src=".github/screenshots/setup_light.png" width="256" hspace="4">
+  <img src=".github/screenshots/setup_dark.png" width="256" hspace="4">
+  <img src=".github/screenshots/home_dark.png" width="256" hspace="4">
+</p>
+
+## Download & install
+
+First, clone the repository with the 'clone' command, or just download the zip.
+
+```
+$ git clone github.com/cedricgrothues/home-automation.git
+```
+
+Then, download any IDE, with their respective Rust, Go, Flutter and Docker plugins.
+There you go, you can now open & edit the project. Enjoy!
 
 ## Currently supported controllers
 
