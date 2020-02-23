@@ -3,9 +3,9 @@
 class ResponseException implements Exception {}
 
 /// PortExceptions should only be thrown in [NetworkAnalyzer] if an invalid port
-/// (`port < 1 || port > 65535`) was passed to the discover function
+/// (`port < 1 || port > 65535`) was passed to the discover function.
 class PortException implements Exception {}
 
 /// NotFoundException should only be thrown in [NetworkAnalyzer] if the
-/// device was not found with in the subnet
+/// device was not found with in the subnet.
 class NotFoundException implements Exception {}

@@ -7,32 +7,48 @@ part 'scene.g.dart';
 /// A [Scene] defines a set of executable [Actions]
 @JsonSerializable()
 class Scene {
-  Scene({this.id, this.name, this.owner, this.actions});
+  /// Creates a new [Scene].
+  const Scene({
+    this.id,
+    this.name,
+    this.owner,
+    this.actions,
+  });
 
+  /// Create a new [Scene] object from its JSON representation.
   factory Scene.fromJson(Map<String, dynamic> json) => _$SceneFromJson(json);
-  Map<String, dynamic> toJson() => _$SceneToJson(this);
 
   /// This defines the scenes identifier
   /// and is required to be unique.
   /// This value shoud not be set by the user.
   @JsonKey(name: 'id')
-  String id;
+  final String id;
 
   /// The human-readable name of the [Scene]
   @JsonKey(name: 'name', defaultValue: '')
-  String name;
+  final String name;
 
   /// Owner of the [Scene] is, whoever first created it.
   /// Must be a username registered with the core.user service.
   @JsonKey(name: 'owner', defaultValue: '')
-  String owner;
+  final String owner;
 
-  /// actions defines a [List] of executable [Actions]
+  /// Actions defines a [List] of executable [Actions]
   @JsonKey(name: 'actions')
-  List<Action> actions;
+  final List<Action> actions;
+
+  /// Serializes this object to a JSON primitive.
+  Map<String, dynamic> toJson() => _$SceneToJson(this);
 
   @override
   String toString() {
-    return 'Scene(name: $name, actions: $actions, id: $id, owner: $owner)';
+    final buf = StringBuffer()
+      ..write('$runtimeType(')
+      ..write('id: $id')
+      ..write(', name: $name')
+      ..write(', owner: $owner')
+      ..write(', actions: $actions')
+      ..write(')');
+    return buf.toString();
   }
 }

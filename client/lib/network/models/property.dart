@@ -5,21 +5,35 @@ part 'property.g.dart';
 /// [Property] defines a key, value pair in an [Action]
 @JsonSerializable()
 class Property {
-  Property({this.name, this.value});
+  /// Creates a new [Property].
+  const Property({
+    this.name,
+    this.value,
+  });
 
+  /// Create a new [Property] object from its JSON representation.
   factory Property.fromJson(Map<String, dynamic> json) => _$PropertyFromJson(json);
-  Map<String, dynamic> toJson() => _$PropertyToJson(this);
 
-  /// Property name
+  /// Human-readable name of the [Property]
   @JsonKey(name: 'name')
-  String name;
+  final String name;
 
-  /// Property value
+  /// Value of the [Property]
   @JsonKey(name: 'value')
-  dynamic value;
+  final dynamic value;
+
+  /// Serializes this object to a JSON primitive.
+  Map<String, dynamic> toJson() => _$PropertyToJson(this);
 
   @override
   String toString() {
-    return 'Property(name: $name, value: $value)';
+    final buf = StringBuffer()
+      ..write('$runtimeType(')
+      ..write('name: $name')
+      ..write(', value: $value')
+      ..write(
+        ')',
+      );
+    return buf.toString();
   }
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// NoTransitionRoute
-/// Custom route which has no transitions
+/// Custom route which has no transitions.
 class NoTransitionRoute<T> extends MaterialPageRoute<T> {
   NoTransitionRoute({WidgetBuilder builder, RouteSettings settings}) : super(builder: builder, settings: settings);
 
@@ -12,8 +11,7 @@ class NoTransitionRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-/// NoPushTransitionRoute
-/// Custom route which has no transition when pushed, but has a pop animation
+/// Custom route which has no transition when pushed, but has a pop animation.
 class NoPushTransitionRoute<T> extends MaterialPageRoute<T> {
   NoPushTransitionRoute({WidgetBuilder builder, RouteSettings settings}) : super(builder: builder, settings: settings);
 
@@ -28,8 +26,7 @@ class NoPushTransitionRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-/// NoPopTransitionRoute
-/// Custom route which has no transition when popped, but has a push animation
+/// Custom route which has no transition when popped, but has a push animation.
 class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
   NoPopTransitionRoute({WidgetBuilder builder, RouteSettings settings}) : super(builder: builder, settings: settings);
 
@@ -44,8 +41,7 @@ class NoPopTransitionRoute<T> extends MaterialPageRoute<T> {
   }
 }
 
-/// FadeTransitionRoute
-/// Custom route with a fade transition
+/// Custom route with a fade transition.
 class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   FadeTransitionRoute({this.child})
       : super(
@@ -70,8 +66,7 @@ class FadeTransitionRoute<T> extends PageRouteBuilder<T> {
   final Widget child;
 }
 
-/// SlideTransitionRoute
-/// Custom route with a fade transition
+/// Custom route with a slide transition.
 class SlideTransitionRoute<T> extends PageRouteBuilder<T> {
   SlideTransitionRoute({this.child})
       : super(

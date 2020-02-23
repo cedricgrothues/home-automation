@@ -200,7 +200,7 @@ class App extends StatelessWidget {
       ),
 
       // The initial route is required to be the spash screen if
-      // Hive is used, since it's initialized in Spash's initState
+      // Hive is used, since it's initialized in Spash's initState.
       initialRoute: '/',
 
       // As mentioned above, every child is wrapped in a NetworkAware widget

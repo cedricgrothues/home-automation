@@ -4,19 +4,30 @@ part 'ranged.g.dart';
 
 @JsonSerializable()
 class RangedValue {
-  RangedValue({this.min, this.max, this.value});
+  /// Creates a new [RangedValue].
+  const RangedValue({
+    this.min,
+    this.max,
+    this.value,
+  });
 
+  /// Create a new [RangedValue] object from its JSON representation.
   factory RangedValue.fromJson(Map<String, dynamic> json) => _$RangedValueFromJson(json);
-  Map<String, dynamic> toJson() => _$RangedValueToJson(this);
 
+  /// Minimum value of this [RangedValue]
   @JsonKey(name: 'min')
-  int min;
+  final int min;
 
+  /// Maximum value of this [RangedValue]
   @JsonKey(name: 'max')
-  int max;
+  final int max;
 
+  /// Current value of this [RangedValue]
   @JsonKey(name: 'value')
-  int value;
+  final int value;
+
+  /// Serializes this object to a JSON primitive.
+  Map<String, dynamic> toJson() => _$RangedValueToJson(this);
 
   @override
   bool operator ==(Object other) =>
@@ -29,4 +40,15 @@ class RangedValue {
 
   @override
   int get hashCode => min.hashCode ^ max.hashCode ^ value.hashCode;
+
+  @override
+  String toString() {
+    final buf = StringBuffer()
+      ..write('$runtimeType(')
+      ..write('value: $value')
+      ..write(', min: $min')
+      ..write(', max: $max')
+      ..write(')');
+    return buf.toString();
+  }
 }

@@ -16,9 +16,10 @@ Device _$DeviceFromJson(Map<String, dynamic> json) {
     room: json['room'] == null
         ? null
         : Room.fromJson(json['room'] as Map<String, dynamic>),
-  )..state = json['state'] == null
-      ? null
-      : DeviceState.fromJson(json['state'] as Map<String, dynamic>);
+    state: json['state'] == null
+        ? null
+        : DeviceState.fromJson(json['state'] as Map<String, dynamic>),
+  );
 }
 
 Map<String, dynamic> _$DeviceToJson(Device instance) => <String, dynamic>{
