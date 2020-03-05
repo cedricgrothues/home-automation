@@ -38,9 +38,9 @@ class Action {
   String toString() {
     final buf = StringBuffer()
       ..write('$runtimeType(')
-      ..write(', controller: $controller')
+      ..write('controller: $controller')
       ..write(', device: $device')
-      ..write(', property: ${property}')
+      ..write(', property: $property')
       ..write(')');
     return buf.toString();
   }

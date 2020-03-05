@@ -8,8 +8,34 @@ class AccountSetup extends StatefulWidget {
   _AccountSetupState createState() => _AccountSetupState();
 }
 
-class _AccountSetupState extends State<AccountSetup> {
+class _AccountSetupState extends State<AccountSetup> with SingleTickerProviderStateMixin {
   static String _first, _last;
+
+  double height = 750;
+
+  AnimationController _controller;
+  CurvedAnimation curve;
+  Animation<double> animation;
+
+  @override
+  void initState() {
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 500),
+      vsync: this,
+    );
+
+    curve = CurvedAnimation(parent: _controller, curve: Curves.easeOut);
+
+    animation = Tween<double>(begin: 450, end: 750).animate(curve)
+      ..addListener(() {
+        setState(() {
+          print(animation.value);
+          height = animation.value;
+        });
+      });
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,65 +81,35 @@ class _AccountSetupState extends State<AccountSetup> {
           ),
         ),
       ),
-      body: SafeArea(
-        minimum: const EdgeInsets.only(top: 20),
-        child: Center(
-          child: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 50),
-            child: ListView(
-              children: <Widget>[
-                TextField(
-                  maxLength: 20,
-                  maxLengthEnforced: true,
-                  enableSuggestions: false,
-                  autofocus: true,
-                  autocorrect: false,
-                  style: const TextStyle(fontSize: 22),
-                  keyboardType: TextInputType.text,
-                  keyboardAppearance: Theme.of(context).brightness,
-                  decoration: InputDecoration(
-                    helperText: 'first name'.toUpperCase(),
-                    helperStyle: TextStyle(fontSize: 12, color: Theme.of(context).buttonColor.withOpacity(0.2)),
-                    border: InputBorder.none,
-                  ),
-                  onSubmitted: (value) {
-                    if (value.trim() == '') return;
-
-                    setState(() => _first = value.trim());
-                  },
-                ),
-                TextField(
-                  maxLength: 20,
-                  maxLengthEnforced: true,
-                  enableSuggestions: false,
-                  autocorrect: false,
-                  style: const TextStyle(fontSize: 22),
-                  keyboardType: TextInputType.text,
-                  keyboardAppearance: Theme.of(context).brightness,
-                  decoration: InputDecoration(
-                    helperText: 'last name'.toUpperCase(),
-                    helperStyle: TextStyle(fontSize: 12, color: Theme.of(context).buttonColor.withOpacity(0.2)),
-                    border: InputBorder.none,
-                  ),
-                  onSubmitted: (value) {
-                    if (value.trim() == '') return;
-
-                    setState(() => _last = value.trim());
-                  },
-                ),
-                const SizedBox(height: 20),
-                Text(
-                  'By tapping \"Save\", you acknowledge that you have read the Privacy Policy and agree to the Terms of Service.',
-                  style: TextStyle(
-                    fontSize: 13,
-                    color: Theme.of(context).buttonColor,
-                    height: 1.4,
+      body: Stack(
+        alignment: Alignment.bottomCenter,
+        children: <Widget>[
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: <Widget>[
+              GestureDetector(
+                onPanEnd: (details) {
+                  _controller.forward(from: 450);
+                },
+                onPanUpdate: (details) {
+                  setState(() {
+                    height -= details.delta.dy * 0.5;
+                  });
+                },
+                child: Container(
+                  height: height,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(15),
+                      topLeft: Radius.circular(15),
+                    ),
                   ),
                 ),
-              ],
-            ),
-          ),
-        ),
+              ),
+            ],
+          )
+        ],
       ),
     );
   }
