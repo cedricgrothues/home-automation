@@ -9,19 +9,11 @@ part of 'state.dart';
 DeviceState _$DeviceStateFromJson(Map<String, dynamic> json) {
   return DeviceState(
     power: json['power'] as bool ?? false,
-    brightness: json['brightness'] == null
-        ? null
-        : RangedValue.fromJson(json['brightness'] as Map<String, dynamic>),
+    brightness: json['brightness'] == null ? null : RangedValue.fromJson(json['brightness'] as Map<String, dynamic>),
     colorMode: json['color_mode'] as String,
-    hue: json['hue'] == null
-        ? null
-        : RangedValue.fromJson(json['hue'] as Map<String, dynamic>),
-    saturation: json['saturation'] == null
-        ? null
-        : RangedValue.fromJson(json['saturation'] as Map<String, dynamic>),
-    temperature: json['temperature'] == null
-        ? null
-        : RangedValue.fromJson(json['temperature'] as Map<String, dynamic>),
+    hue: json['hue'] == null ? null : RangedValue.fromJson(json['hue'] as Map<String, dynamic>),
+    saturation: json['saturation'] == null ? null : RangedValue.fromJson(json['saturation'] as Map<String, dynamic>),
+    temperature: json['temperature'] == null ? null : RangedValue.fromJson(json['temperature'] as Map<String, dynamic>),
     error: json['error'] as bool ?? false,
   );
 }

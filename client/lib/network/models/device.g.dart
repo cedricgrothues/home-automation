@@ -13,12 +13,8 @@ Device _$DeviceFromJson(Map<String, dynamic> json) {
     type: json['type'] as String,
     controller: json['controller'] as String,
     address: json['address'] as String,
-    room: json['room'] == null
-        ? null
-        : Room.fromJson(json['room'] as Map<String, dynamic>),
-    state: json['state'] == null
-        ? null
-        : DeviceState.fromJson(json['state'] as Map<String, dynamic>),
+    room: json['room'] == null ? null : Room.fromJson(json['room'] as Map<String, dynamic>),
+    state: json['state'] == null ? null : DeviceState.fromJson(json['state'] as Map<String, dynamic>),
   );
 }
 

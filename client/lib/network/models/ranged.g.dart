@@ -14,8 +14,7 @@ RangedValue _$RangedValueFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$RangedValueToJson(RangedValue instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$RangedValueToJson(RangedValue instance) => <String, dynamic>{
       'min': instance.min,
       'max': instance.max,
       'value': instance.value,

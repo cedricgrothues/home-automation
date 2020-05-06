@@ -60,10 +60,11 @@ class _SetupState extends State<Setup> {
                       child: Text(
                         'All your smart speakers, lamps, and more controlled from one app, with location, time and temperature based scenes. All to ensure the best smart home experience possible.',
                         textAlign: TextAlign.center,
-                        style: Theme.of(context)
-                            .textTheme
-                            .subtitle2
-                            .copyWith(height: 2, fontWeight: FontWeight.w400, fontSize: 15),
+                        style: Theme.of(context).textTheme.subtitle2.copyWith(
+                              height: 2,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 15,
+                            ),
                         overflow: TextOverflow.ellipsis,
                         maxLines: 5,
                       ),
@@ -80,18 +81,22 @@ class _SetupState extends State<Setup> {
                       title: 'Connect to an existing system',
                       onPressed: () async {
                         try {
-                          await Socket.connect('hub.local', 4000)
-                            ..destroy();
+                          final socket = await Socket.connect('hub.local', 4000)
+                              .timeout(const Duration(seconds: 2));
+
+                          socket.destroy();
 
                           // Socket.connect did not throw an Exception, so we can assume that
                           // the hub is online and available
 
-                          unawaited(Navigator.of(context).pushReplacementNamed('/account'));
+                          unawaited(Navigator.of(context)
+                              .pushReplacementNamed('/account'));
                         } on SocketException {
                           // SocketException are thrown if `hub.local` was not found
                           // with in the device's network.
 
-                          unawaited(Navigator.of(context).pushReplacementNamed('/connection_failed'));
+                          unawaited(Navigator.of(context)
+                              .pushReplacementNamed('/connection_failed'));
                         }
                       },
                       width: MediaQuery.of(context).size.width - 150,
@@ -99,7 +104,10 @@ class _SetupState extends State<Setup> {
                     RichText(
                       text: TextSpan(
                         text: 'Need help? ',
-                        style: Theme.of(context).textTheme.subtitle2.copyWith(fontWeight: FontWeight.w500),
+                        style: Theme.of(context)
+                            .textTheme
+                            .subtitle2
+                            .copyWith(fontWeight: FontWeight.w500),
                         children: <TextSpan>[
                           TextSpan(
                             text: 'Visit the FAQ',
@@ -119,5 +127,6 @@ class _SetupState extends State<Setup> {
     );
   }
 
-  void help() => launch('https://github.com/cedricgrothues/home-automation/blob/master/README.md');
+  void help() => launch(
+      'https://github.com/cedricgrothues/home-automation/blob/master/README.md');
 }

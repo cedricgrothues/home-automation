@@ -10,9 +10,7 @@ Action _$ActionFromJson(Map<String, dynamic> json) {
   return Action(
     controller: json['controller'] as String,
     device: json['device'] as String,
-    property: json['property'] == null
-        ? null
-        : Property.fromJson(json['property'] as Map<String, dynamic>),
+    property: json['property'] == null ? null : Property.fromJson(json['property'] as Map<String, dynamic>),
   );
 }
 
