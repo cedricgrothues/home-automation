@@ -16,8 +16,8 @@ func main() {
 		w.Write([]byte(`{"name":"modules.sonos"}`))
 	}).Methods(http.MethodGet)
 
-	router.GET("/devices/:id", routes.GetState)
-	router.PUT("/devices/:id", routes.PatchState)
+	router.HandleFunc("/devices/:id", routes.GetState).Methods(http.MethodGet)
+	router.HandleFunc("/devices/:id", routes.PatchState).Methods(http.MethodPut)
 
 	panic(http.ListenAndServe(":4004", router))
 
