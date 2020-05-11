@@ -29,7 +29,7 @@ func ListenAndServe(c *routing.Configuration) error {
 
 		prefix := addSlashes(service.Identifier)
 
-		router.HandleFunc(prefix+"*s", handler(prefix, p))
+		router.PathPrefix(prefix).HandlerFunc(handler(prefix, p))
 	}
 
 	return http.ListenAndServe(port(c.Port), router)
