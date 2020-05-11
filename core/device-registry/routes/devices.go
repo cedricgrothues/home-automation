@@ -9,11 +9,11 @@ import (
 
 	"github.com/cedricgrothues/home-automation/core/device-registry/models"
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
 // AllDevices handles GET requests to /devices and returns a JSON structure describing all devices in the database
-func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func AllDevices(w http.ResponseWriter, r *http.Request) {
 	params := r.URL.Query()
 
 	rows, err := Database.Query(`SELECT d.id, d.name, d.type, d.controller, d.address, d.token, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND (length(CAST($1 AS TEXT)) <= 0 OR d.controller=$1)`, params.Get("controller"))
@@ -54,7 +54,7 @@ func AllDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // AddDevice handles POST requests to /devices and returns a JSON structure describing the added device if it's successfully been inserted into the database
-func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func AddDevice(w http.ResponseWriter, r *http.Request) {
 	device := models.Device{}
 
 	err := json.NewDecoder(r.Body).Decode(&device)
@@ -145,13 +145,14 @@ func AddDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // GetDevice handles GET requests to /devices/<id> and returns a JSON structure describing the requested device if it was found, else it returns a `404 NOT FOUND` error
-func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func GetDevice(w http.ResponseWriter, r *http.Request) {
 	params := r.URL.Query()
+	vars := mux.Vars(r)
 
 	var device models.Device
 	room := &models.Room{}
 
-	err := Database.QueryRow(`SELECT d.id, d.name, d.type, d.controller, d.address, d.token, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND (length(CAST($2 AS TEXT)) <= 0 OR d.controller=$2)`, p[0].Value, params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Token, &room.ID, &room.Name)
+	err := Database.QueryRow(`SELECT d.id, d.name, d.type, d.controller, d.address, d.token, r.id, r.name FROM devices d INNER JOIN rooms r ON d.room_id = r.id AND d.id=$1 AND (length(CAST($2 AS TEXT)) <= 0 OR d.controller=$2)`, vars["id"], params.Get("controller")).Scan(&device.ID, &device.Name, &device.Type, &device.Controller, &device.Address, &device.Token, &room.ID, &room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -159,7 +160,7 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Device with ID '%s' not found."}`, p[0].Value)))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Device with ID '%s' not found."}`, vars["id"])))
 			return
 		}
 	}
@@ -179,10 +180,11 @@ func GetDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // DeleteDevice handles DELETE requests to /devices/<id> and returns a `204 NO CONTENT` response if it was removed successfully, else it returns a `404 NOT FOUND` error
-func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func DeleteDevice(w http.ResponseWriter, r *http.Request) {
 	var id string
+	vars := mux.Vars(r)
 
-	err := Database.QueryRow("SELECT id FROM devices WHERE id=$1", p[0].Value).Scan(&id)
+	err := Database.QueryRow("SELECT id FROM devices WHERE id=$1", vars["id"]).Scan(&id)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -190,13 +192,13 @@ func DeleteDevice(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Device with ID '%s' not found."}`, p[0].Value)))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Device with ID '%s' not found."}`, vars["id"])))
 			return
 		}
 	}
 
 	statement, err := Database.Prepare("DELETE FROM devices WHERE id=$1")
-	_, err = statement.Exec(p[0].Value)
+	_, err = statement.Exec(vars["id"])
 
 	defer statement.Close()
 

@@ -8,14 +8,15 @@ import (
 	"strconv"
 
 	"github.com/cedricgrothues/home-automation/modules/scene/domain"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
 // ReadScene return the requested scene
-func ReadScene(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func ReadScene(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 	scene := domain.Scene{}
 
-	err := Database.QueryRow("SELECT id, name, owner FROM scenes WHERE id=$1", p[0].Value).Scan(&scene.ID, &scene.Name, &scene.Owner)
+	err := Database.QueryRow("SELECT id, name, owner FROM scenes WHERE id=$1", vars["id"]).Scan(&scene.ID, &scene.Name, &scene.Owner)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -23,12 +24,12 @@ func ReadScene(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Scene with ID '%s' not found."}`, p[0].Value)))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Scene with ID '%s' not found."}`, vars["id"])))
 			return
 		}
 	}
 
-	rows, err := Database.Query(`SELECT controller, device, property, value, type FROM actions WHERE scene_id=$1`, p[0].Value)
+	rows, err := Database.Query(`SELECT controller, device, property, value, type FROM actions WHERE scene_id=$1`, vars["id"])
 
 	defer rows.Close()
 

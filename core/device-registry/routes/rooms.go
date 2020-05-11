@@ -9,14 +9,14 @@ import (
 
 	"github.com/cedricgrothues/home-automation/core/device-registry/models"
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
 // Database defines a new shared postgres instance, that is defined in main package's main() method
 var Database *sql.DB
 
 // AllRooms handles all GET /rooms and handles them accordingly
-func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func AllRooms(w http.ResponseWriter, r *http.Request) {
 
 	var rooms []models.Room
 
@@ -64,7 +64,7 @@ func AllRooms(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // AddRoom trys to inserts a new room to the database instance defined in the Database variable
-func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func AddRoom(w http.ResponseWriter, r *http.Request) {
 	params := models.Room{}
 
 	err := json.NewDecoder(r.Body).Decode(&params)
@@ -105,10 +105,11 @@ func AddRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // GetRoom handles all GET requests to /rooms/<id> and either returns a json structure describing the room or a `Not Found` error, if the room can't be found in the database
-func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func GetRoom(w http.ResponseWriter, r *http.Request) {
 	var room models.Room
+	vars := mux.Vars(r)
 
-	err := Database.QueryRow(`SELECT id, name FROM rooms WHERE id=$1`, p[0].Value).Scan(&room.ID, &room.Name)
+	err := Database.QueryRow(`SELECT id, name FROM rooms WHERE id=$1`, vars["id"]).Scan(&room.ID, &room.Name)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -116,12 +117,12 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, p[0].Value)))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, vars["id"])))
 			return
 		}
 	}
 
-	rows, err := Database.Query(`SELECT id, name, type, controller, address, token FROM devices WHERE room_id=$1`, p[0].Value)
+	rows, err := Database.Query(`SELECT id, name, type, controller, address, token FROM devices WHERE room_id=$1`, vars["id"])
 
 	defer rows.Close()
 
@@ -149,10 +150,11 @@ func GetRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // DeleteRoom handles all DELETE requests to /rooms/<id> and return either a `404 NOT FOUND` if the room does not exist or a 204 response if it's been deleted successfully
-func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func DeleteRoom(w http.ResponseWriter, r *http.Request) {
 	var id string
+	vars := mux.Vars(r)
 
-	err := Database.QueryRow("SELECT id FROM rooms WHERE id=$1", p[0].Value).Scan(&id)
+	err := Database.QueryRow("SELECT id FROM rooms WHERE id=$1", vars["id"]).Scan(&id)
 
 	if err != nil {
 		if err != sql.ErrNoRows {
@@ -160,13 +162,13 @@ func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		} else {
 			w.Header().Add("Content-Type", "application/json; charset=utf-8")
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, p[0].Value)))
+			w.Write([]byte(fmt.Sprintf(`{"message":"Room with ID '%s' not found."}`, vars["id"])))
 			return
 		}
 	}
 
 	statement, err := Database.Prepare("DELETE FROM devices WHERE room_id=$1")
-	_, err = statement.Exec(p[0].Value)
+	_, err = statement.Exec(vars["id"])
 
 	defer statement.Close()
 
@@ -175,7 +177,7 @@ func DeleteRoom(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 	}
 
 	statement, err = Database.Prepare("DELETE FROM rooms WHERE id=$1")
-	_, err = statement.Exec(p[0].Value)
+	_, err = statement.Exec(vars["id"])
 
 	defer statement.Close()
 

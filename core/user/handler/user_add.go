@@ -5,15 +5,13 @@ import (
 	"encoding/json"
 	"net/http"
 	"regexp"
-
-	"github.com/cedricgrothues/httprouter"
 )
 
 // Database instance
 var Database *sql.DB
 
 // AddUser persists a new user in the database
-func AddUser(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func AddUser(w http.ResponseWriter, r *http.Request) {
 	user := struct {
 		Name string `json:"name"`
 	}{}

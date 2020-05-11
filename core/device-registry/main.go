@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/cedricgrothues/home-automation/core/device-registry/routes"
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
@@ -37,17 +38,17 @@ func main() {
 		panic(err)
 	}
 
-	router.GET("/devices", routes.AllDevices)
-	router.POST("/devices", routes.AddDevice)
+	router.HandleFunc("/devices", routes.AllDevices).Methods(http.MethodGet)
+	router.HandleFunc("/devices", routes.AddDevice).Methods(http.MethodPost)
 
-	router.GET("/devices/:id", routes.GetDevice)
-	router.DELETE("/devices/:id", routes.DeleteDevice)
+	router.HandleFunc("/devices/{id}", routes.GetDevice).Methods(http.MethodGet)
+	router.HandleFunc("/devices/{id}", routes.DeleteDevice).Methods(http.MethodDelete)
 
-	router.GET("/rooms", routes.AllRooms)
-	router.POST("/rooms", routes.AddRoom)
+	router.HandleFunc("/rooms", routes.AllRooms).Methods(http.MethodGet)
+	router.HandleFunc("/rooms", routes.AddRoom).Methods(http.MethodPost)
 
-	router.GET("/rooms/:id", routes.GetRoom)
-	router.DELETE("/rooms/:id", routes.DeleteRoom)
+	router.HandleFunc("/rooms/{id}", routes.GetRoom).Methods(http.MethodGet)
+	router.HandleFunc("/rooms/{id}", routes.DeleteRoom).Methods(http.MethodDelete)
 
 	panic(bootstrap.Start(router, 4001))
 }

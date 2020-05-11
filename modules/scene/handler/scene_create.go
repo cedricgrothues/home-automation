@@ -9,14 +9,13 @@ import (
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/modules/scene/domain"
-	"github.com/cedricgrothues/httprouter"
 )
 
 // Database is a passed on database instance
 var Database *sql.DB
 
 // CreateScene add a new Scene to the database
-func CreateScene(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func CreateScene(w http.ResponseWriter, r *http.Request) {
 	scene := domain.Scene{}
 
 	err := json.NewDecoder(r.Body).Decode(&scene)

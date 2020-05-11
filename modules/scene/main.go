@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
 	"github.com/cedricgrothues/home-automation/modules/scene/handler"
@@ -37,13 +38,13 @@ func main() {
 		panic(err)
 	}
 
-	router.GET("/scenes", handler.ListScenes)
-	router.POST("/scenes", handler.CreateScene)
+	router.HandleFunc("/scenes", handler.ListScenes).Methods(http.MethodGet)
+	router.HandleFunc("/scenes", handler.CreateScene).Methods(http.MethodPost)
 
-	router.GET("/scenes/:id", handler.ReadScene)
-	router.DELETE("/scenes/:id", handler.DeleteScene)
+	router.HandleFunc("/scenes/{id}", handler.ReadScene).Methods(http.MethodGet)
+	router.HandleFunc("/scenes/{id}", handler.DeleteScene).Methods(http.MethodDelete)
 
-	router.GET("/scenes/:id/run", handler.ExecScene)
+	router.HandleFunc("/scenes/{id}/run", handler.ExecScene).Methods(http.MethodGet)
 
 	panic(bootstrap.Start(router, 4006))
 }

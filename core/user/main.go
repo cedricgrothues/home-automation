@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
+	"net/http"
 
 	"github.com/cedricgrothues/home-automation/core/user/handler"
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
@@ -36,10 +37,10 @@ func main() {
 		panic(err)
 	}
 
-	router.GET("/users", handler.ListUsers)
-	router.POST("/users", handler.AddUser)
+	router.HandleFunc("/users", handler.ListUsers).Methods(http.MethodGet)
+	router.HandleFunc("/users", handler.AddUser).Methods(http.MethodPost)
 
-	router.DELETE("/users/:id", handler.RemoveUser)
+	router.HandleFunc("/users/{id}", handler.RemoveUser).Methods(http.MethodDelete)
 
 	panic(bootstrap.Start(router, 4002))
 }

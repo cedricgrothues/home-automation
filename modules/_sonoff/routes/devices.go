@@ -7,8 +7,8 @@ import (
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/modules/sonoff/dao"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/cedricgrothues/home-automation/modules/_sonoff/dao"
+	"github.com/gorilla/mux"
 )
 
 // Response : a typical response struct
@@ -22,9 +22,10 @@ type Response struct {
 }
 
 // GetState combines core.device-registry data, with device state
-func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func GetState(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 
-	device, err := dao.GetDeviceInfo(p[0].Value)
+	device, err := dao.GetDeviceInfo(vars["id"])
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -67,7 +68,8 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // PutState updates a device state
-func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func PutState(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 
 	var request struct {
 		Power bool `json:"power"`
@@ -80,7 +82,7 @@ func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	device, err := dao.GetDeviceInfo(p[0].Value)
+	device, err := dao.GetDeviceInfo(vars["id"])
 
 	if err != nil {
 		// undesirable solution, update in the near future

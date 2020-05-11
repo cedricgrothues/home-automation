@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/cedricgrothues/home-automation/modules/sonoff/helper"
+	"github.com/cedricgrothues/home-automation/modules/_sonoff/helper"
 )
 
 // GetState returns the requested devices state and an optional error

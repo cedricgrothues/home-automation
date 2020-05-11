@@ -9,13 +9,14 @@ import (
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
 	"github.com/cedricgrothues/home-automation/modules/aurora/nanoleaf"
 	"github.com/cedricgrothues/home-automation/modules/aurora/registry"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
 // GetState combines core.device-registry data, with device state
-func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func GetState(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 
-	device, err := registry.GetDeviceInfo(p[0].Value)
+	device, err := registry.GetDeviceInfo(vars["id"])
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {
@@ -84,7 +85,8 @@ func GetState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 }
 
 // PutState updates a device state
-func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func PutState(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 
 	state := struct {
 		Power       *bool `json:"power"`
@@ -102,7 +104,7 @@ func PutState(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
 		return
 	}
 
-	device, err := registry.GetDeviceInfo(p[0].Value)
+	device, err := registry.GetDeviceInfo(vars["id"])
 
 	if err != nil {
 		if match, _ := regexp.MatchString(`connection refused$`, err.Error()); !match {

@@ -6,7 +6,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
 type service struct {
@@ -14,10 +14,10 @@ type service struct {
 }
 
 // New creates a new bootstrap
-func New(name string) (*httprouter.Router, error) {
-	router := httprouter.New()
+func New(name string) (*mux.Router, error) {
+	router := mux.NewRouter()
 
-	router.GET("/", func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		bytes, err := json.Marshal(service{Name: name})
 
 		if err != nil {
@@ -29,13 +29,13 @@ func New(name string) (*httprouter.Router, error) {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 		w.Write(bytes)
-	})
+	}).Methods(http.MethodGet)
 
 	return router, nil
 }
 
 // Start a new service
-func Start(router *httprouter.Router, port int) error {
+func Start(router *mux.Router, port int) error {
 	log.Println("Starting service on port ", port)
 
 	return http.ListenAndServe(fmt.Sprintf(":%d", port), router)

@@ -8,13 +8,14 @@ import (
 	"strconv"
 
 	"github.com/cedricgrothues/home-automation/modules/scene/domain"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
-// ExecScene runs the scene asynchronous
-func ExecScene(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+// ExecScene runs the scene asynchronously
+func ExecScene(w http.ResponseWriter, r *http.Request) {
+	vars := mux.Vars(r)
 
-	rows, err := Database.Query(`SELECT controller, device, property, value, type FROM actions WHERE scene_id=$1`, p[0].Value)
+	rows, err := Database.Query(`SELECT controller, device, property, value, type FROM actions WHERE scene_id=$1`, vars["id"])
 
 	defer rows.Close()
 

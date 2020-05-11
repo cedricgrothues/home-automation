@@ -4,17 +4,17 @@ import (
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/modules/sonos/routes"
-	"github.com/cedricgrothues/httprouter"
+	"github.com/gorilla/mux"
 )
 
 func main() {
-	router := httprouter.New()
+	router := mux.NewRouter()
 
-	router.GET("/", func(w http.ResponseWriter, r *http.Request, params httprouter.Params) {
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Add("Content-Type", "application/json; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(`{"name":"modules.sonos"}`))
-	})
+	}).Methods(http.MethodGet)
 
 	router.GET("/devices/:id", routes.GetState)
 	router.PUT("/devices/:id", routes.PatchState)

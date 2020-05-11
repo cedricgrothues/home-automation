@@ -6,11 +6,10 @@ import (
 	"strconv"
 
 	"github.com/cedricgrothues/home-automation/modules/scene/domain"
-	"github.com/cedricgrothues/httprouter"
 )
 
 // ListScenes returns all stored scenes
-func ListScenes(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func ListScenes(w http.ResponseWriter, r *http.Request) {
 
 	var scenes []domain.Scene
 

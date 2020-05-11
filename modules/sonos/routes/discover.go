@@ -5,11 +5,10 @@ import (
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/modules/sonos/discovery"
-	"github.com/cedricgrothues/httprouter"
 )
 
 // DiscoverDevices returns all devices found this service's network, using ssdp discovery
-func DiscoverDevices(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func DiscoverDevices(w http.ResponseWriter, r *http.Request) {
 	devices := make(chan *discovery.Sonos)
 	done := make(chan bool)
 	errors := make(chan error)

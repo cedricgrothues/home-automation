@@ -4,12 +4,10 @@ import (
 	"database/sql"
 	"encoding/json"
 	"net/http"
-
-	"github.com/cedricgrothues/httprouter"
 )
 
 // ListUsers returns all users from the database
-func ListUsers(w http.ResponseWriter, r *http.Request, p httprouter.Params) {
+func ListUsers(w http.ResponseWriter, r *http.Request) {
 	rows, err := Database.Query(`SELECT name FROM users`)
 
 	defer rows.Close()
