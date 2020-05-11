@@ -5,9 +5,6 @@
 <h3 align="center">Open-source, distributed home automation system</h3>
 
 <p align="center">
-  <a href="">
-    <img src="https://img.shields.io/badge/TestFlight-Get the beta-informational">
-  </a>
   <a href="https://github.com/cedricgrothues/home-automation/releases">
     <img src="https://img.shields.io/badge/Version-0.1.0+alpha.1-informational">
   </a>
@@ -41,8 +38,8 @@ There you go, you can now open & edit the project. Enjoy!
 
 | Controller | Description | Status |
 | --- | --- | --- |
-| modules.aurora | A controller for Nanoleaf Aurora lightpanels      | Alpha |
-| modules.sonoff | A controller for sonoff tasmota lights and plugs  | Alpha |
+| modules.aurora | A controller for Nanoleaf Aurora lightpanels      | Preview |
+| modules.sonoff | A controller for sonoff tasmota lights and plugs  | Preview |
 | modules.sonos  | A controller for all types of sonos speakers      | WIP   |
 | modules.hue    | tbd                                               | Planned |
 
@@ -50,13 +47,13 @@ There you go, you can now open & edit the project. Enjoy!
 
 | Service | Description | Status |
 | --- | --- | --- |
-| core.api-gateway      | The API Gateway                                   | Alpha |
-| core.user             | User management                                   | Alpha |
-| core.device-registry  | The Device Registry Service                       | Alpha |
+| core.api-gateway      | The API Gateway                                   | Preview |
+| core.user             | User management                                   | Preview |
+| core.device-registry  | The Device Registry Service                       | Preview |
 | modules.scene         | The scene controller                              | WIP   |
 | modules.schedule      | The schedule controller                           | WIP   |
-| modules.aurora        | A controller for Nanoleaf Aurora lightpanels      | Alpha |
-| modules.sonoff        | A controller for sonoff tasmota lights and plugs  | Alpha |
+| modules.aurora        | A controller for Nanoleaf Aurora lightpanels      | Preview |
+| modules.sonoff        | A controller for sonoff tasmota lights and plugs  | Preview |
 | modules.sonos         | A controller for all types of sonos speakers      | WIP   |
 
 ## Usage
