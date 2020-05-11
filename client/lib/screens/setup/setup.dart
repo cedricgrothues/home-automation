@@ -90,7 +90,7 @@ class _SetupState extends State<Setup> {
                           // the hub is online and available
 
                           unawaited(Navigator.of(context)
-                              .pushReplacementNamed('/account'));
+                              .pushReplacementNamed('/home'));
                         } on SocketException {
                           // SocketException are thrown if `hub.local` was not found
                           // with in the device's network.
