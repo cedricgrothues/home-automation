@@ -2,17 +2,17 @@ import 'package:flutter/services.dart' show SystemChrome, DeviceOrientation;
 import 'package:flutter/cupertino.dart' show CupertinoThemeData;
 import 'package:flutter/material.dart';
 
-import 'package:home/screens/wifi.dart';
-import 'package:home/screens/splash.dart';
-import 'package:home/screens/add/brand.dart';
-import 'package:home/screens/home/home.dart';
-import 'package:home/screens/setup/setup.dart';
-import 'package:home/screens/errors/failed.dart';
-import 'package:home/screens/setup/account.dart';
-import 'package:home/screens/settings/settings.dart';
+import 'src/screens/wifi.dart';
+import 'src/screens/splash.dart';
+import 'src/screens/add/brand.dart';
+import 'src/screens/home/home.dart';
+import 'src/screens/setup/setup.dart';
+import 'src/screens/errors/failed.dart';
+import 'src/screens/setup/account.dart';
+import 'src/screens/settings/settings.dart';
 
-import 'package:home/components/routes.dart';
-import 'package:home/components/splash.dart';
+import 'src/components/routes.dart';
+import 'src/components/splash.dart';
 
 void main() => runApp(App());
 
