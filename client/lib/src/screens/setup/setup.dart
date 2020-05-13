@@ -3,6 +3,7 @@ import 'dart:io' show Socket, SocketException;
 import 'package:flutter/material.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:hive/hive.dart';
 
 import 'package:pedantic/pedantic.dart' show unawaited;
 import 'package:url_launcher/url_launcher.dart' show launch;
@@ -88,6 +89,9 @@ class _SetupState extends State<Setup> {
 
                           // Socket.connect did not throw an Exception, so we can assume that
                           // the hub is online and available
+
+                          final box = Hive.box<String>('preferences');
+                          await box.put('username', 'tmpusr');
 
                           unawaited(Navigator.of(context)
                               .pushReplacementNamed('/home'));

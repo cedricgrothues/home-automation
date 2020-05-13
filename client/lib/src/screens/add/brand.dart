@@ -27,6 +27,7 @@ class SelectBrand extends StatelessWidget {
           border: null,
         ),
         body: PopupList(
+          discardAction: (context) => Navigator.of(context).pop(),
           discard: 'Cancel',
           header: <Widget>[
             const Padding(
@@ -60,13 +61,14 @@ class SelectBrand extends StatelessWidget {
                 //
                 // 1. No devices found
                 // 2. One device found
-                // 3. N devices found (with N > 1)
+                // 3. More then 1 devices found
 
                 Navigator.of(context).push(
                   FadeTransitionRoute<void>(
                     child: Discover(
-                        target: 'nanoleaf_aurora:light',
-                        controller: 'modules.aurora'),
+                      target: 'nanoleaf_aurora:light',
+                      controller: 'modules.aurora',
+                    ),
                   ),
                 );
               },
