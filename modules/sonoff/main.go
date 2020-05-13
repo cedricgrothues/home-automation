@@ -4,7 +4,7 @@ import (
 	"net/http"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/bootstrap"
-	"github.com/cedricgrothues/home-automation/modules/_sonoff/routes"
+	"github.com/cedricgrothues/home-automation/modules/sonoff/routes"
 )
 
 func main() {

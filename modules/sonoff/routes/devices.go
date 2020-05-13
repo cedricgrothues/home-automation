@@ -7,7 +7,7 @@ import (
 	"regexp"
 
 	"github.com/cedricgrothues/home-automation/libraries/go/errors"
-	"github.com/cedricgrothues/home-automation/modules/_sonoff/dao"
+	"github.com/cedricgrothues/home-automation/modules/sonoff/dao"
 	"github.com/gorilla/mux"
 )
 
