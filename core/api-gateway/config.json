@@ -8,7 +8,7 @@
         },
         {
             "identifier": "core.user",
-            "name": "Device Registry",
+            "name": "User Registry",
             "upstream": "http://core.user:4002"
         },
         {
