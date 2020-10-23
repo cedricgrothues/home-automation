@@ -67,7 +67,7 @@ The api gateway service reads data from `core.api-gateway/config.json` and distr
 Example config.json structure:
 ```json
 {
-    "port": ,
+    "port": 4000,
     "services": [
         {
             "identifier": "core.device-registry",
