@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-/// Defines a [Section] in a [PopupList].
-///
-/// While the [title] may be null, items may not.
+/// A [Section] in a [PopupList].
 class Section extends StatelessWidget {
   const Section({Key key, this.title, @required this.items})
       : assert(items != null),

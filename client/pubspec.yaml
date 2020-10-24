@@ -9,7 +9,7 @@ author: Cedric Grothues <cedricgrothues@gmail.com>
 repository: https://www.github.com/cedricgrothues/home-automation
 
 environment:
-  sdk: ">=2.3.0 <3.0.0"
+  sdk: '>=2.3.0 <3.0.0'
 
 dependencies:
   flutter:
@@ -18,10 +18,10 @@ dependencies:
   # Effective Dart (Static analysis)
   pedantic: ^1.9.0
 
-  # get the database path
+  # Commonly used locations on the filesystem
   path_provider: ^1.6.0
 
-  # Open the Help URL
+  # Open URLs
   url_launcher: ^5.4.1
 
   # Used to check if the user
@@ -39,15 +39,13 @@ dependencies:
 
   # JSON Parsing
   json_annotation: ^3.0.1
-  
+
 dev_dependencies:
   # JSON Parsing
   json_serializable: ^3.2.5
 
   # Used to autogenerate JSON files
   build_runner: ^1.7.3
-    
-      
 
 flutter:
   uses-material-design: true

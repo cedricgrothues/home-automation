@@ -26,7 +26,7 @@ class DeviceState {
   @JsonKey(includeIfNull: false, defaultValue: false)
   bool power;
 
-  /// The Device's brightness (e.g. min: 0, max: 100, value: 50).
+  /// The Device brightness.
   @JsonKey(includeIfNull: false)
   RangedValue brightness;
 
@@ -34,7 +34,7 @@ class DeviceState {
   @JsonKey(name: 'color_mode', includeIfNull: false)
   String colorMode;
 
-  /// The Device's (color) temperature.
+  /// The Device's color temperature.
   @JsonKey(includeIfNull: false)
   RangedValue temperature;
 
@@ -46,7 +46,7 @@ class DeviceState {
   @JsonKey(includeIfNull: false)
   RangedValue saturation;
 
-  /// True the current [DeviceState] contains an error.
+  /// `true` if the current [DeviceState] contains an error.
   @JsonKey(defaultValue: false)
   bool error = false;
 

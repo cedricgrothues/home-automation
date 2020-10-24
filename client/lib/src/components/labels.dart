@@ -3,8 +3,8 @@ import 'package:flutter/cupertino.dart' show CupertinoColors;
 
 import 'package:home/src/network/models/device.dart';
 
-/// The [StateLabel] class defines a `Text` that holds device information,
-/// like the `power` and `brightness`state.
+/// The [StateLabel] defines a `Text` that contains device
+/// information, like the `power` or `brightness`state.
 class StateLabel extends StatelessWidget {
   const StateLabel(
       {Key key, @required this.device, @required this.style, this.long = false})

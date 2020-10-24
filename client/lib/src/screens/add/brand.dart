@@ -8,9 +8,8 @@ import 'package:home/src/screens/settings/components/button.dart';
 import 'package:home/src/screens/settings/components/list.dart';
 
 /// [SelectBrand] screen is the first screen the user sees,
-/// when the add device button is pressed. It's use is, as
-/// expected, to offer the user a selection of possible brands and
-/// store the proper way to discover the a new [Device] (`SSDP` or `IP`)
+/// when the add device button is pressed. Used to offer the
+/// user with a selection of possible brands.
 class SelectBrand extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

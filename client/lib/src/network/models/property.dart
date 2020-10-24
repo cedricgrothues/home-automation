@@ -2,7 +2,7 @@ import 'package:json_annotation/json_annotation.dart' show JsonSerializable, Jso
 
 part 'property.g.dart';
 
-/// [Property] defines a key, value pair in an [Action]
+/// [Property] defines a key/value pair in an [Action].
 @JsonSerializable()
 class Property {
   /// Creates a new [Property].

@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Theme;
 
-/// The [ButtonType] choosen defines the look
+/// The [ButtonType] chosen defines the look
 /// of the parent [PopupButton] Widget.
 ///
-/// `ButtonType.destructive` should be choosen,
+/// `ButtonType.destructive` should be chosen,
 /// if the action might change or delete data.
 /// Destructive buttons have a red background.
 enum ButtonType {
@@ -12,8 +12,7 @@ enum ButtonType {
   destructive,
 }
 
-/// Creates a button that is supposed to be
-/// used within a [PopupList]
+/// Creates a [PopupButton] used within a [PopupList].
 class PopupButton extends StatelessWidget {
   const PopupButton({Key key, this.onPressed, @required this.child, this.type = ButtonType.normal, this.height = 66})
       : super(key: key);

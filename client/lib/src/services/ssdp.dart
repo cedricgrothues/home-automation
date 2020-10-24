@@ -6,9 +6,7 @@ import 'package:pedantic/pedantic.dart' show unawaited;
 
 final InternetAddress multicast = InternetAddress('239.255.255.250');
 
-/// Quick discover all devices ssdp devices that comply with the specified `target`.
-///
-/// [target] may not be null
+/// Quickly discover all devices that match the specified `target`.
 Stream<String> discover({String target = 'ssdp:all'}) async* {
   final _controller = StreamController<String>();
 
@@ -22,8 +20,7 @@ Stream<String> discover({String target = 'ssdp:all'}) async* {
   try {
     _socket = await RawDatagramSocket.bind(InternetAddress.anyIPv4, 0);
   } on SocketException catch (error) {
-    // An error occured while trying to bind the _socket.
-    // Forwarding the error.
+    // Unable to bind `InternetAddress.anyIPv4` to `_socket`.
 
     print('Failed to join ipv4 multicast group: $error');
 

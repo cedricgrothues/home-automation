@@ -2,9 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:connectivity/connectivity.dart' show Connectivity, ConnectivityResult;
 
-/// NetworkAware: This widget renders a `NoWifi()` screen above the current `child`
-/// if it detects a state change from the `ConnectivityResult Provider` defined in main.dart's
-/// `MultiProvider` Widget. If this provider is not present, the widgit will throw an exception.
+/// [NetworkAware] renders a `NoWifi()` screen above the current `child` if
+/// it detects a `ConnectivityResult` state change.
 class NetworkAware extends StatelessWidget {
   const NetworkAware({Key key, @required this.child}) : super(key: key);
 
@@ -14,9 +13,9 @@ class NetworkAware extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    /// Register a StreamBuilder that listens to the connectivity result
-    /// changes. This is used to show a `NoWifi` page, if wifi is
-    /// not availiable. Register all other global providers here.
+    /// Register a [StreamBuilder] that listens to [ConnectivityResult]
+    /// changes. This is used to show a `NoWifi` page, if the user is not
+    /// connected to wifi.
     return StreamBuilder<ConnectivityResult>(
       stream: stream,
       initialData: ConnectivityResult.wifi,
@@ -32,8 +31,8 @@ class NetworkAware extends StatelessWidget {
   }
 }
 
-/// This class defines the widget that is rendered above NetworkAware's current child.
-/// See `NetworkAware` for more information on this.
+/// [NoWifi] is rendered above NetworkAware's current child.
+/// See [NetworkAware] for more information on this widget.
 class NoWifi extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

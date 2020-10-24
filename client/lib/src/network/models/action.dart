@@ -17,18 +17,15 @@ class Action {
   /// Create a new [Action] object from its JSON representation.
   factory Action.fromJson(Map<String, dynamic> json) => _$ActionFromJson(json);
 
-  /// The device's resp. controller.
+  /// A controller responsible for controlling the [device].
   @JsonKey(name: 'controller')
   final String controller;
 
-  /// Defines the device the given [property]
-  /// is supposed to be executed on.
+  /// Defines the device the [property] executed on.
   @JsonKey(name: 'device')
   final String device;
 
-  /// Defines a [property] consisting of a
-  /// name, e.g. 'power' and a value,
-  /// e.g. true.
+  /// Defines a new [Property] instance.
   @JsonKey(name: 'property')
   final Property property;
 

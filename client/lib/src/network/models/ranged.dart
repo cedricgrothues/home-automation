@@ -14,11 +14,11 @@ class RangedValue {
   /// Create a new [RangedValue] object from its JSON representation.
   factory RangedValue.fromJson(Map<String, dynamic> json) => _$RangedValueFromJson(json);
 
-  /// Minimum value of this [RangedValue]
+  /// Lowest possible value
   @JsonKey(name: 'min')
   final int min;
 
-  /// Maximum value of this [RangedValue]
+  /// Highest possible value
   @JsonKey(name: 'max')
   final int max;
 

@@ -21,8 +21,8 @@ class _SplashState extends State<Splash> {
   void initState() {
     super.initState();
 
-    // Add the status() function as post frame callback so it's called
-    // after _SplashState's first build
+    // Add the status() function as post frame callback
+    // so it's called after _SplashState's initial build.
     WidgetsBinding.instance.addPostFrameCallback((_) => status());
   }
 
@@ -32,7 +32,9 @@ class _SplashState extends State<Splash> {
   }
 
   /// The status function checks the connection to the API Gateway service and redirects
-  /// the user to the appropriate screen. This function may not be called during build.
+  /// the user to the correct screen.
+  ///
+  /// Don't call this function during build.
   Future<void> status() async {
     if (!kIsWeb) {
       Hive.init(Platform.isMacOS
@@ -43,8 +45,9 @@ class _SplashState extends State<Splash> {
     final box = await Hive.openBox<String>('preferences');
 
     if (!box.containsKey('username')) {
-      // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
-      // so we'll redirect them to the account setup page
+      // The API gateway might be available, but the user has not
+      // yet chosen a username and/or profile picture, so we'll
+      // redirect them to the account setup page
       unawaited(Navigator.of(context).pushReplacementNamed('/setup'));
       return;
     }
@@ -58,13 +61,13 @@ class _SplashState extends State<Splash> {
       // that this is the possible status code the server will return this if the response was successfull.
       if (response.statusCode != 200) throw ResponseException();
 
-      // There is no need to decode the json response. Simply check if the response contains the service name.
+      // Don't accept any other status codes than OK.
       if (!response.body.contains('core.api-gateway')) {
         throw ResponseException();
       }
 
-      // The api gateway is available and the user finished the setup process
-      // so we'll redirect the user to their home page
+      // The API gateway is available and the user finished the setup process
+      // so we'll redirect the user to the home page.
       unawaited(Navigator.of(context).pushReplacementNamed('/home'));
     } on SocketException catch (error) {
       // SocketExceptions are thrown if there appears to be a problem with the users internet connection

@@ -19,8 +19,7 @@ void main() => runApp(App());
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // This locks the device orientation to a portrait up position.
-    // After sufficient testing, edit this list to enable other device orientations.
+    // Locks the device orientation to a portrait up position.
     SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
 
     return MaterialApp(
@@ -199,13 +198,13 @@ class App extends StatelessWidget {
         ),
       ),
 
-      // The initial route is required to be the spash screen if
-      // Hive is used, since it's initialized in Spash's initState.
+      // Set the initial route to `/` to make
+      // sure Hive is initialized properly.
       initialRoute: '/',
 
-      // As mentioned above, every child is wrapped in a NetworkAware widget
-      // to detect network state changes and show an error message if the
-      // client is not connected to wifi.
+      // Every child is wrapped in a NetworkAware widget to detect network
+      // state changes and and present the client with an error screen
+      // if they're not connected to wifi.
       builder: (context, Widget child) => NetworkAware(child: child),
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
@@ -248,10 +247,10 @@ class App extends StatelessWidget {
         }
       },
 
-      // Add all supported locales here:
-      supportedLocales: const [Locale('en', 'UK')],
+      // All supported locales
+      supportedLocales: const [Locale('en', 'US')],
 
-      // Remove the bright red debug banner if we're in debug mode
+      // Hide the bright red debug banner
       debugShowCheckedModeBanner: false,
     );
   }

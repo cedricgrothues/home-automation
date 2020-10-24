@@ -10,12 +10,12 @@ import 'package:home/src/network/models/device.dart';
 import 'package:home/src/network/device_service.dart';
 import 'package:home/src/screens/controls/details.dart';
 
-/// DeviceCard shows basic information about it's [device].
+/// [DeviceCard] displays basic information about it's [device].
 /// For all types of devices the name and the room will be shown, together with
 /// the appropriate icon. For non-dimmable lamps, the power status will be shown.
 /// For dimmable and colorful lamps, the brightness value will be shown
-/// (If `power` is false, the brightness will be 0%). A speakers' status will either be
-/// `playing` or `paused`
+/// (If `power` is false, the brightness is 0%). A speakers' status is either
+/// `playing` or `paused`.
 class DeviceCard extends StatefulWidget {
   const DeviceCard(this.device, {Key key}) : super(key: key);
 

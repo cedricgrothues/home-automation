@@ -6,10 +6,11 @@ import 'package:http/http.dart' show get;
 import 'package:home/src/network/models/device.dart' show Device;
 import 'package:home/src/models/errors.dart' show ResponseException;
 
-/// The [RegistryService] handles all requests regarding core.device-registry
+/// [RegistryService] handles all requests to `core.device-registry`
 class RegistryService {
-  /// Exists checks wheter the given address exists within the
-  /// scope of the controller (if not null) or the entire device-registry
+  /// `exists` checks wheter the given address exists within the
+  /// scope of the entire `device-registry` or the `controller`
+  /// (if it's not null).
   static Future<bool> exists(String address, {String controller = ''}) async {
     if (controller != '') controller = '?controller=' + controller;
 

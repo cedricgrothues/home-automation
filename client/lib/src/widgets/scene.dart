@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart' show CupertinoButton;
 import 'package:home/src/network/models/scene.dart';
 import 'package:home/src/network/scene_service.dart';
 
-/// SceneCard shows basic information about it's [scene].
+/// [SceneCard] shows basic information about it's [scene].
 /// For all types of scenes the name together with the
 /// appropriate icon will be shown.
 class SceneCard extends StatelessWidget {

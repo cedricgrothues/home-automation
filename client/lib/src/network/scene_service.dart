@@ -10,7 +10,7 @@ import 'package:home/src/network/models/scene.dart';
 /// The [DeviceService] handles all requests regarding a
 /// [Device]'s state, such as refreshing, fetching and updating
 class SceneService {
-  /// fetch is called when first loading the [Home] screen
+  /// `fetch` is called when first loading the [Home] screen
   /// This method will return the inital list of devices and
   /// should not be called afterwards, except if the screen
   /// needs to be refreshed.

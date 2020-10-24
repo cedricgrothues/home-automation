@@ -105,8 +105,9 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
     final box = Hive.box<String>('preferences');
 
     if (!box.containsKey('username')) {
-      // While the api gateway is availiable, the user has not yet choosen a username and / or profile picture
-      // so we'll redirect them to the account setup page
+      // The API gateway might be available, but the user has not
+      // yet chosen a username and/or profile picture, so we'll
+      // redirect them to the account setup page
       unawaited(Navigator.of(context).pushReplacementNamed('/setup'));
       return;
     }
@@ -116,17 +117,18 @@ class _ConnectionFailedState extends State<ConnectionFailed> {
         const Duration(seconds: 2),
       );
 
-      // Here we won't accept any status code that is not `200` / http.StatusOK since we know
-      // that this is the possible status code the server will return this if the response was successfull.
+      // Don't accept any other status codes than OK.
       if (response.statusCode != 200) throw ResponseException();
 
-      // There is no need to decode the json response. Simply check if the response contains the service name.
+      // There is no need to decode the json response.
+      // Simply checking if the response contains the
+      // service name is enough.
       if (!response.body.contains('core.api-gateway')) {
         throw ResponseException();
       }
 
-      // The api gateway is available and the user finished the setup process
-      // so we'll redirect the user to their home page
+      // The API gateway is available and the user finished the setup process
+      // so we'll redirect the user to the home page
       unawaited(Navigator.of(context).pushReplacementNamed('/home'));
     } on SocketException {
       // SocketExceptions are thrown if there appears to be a problem with the users internet connection

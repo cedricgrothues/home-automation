@@ -5,10 +5,10 @@ import 'package:home/src/network/models/action.dart';
 
 part 'scene.g.dart';
 
-/// A [Scene] defines a set of executable [Actions]
+/// A [Scene] defines a set of executable [Actions].
 @JsonSerializable()
 class Scene {
-  /// Creates a new [Scene].
+  /// Create a new [Scene].
   const Scene({
     this.id,
     this.name,
@@ -19,18 +19,17 @@ class Scene {
   /// Create a new [Scene] object from its JSON representation.
   factory Scene.fromJson(Map<String, dynamic> json) => _$SceneFromJson(json);
 
-  /// This defines the scenes identifier
-  /// and is required to be unique.
+  /// Unique identifier for this [Scene].
   /// This value shoud not be set by the user.
   @JsonKey(name: 'id')
   final String id;
 
-  /// The human-readable name of the [Scene]
+  /// The human-readable non-unique name of this [Scene].
   @JsonKey(name: 'name', defaultValue: '')
   final String name;
 
   /// Owner of the [Scene] is, whoever first created it.
-  /// Must be a username registered with the core.user service.
+  /// Must be a username from a registered user.
   @JsonKey(name: 'owner', defaultValue: '')
   final String owner;
 

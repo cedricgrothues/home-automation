@@ -4,9 +4,10 @@ import 'package:flutter/cupertino.dart' show CupertinoButton;
 import 'package:home/src/network/models/device.dart';
 import 'package:home/src/components/labels.dart';
 
-/// Details is called on a long-press on a `DeviceCard`.
-/// It shows detailed information on the device and
-/// provides more in-depth control over the device.
+/// Use [DeviceDetails] if the user long-presses
+/// on a [DeviceCard]. It shows in-depth information
+/// on the device and provides fine-grained control
+/// over the device.
 class DeviceDetails extends StatefulWidget {
   const DeviceDetails(this.device, {Key key}) : super(key: key);
 

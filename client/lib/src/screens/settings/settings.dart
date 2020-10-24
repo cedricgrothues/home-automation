@@ -17,7 +17,7 @@ import 'package:home/src/screens/settings/components/list.dart';
 import 'package:home/src/screens/settings/components/button.dart';
 import 'package:home/src/screens/settings/components/section.dart';
 
-/// Defines the main [Settings] page. This is show
+/// The main [Settings] page. This is shown
 /// when the user taps on their profile picture.
 class Settings extends StatefulWidget {
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart' show Theme;
 
-/// The [Button] class defines the standard style for a button in client.app.home.
+/// The [Button] class defines the standard style.
 /// The title size is adjusted to fit the [Button]s width.
 ///
 /// Since the [Button] extends the [CupertinoButton], it'll have an onPressed animation.

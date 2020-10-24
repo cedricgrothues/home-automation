@@ -4,7 +4,8 @@ import 'package:flutter/material.dart' show Material, MaterialType, Theme;
 /// Creates a scrollable, linear array of widgets from an explicit
 /// [List] of headers and [List] of sections. This constructor is appropriate
 /// for list views that should comply with home's design guidelines.
-/// This list is supposed to be used within a [DraggableScrollableSheet].
+///
+/// This list is most commonly used in combination a [DraggableScrollableSheet].
 class PopupList extends StatelessWidget {
   PopupList({Key key, this.controller, @required this.sections, this.header, this.discard, this.discardAction})
       : assert(sections != null),

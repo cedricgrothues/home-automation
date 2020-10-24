@@ -17,8 +17,8 @@ class Home extends StatelessWidget {
   final Uint8List _image =
       base64.decode(Hive.box<String>('preferences').get('picture') ?? '');
 
-  // Futures and images for the underlying widgets are defines here,
-  // so neither the FutureBuilder nor Image fires twice.
+  // Any `Future<T>` for the underlying widgets are defined here,
+  // so the FutureBuilders, don't rerun on every rebuild.
   final _devices = DeviceService.fetch();
   final _scenes = SceneService.fetch();
 
