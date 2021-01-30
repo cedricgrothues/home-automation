@@ -12,7 +12,7 @@
 
 ### About the project
 
-Home Automation is a distributed smart home system largely written in Go, Rust, and Dart. It's mostly meant as a learning opportunity rather than a production-ready system.
+Home Automation is a distributed smart home system largely written in Go, Rust, and Dart. It's meant as a learning opportunity rather than a production-ready system.
 
 The client uses the [Flutter](https://flutter.dev/) framework, which allows building an app for mobile, desktop & web, from a single codebase.
 
@@ -182,6 +182,3 @@ This project is based on [Jake Wright](https://github.com/jakewright)'s home-aut
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)
-
----
-<sup>1</sup> <a class="anchor" id="1">Core services are required to be written Go or Rust, other services, like controllers, may also be written in Python or NodeJS.</a>
