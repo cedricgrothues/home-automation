@@ -12,10 +12,9 @@
 
 ### About the project
 
-Home Automation is a distributed smart home system largely written in Go, Rust and Dart[<sup>1</sup>](#1).
-It's mostly meant as a learning opportunity rather than a production-ready system.
+Home Automation is a distributed smart home system largely written in Go, Rust, and Dart. It's mostly meant as a learning opportunity rather than a production-ready system.
 
-The client has been built using the [Flutter](https://flutter.dev/) framework, which allows to build an app for mobile, desktop & web, from a single codebase.
+The client uses the [Flutter](https://flutter.dev/) framework, which allows building an app for mobile, desktop & web, from a single codebase.
 
 <p align="center">
   <img src=".github/screenshots/setup_light.png" width="256" hspace="4">
@@ -25,14 +24,14 @@ The client has been built using the [Flutter](https://flutter.dev/) framework, w
 
 ## Download & install
 
-First, clone the repository with the 'clone' command, or just download the zip.
+First, clone the repository with the 'clone' command, or download the zip.
 
 ```
 $ git clone github.com/cedricgrothues/home-automation.git
 ```
 
-Then, download any IDE, with their respective Rust, Go, Flutter and Docker plugins.
-There you go, you can now open & edit the project. Enjoy!
+Then, download any IDE, with their respective Rust, Go, Flutter, and Docker plugins.
+There you go, you can now open & edit the project.
 
 ## Currently supported controllers
 
@@ -40,7 +39,7 @@ There you go, you can now open & edit the project. Enjoy!
 | --- | --- | --- |
 | modules.aurora | A controller for Nanoleaf Aurora lightpanels      | Preview |
 | modules.sonoff | A controller for sonoff tasmota lights and plugs  | Preview |
-| modules.sonos  | A controller for all types of sonos speakers      | WIP   |
+| modules.sonos  | A controller for all types of sonos speakers      | WIP     |
 | modules.hue    | tbd                                               | Planned |
 
 ## All services
@@ -50,11 +49,11 @@ There you go, you can now open & edit the project. Enjoy!
 | core.api-gateway      | The API Gateway                                   | Preview |
 | core.user             | User management                                   | Preview |
 | core.device-registry  | The Device Registry Service                       | Preview |
-| modules.scene         | The scene controller                              | WIP   |
-| modules.schedule      | The schedule controller                           | WIP   |
+| modules.scene         | The scene controller                              | WIP     |
+| modules.schedule      | The schedule controller                           | WIP     |
 | modules.aurora        | A controller for Nanoleaf Aurora lightpanels      | Preview |
 | modules.sonoff        | A controller for sonoff tasmota lights and plugs  | Preview |
-| modules.sonos         | A controller for all types of sonos speakers      | WIP   |
+| modules.sonos         | A controller for all types of sonos speakers      | WIP     |
 
 ## Usage
 
@@ -63,8 +62,9 @@ Start all docker containers with: `docker-compose up -d --build --force-recreate
 
 ### API Gateway Service
 
-The api gateway service reads data from `core.api-gateway/config.json` and distributes requests accordingly.
+The API gateway service reads data from `core.api-gateway/config.json` and distributes requests accordingly.
 Example config.json structure:
+
 ```json
 {
     "port": 4000,
@@ -95,7 +95,7 @@ Example config.json structure:
 
 ### Controllers
 
-Controllers must implement a standardised interface for fetching and updating device state.
+Controllers must implement a standardized interface for fetching and updating the device state.
 
 `GET modules.<controller-identifier>/device/<device-identifier>`
 
@@ -178,7 +178,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Please make sure to update tests and screenshots as appropriate.
 
 ## Credits
-This project is based on [Jake Wright](https://github.com/jakewright)'s idea of a home-automation system, his youtube series and his home-automation repo.
+This project is based on [Jake Wright](https://github.com/jakewright)'s home-automation project and his YouTube series.
 
 ## License
 [MIT](https://choosealicense.com/licenses/mit/)

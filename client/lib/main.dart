@@ -198,13 +198,12 @@ class App extends StatelessWidget {
         ),
       ),
 
-      // Set the initial route to `/` to make
-      // sure Hive is initialized properly.
+      // Set the initial route to `/` to make sure Hive is initialized.
       initialRoute: '/',
 
-      // Every child is wrapped in a NetworkAware widget to detect network
-      // state changes and and present the client with an error screen
-      // if they're not connected to wifi.
+      // Every child is wrapped in a NetworkAware widget to detect
+      // network state changes and show an error message if the
+      // user is not connected to WiFi.
       builder: (context, Widget child) => NetworkAware(child: child),
       onGenerateRoute: (RouteSettings settings) {
         switch (settings.name) {
